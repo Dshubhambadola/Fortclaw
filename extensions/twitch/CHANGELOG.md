@@ -3,7 +3,7 @@
 ## 2026.1.27-beta.1
 
 ### Changes
-- Version alignment with core Moltbot release numbers.
+- Version alignment with core Fortclaw release numbers.
 
 ## 2026.1.23
 

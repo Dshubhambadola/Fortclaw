@@ -1,5 +1,5 @@
-import MoltbotKit
-import MoltbotProtocol
+import FortclawKit
+import FortclawProtocol
 import CoreGraphics
 import Foundation
 import OSLog

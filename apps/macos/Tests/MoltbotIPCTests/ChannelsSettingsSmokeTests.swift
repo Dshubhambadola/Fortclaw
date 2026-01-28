@@ -1,9 +1,9 @@
-import MoltbotProtocol
+import FortclawProtocol
 import SwiftUI
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
-private typealias SnapshotAnyCodable = Moltbot.AnyCodable
+private typealias SnapshotAnyCodable = Fortclaw.AnyCodable
 
 @Suite(.serialized)
 @MainActor

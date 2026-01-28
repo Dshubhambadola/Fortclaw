@@ -1,7 +1,7 @@
 import Foundation
 import os
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite(.serialized) struct CanvasFileWatcherTests {
     private func makeTempDir() throws -> URL {

@@ -4,15 +4,15 @@ read_when:
   - Adding or modifying skills
   - Changing skill gating or load rules
 ---
-# Skills (Moltbot)
+# Skills (Fortclaw)
 
-Moltbot uses **[AgentSkills](https://agentskills.io)-compatible** skill folders to teach the agent how to use tools. Each skill is a directory containing a `SKILL.md` with YAML frontmatter and instructions. Moltbot loads **bundled skills** plus optional local overrides, and filters them at load time based on environment, config, and binary presence.
+Fortclaw uses **[AgentSkills](https://agentskills.io)-compatible** skill folders to teach the agent how to use tools. Each skill is a directory containing a `SKILL.md` with YAML frontmatter and instructions. Fortclaw loads **bundled skills** plus optional local overrides, and filters them at load time based on environment, config, and binary presence.
 
 ## Locations and precedence
 
 Skills are loaded from **three** places:
 
-1) **Bundled skills**: shipped with the install (npm package or Moltbot.app)
+1) **Bundled skills**: shipped with the install (npm package or Fortclaw.app)
 2) **Managed/local skills**: `~/.clawdbot/skills`
 3) **Workspace skills**: `<workspace>/skills`
 
@@ -47,7 +47,7 @@ tool surface those skills teach.
 
 ## ClawdHub (install + sync)
 
-ClawdHub is the public skills registry for Moltbot. Browse at
+ClawdHub is the public skills registry for Fortclaw. Browse at
 https://clawdhub.com. Use it to discover, install, update, and back up skills.
 Full guide: [ClawdHub](/tools/clawdhub).
 
@@ -61,7 +61,7 @@ Common flows:
   - `clawdhub sync --all`
 
 By default, `clawdhub` installs into `./skills` under your current working
-directory (or falls back to the configured Moltbot workspace). Moltbot picks
+directory (or falls back to the configured Fortclaw workspace). Fortclaw picks
 that up as `<workspace>/skills` on the next session.
 
 ## Security notes
@@ -101,7 +101,7 @@ Notes:
 
 ## Gating (load-time filters)
 
-Moltbot **filters skills at load time** using `metadata` (single-line JSON):
+Fortclaw **filters skills at load time** using `metadata` (single-line JSON):
 
 ```markdown
 ---
@@ -144,7 +144,7 @@ metadata: {"moltbot":{"emoji":"♊️","requires":{"bins":["gemini"]},"install":
 
 Notes:
 - If multiple installers are listed, the gateway picks a **single** preferred option (brew when available, otherwise node).
-- If all installers are `download`, Moltbot lists each entry so you can see the available artifacts.
+- If all installers are `download`, Fortclaw lists each entry so you can see the available artifacts.
 - Installer specs can include `os: ["darwin"|"linux"|"win32"]` to filter options by platform.
 - Node installs honor `skills.install.nodeManager` in `moltbot.json` (default: npm; options: npm/pnpm/yarn/bun).
   This only affects **skill installs**; the Gateway runtime should still be Node
@@ -196,7 +196,7 @@ Rules:
 
 ## Environment injection (per agent run)
 
-When an agent run starts, Moltbot:
+When an agent run starts, Fortclaw:
 1) Reads skill metadata.
 2) Applies any `skills.entries.<key>.env` or `skills.entries.<key>.apiKey` to
    `process.env`.
@@ -207,19 +207,19 @@ This is **scoped to the agent run**, not a global shell environment.
 
 ## Session snapshot (performance)
 
-Moltbot snapshots the eligible skills **when a session starts** and reuses that list for subsequent turns in the same session. Changes to skills or config take effect on the next new session.
+Fortclaw snapshots the eligible skills **when a session starts** and reuses that list for subsequent turns in the same session. Changes to skills or config take effect on the next new session.
 
 Skills can also refresh mid-session when the skills watcher is enabled or when a new eligible remote node appears (see below). Think of this as a **hot reload**: the refreshed list is picked up on the next agent turn.
 
 ## Remote macOS nodes (Linux gateway)
 
-If the Gateway is running on Linux but a **macOS node** is connected **with `system.run` allowed** (Exec approvals security not set to `deny`), Moltbot can treat macOS-only skills as eligible when the required binaries are present on that node. The agent should execute those skills via the `nodes` tool (typically `nodes.run`).
+If the Gateway is running on Linux but a **macOS node** is connected **with `system.run` allowed** (Exec approvals security not set to `deny`), Fortclaw can treat macOS-only skills as eligible when the required binaries are present on that node. The agent should execute those skills via the `nodes` tool (typically `nodes.run`).
 
 This relies on the node reporting its command support and on a bin probe via `system.run`. If the macOS node goes offline later, the skills remain visible; invocations may fail until the node reconnects.
 
 ## Skills watcher (auto-refresh)
 
-By default, Moltbot watches skill folders and bumps the skills snapshot when `SKILL.md` files change. Configure this under `skills.load`:
+By default, Fortclaw watches skill folders and bumps the skills snapshot when `SKILL.md` files change. Configure this under `skills.load`:
 
 ```json5
 {
@@ -234,7 +234,7 @@ By default, Moltbot watches skill folders and bumps the skills snapshot when `SK
 
 ## Token impact (skills list)
 
-When skills are eligible, Moltbot injects a compact XML list of available skills into the system prompt (via `formatSkillsForPrompt` in `pi-coding-agent`). The cost is deterministic:
+When skills are eligible, Fortclaw injects a compact XML list of available skills into the system prompt (via `formatSkillsForPrompt` in `pi-coding-agent`). The cost is deterministic:
 
 - **Base overhead (only when ≥1 skill):** 195 characters.
 - **Per skill:** 97 characters + the length of the XML-escaped `<name>`, `<description>`, and `<location>` values.
@@ -251,8 +251,8 @@ Notes:
 
 ## Managed skills lifecycle
 
-Moltbot ships a baseline set of skills as **bundled skills** as part of the
-install (npm package or Moltbot.app). `~/.clawdbot/skills` exists for local
+Fortclaw ships a baseline set of skills as **bundled skills** as part of the
+install (npm package or Fortclaw.app). `~/.clawdbot/skills` exists for local
 overrides (for example, pinning/patching a skill without changing the bundled
 copy). Workspace skills are user-owned and override both on name conflicts.
 

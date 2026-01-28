@@ -8,7 +8,7 @@ read_when:
 # API usage & costs
 
 This doc lists **features that can invoke API keys** and where their costs show up. It focuses on
-Moltbot features that can generate provider usage or paid API calls.
+Fortclaw features that can generate provider usage or paid API calls.
 
 ## Where costs show up (chat + CLI)
 
@@ -28,7 +28,7 @@ See [Token use & costs](/token-use) for details and examples.
 
 ## How keys are discovered
 
-Moltbot can pick up credentials from:
+Fortclaw can pick up credentials from:
 - **Auth profiles** (per-agent, stored in `auth-profiles.json`).
 - **Environment variables** (e.g. `OPENAI_API_KEY`, `BRAVE_API_KEY`, `FIRECRAWL_API_KEY`).
 - **Config** (`models.providers.*.apiKey`, `tools.web.search.*`, `tools.web.fetch.firecrawl.*`,

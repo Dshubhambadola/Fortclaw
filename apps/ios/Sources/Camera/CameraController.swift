@@ -1,5 +1,5 @@
 import AVFoundation
-import MoltbotKit
+import FortclawKit
 import Foundation
 
 actor CameraController {
@@ -36,7 +36,7 @@ actor CameraController {
         }
     }
 
-    func snap(params: MoltbotCameraSnapParams) async throws -> (
+    func snap(params: FortclawCameraSnapParams) async throws -> (
         format: String,
         base64: String,
         width: Int,
@@ -109,7 +109,7 @@ actor CameraController {
             height: res.heightPx)
     }
 
-    func clip(params: MoltbotCameraClipParams) async throws -> (
+    func clip(params: FortclawCameraClipParams) async throws -> (
         format: String,
         base64: String,
         durationMs: Int,
@@ -221,7 +221,7 @@ actor CameraController {
     }
 
     private nonisolated static func pickCamera(
-        facing: MoltbotCameraFacing,
+        facing: FortclawCameraFacing,
         deviceId: String?) -> AVCaptureDevice?
     {
         if let deviceId, !deviceId.isEmpty {

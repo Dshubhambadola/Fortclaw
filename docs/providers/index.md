@@ -1,12 +1,12 @@
 ---
-summary: "Model providers (LLMs) supported by Moltbot"
+summary: "Model providers (LLMs) supported by Fortclaw"
 read_when:
   - You want to choose a model provider
   - You need a quick overview of supported LLM backends
 ---
 # Model Providers
 
-Moltbot can use many LLM providers. Pick a provider, authenticate, then set the
+Fortclaw can use many LLM providers. Pick a provider, authenticate, then set the
 default model as `provider/model`.
 
 Looking for chat channel docs (WhatsApp/Telegram/Discord/Slack/Mattermost (plugin)/etc.)? See [Channels](/channels).

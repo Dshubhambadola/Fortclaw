@@ -5,12 +5,12 @@ import fs from "node:fs/promises";
 import Ajv from "ajv";
 import { Type } from "@sinclair/typebox";
 
-// NOTE: This extension is intended to be bundled with Moltbot.
-// When running from source (tests/dev), Moltbot internals live under src/.
+// NOTE: This extension is intended to be bundled with Fortclaw.
+// When running from source (tests/dev), Fortclaw internals live under src/.
 // When running from a built install, internals live under dist/ (no src/ tree).
 // So we resolve internal imports dynamically with src-first, dist-fallback.
 
-import type { MoltbotPluginApi } from "../../../src/plugins/types.js";
+import type { FortclawPluginApi } from "../../../src/plugins/types.js";
 
 type RunEmbeddedPiAgentFn = (params: Record<string, unknown>) => Promise<unknown>;
 
@@ -61,7 +61,7 @@ type PluginCfg = {
   timeoutMs?: number;
 };
 
-export function createLlmTaskTool(api: MoltbotPluginApi) {
+export function createLlmTaskTool(api: FortclawPluginApi) {
   return {
     name: "llm-task",
     description:

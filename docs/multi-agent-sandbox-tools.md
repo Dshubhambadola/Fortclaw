@@ -225,7 +225,7 @@ Tool policies (global, agent, sandbox) support `group:*` entries that expand to 
 - `group:automation`: `cron`, `gateway`
 - `group:messaging`: `message`
 - `group:nodes`: `nodes`
-- `group:moltbot`: all built-in Moltbot tools (excludes provider plugins)
+- `group:moltbot`: all built-in Fortclaw tools (excludes provider plugins)
 
 ### Elevated Mode
 `tools.elevated` is the global baseline (sender-based allowlist). `agents.list[].tools.elevated` can further restrict elevated for specific agents (both must allow).

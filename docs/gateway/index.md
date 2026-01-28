@@ -58,7 +58,7 @@ Supported if you isolate state + config and use unique ports. Full guide: [Multi
 Service names are profile-aware:
 - macOS: `bot.molt.<profile>` (legacy `com.clawdbot.*` may still exist)
 - Linux: `moltbot-gateway-<profile>.service`
-- Windows: `Moltbot Gateway (<profile>)`
+- Windows: `Fortclaw Gateway (<profile>)`
 
 Install metadata is embedded in the service config:
 - `CLAWDBOT_SERVICE_MARKER=moltbot`
@@ -206,13 +206,13 @@ Notes:
 - `gateway status` prints config path + probe target to avoid “localhost vs LAN bind” confusion and profile mismatches.
 - `gateway status` includes the last gateway error line when the service looks running but the port is closed.
 - `logs` tails the Gateway file log via RPC (no manual `tail`/`grep` needed).
-- If other gateway-like services are detected, the CLI warns unless they are Moltbot profile services.
+- If other gateway-like services are detected, the CLI warns unless they are Fortclaw profile services.
   We still recommend **one gateway per machine** for most setups; use isolated profiles/ports for redundancy or a rescue bot. See [Multiple gateways](/gateway/multiple-gateways).
   - Cleanup: `moltbot gateway uninstall` (current service) and `moltbot doctor` (legacy migrations).
 - `gateway install` is a no-op when already installed; use `moltbot gateway install --force` to reinstall (profile/env/path changes).
 
 Bundled mac app:
-- Moltbot.app can bundle a Node-based gateway relay and install a per-user LaunchAgent labeled
+- Fortclaw.app can bundle a Node-based gateway relay and install a per-user LaunchAgent labeled
   `bot.molt.gateway` (or `bot.molt.<profile>`; legacy `com.clawdbot.*` labels still unload cleanly).
 - To stop it cleanly, use `moltbot gateway stop` (or `launchctl bootout gui/$UID/bot.molt.gateway`).
 - To restart, use `moltbot gateway restart` (or `launchctl kickstart -k gui/$UID/bot.molt.gateway`).
@@ -220,7 +220,7 @@ Bundled mac app:
   - Replace the label with `bot.molt.<profile>` when running a named profile.
 
 ## Supervision (systemd user unit)
-Moltbot installs a **systemd user service** by default on Linux/WSL2. We
+Fortclaw installs a **systemd user service** by default on Linux/WSL2. We
 recommend user services for single-user machines (simpler env, per-user config).
 Use a **system service** for multi-user or always-on servers (no lingering
 required, shared supervision).
@@ -231,7 +231,7 @@ unit and can update it to match the current recommended defaults.
 Create `~/.config/systemd/user/moltbot-gateway[-<profile>].service`:
 ```
 [Unit]
-Description=Moltbot Gateway (profile: <profile>, v<version>)
+Description=Fortclaw Gateway (profile: <profile>, v<version>)
 After=network-online.target
 Wants=network-online.target
 

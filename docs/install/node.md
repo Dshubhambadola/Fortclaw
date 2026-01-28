@@ -2,14 +2,14 @@
 title: "Node.js + npm (PATH sanity)"
 summary: "Node.js + npm install sanity: versions, PATH, and global installs"
 read_when:
-  - "You installed Moltbot but `moltbot` is “command not found”"
+  - "You installed Fortclaw but `moltbot` is “command not found”"
   - "You’re setting up Node.js/npm on a new machine"
   - "npm install -g ... fails with permissions or PATH issues"
 ---
 
 # Node.js + npm (PATH sanity)
 
-Moltbot’s runtime baseline is **Node 22+**.
+Fortclaw’s runtime baseline is **Node 22+**.
 
 If you can run `npm install -g moltbot@latest` but later see `moltbot: command not found`, it’s almost always a **PATH** issue: the directory where npm puts global binaries isn’t on your shell’s PATH.
 

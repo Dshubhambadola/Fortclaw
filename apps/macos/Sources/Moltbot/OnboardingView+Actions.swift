@@ -1,6 +1,6 @@
 import AppKit
-import MoltbotDiscovery
-import MoltbotIPC
+import FortclawDiscovery
+import FortclawIPC
 import Foundation
 import SwiftUI
 
@@ -35,7 +35,7 @@ extension OnboardingView {
                 user: user,
                 host: host,
                 port: gateway.sshPort)
-            MoltbotConfigFile.setRemoteGatewayUrl(host: host, port: gateway.gatewayPort)
+            FortclawConfigFile.setRemoteGatewayUrl(host: host, port: gateway.gatewayPort)
         }
         self.state.remoteCliPath = gateway.cliPath ?? ""
 
@@ -113,9 +113,9 @@ extension OnboardingView {
                 code: parsed.code,
                 state: parsed.state,
                 verifier: pkce.verifier)
-            try MoltbotOAuthStore.saveAnthropicOAuth(creds)
+            try FortclawOAuthStore.saveAnthropicOAuth(creds)
             self.refreshAnthropicOAuthStatus()
-            self.anthropicAuthStatus = "Connected. Moltbot can now use Claude."
+            self.anthropicAuthStatus = "Connected. Fortclaw can now use Claude."
         } catch {
             self.anthropicAuthStatus = "OAuth failed: \(error.localizedDescription)"
         }

@@ -7,7 +7,7 @@ read_when:
 ---
 # Discovery & transports
 
-Moltbot has two distinct problems that look similar on the surface:
+Fortclaw has two distinct problems that look similar on the surface:
 
 1) **Operator remote control**: the macOS menu bar app controlling a gateway running elsewhere.
 2) **Node pairing**: iOS/Android (and future nodes) finding a gateway and pairing securely.

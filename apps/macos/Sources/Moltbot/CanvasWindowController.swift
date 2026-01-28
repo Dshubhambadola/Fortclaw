@@ -1,6 +1,6 @@
 import AppKit
-import MoltbotIPC
-import MoltbotKit
+import FortclawIPC
+import FortclawKit
 import Foundation
 import WebKit
 

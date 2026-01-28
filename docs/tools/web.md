@@ -8,7 +8,7 @@ read_when:
 
 # Web tools
 
-Moltbot ships two lightweight web tools:
+Fortclaw ships two lightweight web tools:
 
 - `web_search` — Search the web via Brave Search API (default) or Perplexity Sonar (direct or via OpenRouter).
 - `web_fetch` — HTTP fetch + readable extraction (HTML → markdown/text).
@@ -124,7 +124,7 @@ crypto/prepaid).
 **Environment alternative:** set `OPENROUTER_API_KEY` or `PERPLEXITY_API_KEY` in the Gateway
 environment. For a gateway install, put it in `~/.clawdbot/.env`.
 
-If no base URL is set, Moltbot chooses a default based on the API key source:
+If no base URL is set, Fortclaw chooses a default based on the API key source:
 
 - `PERPLEXITY_API_KEY` or `pplx-...` → `https://api.perplexity.ai`
 - `OPENROUTER_API_KEY` or `sk-or-...` → `https://openrouter.ai/api/v1`

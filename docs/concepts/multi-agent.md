@@ -47,7 +47,7 @@ reach other host locations unless sandboxing is enabled. See
 
 ### Single-agent mode (default)
 
-If you do nothing, Moltbot runs a single agent:
+If you do nothing, Fortclaw runs a single agent:
 
 - `agentId` defaults to **`main`**.
 - Sessions are keyed as `agent:main:<mainKey>`.

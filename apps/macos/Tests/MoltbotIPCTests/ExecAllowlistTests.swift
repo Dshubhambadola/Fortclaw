@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 struct ExecAllowlistTests {
     @Test func matchUsesResolvedPath() {

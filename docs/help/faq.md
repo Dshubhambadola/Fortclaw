@@ -1,5 +1,5 @@
 ---
-summary: "Frequently asked questions about Moltbot setup, configuration, and usage"
+summary: "Frequently asked questions about Fortclaw setup, configuration, and usage"
 ---
 # FAQ
 
@@ -9,7 +9,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 
 - [Quick start and first-run setup](#quick-start-and-firstrun-setup)
   - [Im stuck whats the fastest way to get unstuck?](#im-stuck-whats-the-fastest-way-to-get-unstuck)
-  - [What’s the recommended way to install and set up Moltbot?](#whats-the-recommended-way-to-install-and-set-up-moltbot)
+  - [What’s the recommended way to install and set up Fortclaw?](#whats-the-recommended-way-to-install-and-set-up-moltbot)
   - [How do I open the dashboard after onboarding?](#how-do-i-open-the-dashboard-after-onboarding)
   - [How do I authenticate the dashboard (token) on localhost vs remote?](#how-do-i-authenticate-the-dashboard-token-on-localhost-vs-remote)
   - [What runtime do I need?](#what-runtime-do-i-need)
@@ -26,8 +26,8 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [Installer stuck? How do I get more feedback?](#installer-stuck-how-do-i-get-more-feedback)
   - [Windows install says git not found or moltbot not recognized](#windows-install-says-git-not-found-or-moltbot-not-recognized)
   - [The docs didn’t answer my question - how do I get a better answer?](#the-docs-didnt-answer-my-question-how-do-i-get-a-better-answer)
-  - [How do I install Moltbot on Linux?](#how-do-i-install-moltbot-on-linux)
-  - [How do I install Moltbot on a VPS?](#how-do-i-install-moltbot-on-a-vps)
+  - [How do I install Fortclaw on Linux?](#how-do-i-install-moltbot-on-linux)
+  - [How do I install Fortclaw on a VPS?](#how-do-i-install-moltbot-on-a-vps)
   - [Where are the cloud/VPS install guides?](#where-are-the-cloudvps-install-guides)
   - [Can I ask Clawd to update itself?](#can-i-ask-clawd-to-update-itself)
   - [What does the onboarding wizard actually do?](#what-does-the-onboarding-wizard-actually-do)
@@ -45,24 +45,24 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [How do I keep hosted model traffic in a specific region?](#how-do-i-keep-hosted-model-traffic-in-a-specific-region)
   - [Do I have to buy a Mac Mini to install this?](#do-i-have-to-buy-a-mac-mini-to-install-this)
   - [Do I need a Mac mini for iMessage support?](#do-i-need-a-mac-mini-for-imessage-support)
-  - [If I buy a Mac mini to run Moltbot, can I connect it to my MacBook Pro?](#if-i-buy-a-mac-mini-to-run-moltbot-can-i-connect-it-to-my-macbook-pro)
+  - [If I buy a Mac mini to run Fortclaw, can I connect it to my MacBook Pro?](#if-i-buy-a-mac-mini-to-run-moltbot-can-i-connect-it-to-my-macbook-pro)
   - [Can I use Bun?](#can-i-use-bun)
   - [Telegram: what goes in `allowFrom`?](#telegram-what-goes-in-allowfrom)
-  - [Can multiple people use one WhatsApp number with different Moltbots?](#can-multiple-people-use-one-whatsapp-number-with-different-moltbots)
+  - [Can multiple people use one WhatsApp number with different Fortclaws?](#can-multiple-people-use-one-whatsapp-number-with-different-moltbots)
   - [Can I run a "fast chat" agent and an "Opus for coding" agent?](#can-i-run-a-fast-chat-agent-and-an-opus-for-coding-agent)
   - [Does Homebrew work on Linux?](#does-homebrew-work-on-linux)
   - [What’s the difference between the hackable (git) install and npm install?](#whats-the-difference-between-the-hackable-git-install-and-npm-install)
   - [Can I switch between npm and git installs later?](#can-i-switch-between-npm-and-git-installs-later)
   - [Should I run the Gateway on my laptop or a VPS?](#should-i-run-the-gateway-on-my-laptop-or-a-vps)
-  - [How important is it to run Moltbot on a dedicated machine?](#how-important-is-it-to-run-moltbot-on-a-dedicated-machine)
+  - [How important is it to run Fortclaw on a dedicated machine?](#how-important-is-it-to-run-moltbot-on-a-dedicated-machine)
   - [What are the minimum VPS requirements and recommended OS?](#what-are-the-minimum-vps-requirements-and-recommended-os)
-  - [Can I run Moltbot in a VM and what are the requirements](#can-i-run-moltbot-in-a-vm-and-what-are-the-requirements)
-- [What is Moltbot?](#what-is-moltbot)
-  - [What is Moltbot, in one paragraph?](#what-is-moltbot-in-one-paragraph)
+  - [Can I run Fortclaw in a VM and what are the requirements](#can-i-run-moltbot-in-a-vm-and-what-are-the-requirements)
+- [What is Fortclaw?](#what-is-moltbot)
+  - [What is Fortclaw, in one paragraph?](#what-is-moltbot-in-one-paragraph)
   - [What’s the value proposition?](#whats-the-value-proposition)
   - [I just set it up what should I do first](#i-just-set-it-up-what-should-i-do-first)
-  - [What are the top five everyday use cases for Moltbot](#what-are-the-top-five-everyday-use-cases-for-moltbot)
-  - [Can Moltbot help with lead gen outreach ads and blogs for a SaaS](#can-moltbot-help-with-lead-gen-outreach-ads-and-blogs-for-a-saas)
+  - [What are the top five everyday use cases for Fortclaw](#what-are-the-top-five-everyday-use-cases-for-moltbot)
+  - [Can Fortclaw help with lead gen outreach ads and blogs for a SaaS](#can-moltbot-help-with-lead-gen-outreach-ads-and-blogs-for-a-saas)
   - [What are the advantages vs Claude Code for web development?](#what-are-the-advantages-vs-claude-code-for-web-development)
 - [Skills and automation](#skills-and-automation)
   - [How do I customize skills without keeping the repo dirty?](#how-do-i-customize-skills-without-keeping-the-repo-dirty)
@@ -71,7 +71,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [The bot freezes while doing heavy work. How do I offload that?](#the-bot-freezes-while-doing-heavy-work-how-do-i-offload-that)
   - [Cron or reminders do not fire. What should I check?](#cron-or-reminders-do-not-fire-what-should-i-check)
   - [How do I install skills on Linux?](#how-do-i-install-skills-on-linux)
-  - [Can Moltbot run tasks on a schedule or continuously in the background?](#can-moltbot-run-tasks-on-a-schedule-or-continuously-in-the-background)
+  - [Can Fortclaw run tasks on a schedule or continuously in the background?](#can-moltbot-run-tasks-on-a-schedule-or-continuously-in-the-background)
   - [Can I run Apple/macOS-only skills from Linux?](#can-i-run-applemacosonly-skills-from-linux)
   - [Do you have a Notion or HeyGen integration?](#do-you-have-a-notion-or-heygen-integration)
   - [How do I install the Chrome extension for browser takeover?](#how-do-i-install-the-chrome-extension-for-browser-takeover)
@@ -83,11 +83,11 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [Does memory persist forever? What are the limits?](#does-memory-persist-forever-what-are-the-limits)
   - [Does semantic memory search require an OpenAI API key?](#does-semantic-memory-search-require-an-openai-api-key)
 - [Where things live on disk](#where-things-live-on-disk)
-  - [Is all data used with Moltbot saved locally?](#is-all-data-used-with-moltbot-saved-locally)
-  - [Where does Moltbot store its data?](#where-does-moltbot-store-its-data)
+  - [Is all data used with Fortclaw saved locally?](#is-all-data-used-with-moltbot-saved-locally)
+  - [Where does Fortclaw store its data?](#where-does-moltbot-store-its-data)
   - [Where should AGENTS.md / SOUL.md / USER.md / MEMORY.md live?](#where-should-agentsmd-soulmd-usermd-memorymd-live)
   - [What’s the recommended backup strategy?](#whats-the-recommended-backup-strategy)
-  - [How do I completely uninstall Moltbot?](#how-do-i-completely-uninstall-moltbot)
+  - [How do I completely uninstall Fortclaw?](#how-do-i-completely-uninstall-moltbot)
   - [Can agents work outside the workspace?](#can-agents-work-outside-the-workspace)
   - [I’m in remote mode - where is the session store?](#im-in-remote-mode-where-is-the-session-store)
 - [Config basics](#config-basics)
@@ -98,13 +98,13 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [How do I enable web search (and web fetch)?](#how-do-i-enable-web-search-and-web-fetch)
   - [config.apply wiped my config. How do I recover and avoid this?](#configapply-wiped-my-config-how-do-i-recover-and-avoid-this)
   - [How do I run a central Gateway with specialized workers across devices?](#how-do-i-run-a-central-gateway-with-specialized-workers-across-devices)
-  - [Can the Moltbot browser run headless?](#can-the-moltbot-browser-run-headless)
+  - [Can the Fortclaw browser run headless?](#can-the-moltbot-browser-run-headless)
   - [How do I use Brave for browser control?](#how-do-i-use-brave-for-browser-control)
 - [Remote gateways + nodes](#remote-gateways-nodes)
   - [How do commands propagate between Telegram, the gateway, and nodes?](#how-do-commands-propagate-between-telegram-the-gateway-and-nodes)
   - [How can my agent access my computer if the Gateway is hosted remotely?](#how-can-my-agent-access-my-computer-if-the-gateway-is-hosted-remotely)
   - [Tailscale is connected but I get no replies. What now?](#tailscale-is-connected-but-i-get-no-replies-what-now)
-  - [Can two Moltbots talk to each other (local + VPS)?](#can-two-moltbots-talk-to-each-other-local-vps)
+  - [Can two Fortclaws talk to each other (local + VPS)?](#can-two-moltbots-talk-to-each-other-local-vps)
   - [Do I need separate VPSes for multiple agents](#do-i-need-separate-vpses-for-multiple-agents)
   - [Is there a benefit to using a node on my personal laptop instead of SSH from a VPS?](#is-there-a-benefit-to-using-a-node-on-my-personal-laptop-instead-of-ssh-from-a-vps)
   - [Do nodes run a gateway service?](#do-nodes-run-a-gateway-service)
@@ -114,21 +114,21 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [How do I connect a Mac node to a remote Gateway (Tailscale Serve)?](#how-do-i-connect-a-mac-node-to-a-remote-gateway-tailscale-serve)
   - [Should I install on a second laptop or just add a node?](#should-i-install-on-a-second-laptop-or-just-add-a-node)
 - [Env vars and .env loading](#env-vars-and-env-loading)
-  - [How does Moltbot load environment variables?](#how-does-moltbot-load-environment-variables)
+  - [How does Fortclaw load environment variables?](#how-does-moltbot-load-environment-variables)
   - [“I started the Gateway via the service and my env vars disappeared.” What now?](#i-started-the-gateway-via-the-service-and-my-env-vars-disappeared-what-now)
   - [I set `COPILOT_GITHUB_TOKEN`, but models status shows “Shell env: off.” Why?](#i-set-copilotgithubtoken-but-models-status-shows-shell-env-off-why)
 - [Sessions & multiple chats](#sessions-multiple-chats)
   - [How do I start a fresh conversation?](#how-do-i-start-a-fresh-conversation)
   - [Do sessions reset automatically if I never send `/new`?](#do-sessions-reset-automatically-if-i-never-send-new)
-  - [Is there a way to make a team of Moltbots one CEO and many agents](#is-there-a-way-to-make-a-team-of-moltbots-one-ceo-and-many-agents)
+  - [Is there a way to make a team of Fortclaws one CEO and many agents](#is-there-a-way-to-make-a-team-of-moltbots-one-ceo-and-many-agents)
   - [Why did context get truncated mid-task? How do I prevent it?](#why-did-context-get-truncated-midtask-how-do-i-prevent-it)
-  - [How do I completely reset Moltbot but keep it installed?](#how-do-i-completely-reset-moltbot-but-keep-it-installed)
+  - [How do I completely reset Fortclaw but keep it installed?](#how-do-i-completely-reset-moltbot-but-keep-it-installed)
   - [I’m getting “context too large” errors - how do I reset or compact?](#im-getting-context-too-large-errors-how-do-i-reset-or-compact)
   - [Why am I seeing “LLM request rejected: messages.N.content.X.tool_use.input: Field required”?](#why-am-i-seeing-llm-request-rejected-messagesncontentxtooluseinput-field-required)
   - [Why am I getting heartbeat messages every 30 minutes?](#why-am-i-getting-heartbeat-messages-every-30-minutes)
   - [Do I need to add a “bot account” to a WhatsApp group?](#do-i-need-to-add-a-bot-account-to-a-whatsapp-group)
   - [How do I get the JID of a WhatsApp group?](#how-do-i-get-the-jid-of-a-whatsapp-group)
-  - [Why doesn’t Moltbot reply in a group?](#why-doesnt-moltbot-reply-in-a-group)
+  - [Why doesn’t Fortclaw reply in a group?](#why-doesnt-moltbot-reply-in-a-group)
   - [Do groups/threads share context with DMs?](#do-groupsthreads-share-context-with-dms)
   - [How many workspaces and agents can I create?](#how-many-workspaces-and-agents-can-i-create)
   - [Can I run multiple bots or chats at the same time (Slack), and how should I set that up?](#can-i-run-multiple-bots-or-chats-at-the-same-time-slack-and-how-should-i-set-that-up)
@@ -161,7 +161,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [Why does `moltbot gateway status` say `Runtime: running` but `RPC probe: failed`?](#why-does-moltbot-gateway-status-say-runtime-running-but-rpc-probe-failed)
   - [Why does `moltbot gateway status` show `Config (cli)` and `Config (service)` different?](#why-does-moltbot-gateway-status-show-config-cli-and-config-service-different)
   - [What does “another gateway instance is already listening” mean?](#what-does-another-gateway-instance-is-already-listening-mean)
-  - [How do I run Moltbot in remote mode (client connects to a Gateway elsewhere)?](#how-do-i-run-moltbot-in-remote-mode-client-connects-to-a-gateway-elsewhere)
+  - [How do I run Fortclaw in remote mode (client connects to a Gateway elsewhere)?](#how-do-i-run-moltbot-in-remote-mode-client-connects-to-a-gateway-elsewhere)
   - [The Control UI says “unauthorized” (or keeps reconnecting). What now?](#the-control-ui-says-unauthorized-or-keeps-reconnecting-what-now)
   - [I set `gateway.bind: "tailnet"` but it can’t bind / nothing listens](#i-set-gatewaybind-tailnet-but-it-cant-bind-nothing-listens)
   - [Can I run multiple Gateways on the same host?](#can-i-run-multiple-gateways-on-the-same-host)
@@ -169,7 +169,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 - [Logging and debugging](#logging-and-debugging)
   - [Where are logs?](#where-are-logs)
   - [How do I start/stop/restart the Gateway service?](#how-do-i-startstoprestart-the-gateway-service)
-  - [I closed my terminal on Windows - how do I restart Moltbot?](#i-closed-my-terminal-on-windows-how-do-i-restart-moltbot)
+  - [I closed my terminal on Windows - how do I restart Fortclaw?](#i-closed-my-terminal-on-windows-how-do-i-restart-moltbot)
   - [The Gateway is up but replies never arrive. What should I check?](#the-gateway-is-up-but-replies-never-arrive-what-should-i-check)
   - ["Disconnected from gateway: no reason" - what now?](#disconnected-from-gateway-no-reason-what-now)
   - [Telegram setMyCommands fails with network errors. What should I check?](#telegram-setmycommands-fails-with-network-errors-what-should-i-check)
@@ -180,7 +180,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 - [Media & attachments](#media-attachments)
   - [My skill generated an image/PDF, but nothing was sent](#my-skill-generated-an-imagepdf-but-nothing-was-sent)
 - [Security and access control](#security-and-access-control)
-  - [Is it safe to expose Moltbot to inbound DMs?](#is-it-safe-to-expose-moltbot-to-inbound-dms)
+  - [Is it safe to expose Fortclaw to inbound DMs?](#is-it-safe-to-expose-moltbot-to-inbound-dms)
   - [Is prompt injection only a concern for public bots?](#is-prompt-injection-only-a-concern-for-public-bots)
   - [Should my bot have its own email GitHub account or phone number](#should-my-bot-have-its-own-email-github-account-or-phone-number)
   - [Can I give it autonomy over my text messages and is that safe](#can-i-give-it-autonomy-over-my-text-messages-and-is-that-safe)
@@ -261,7 +261,7 @@ the hackable (git) install:
 curl -fsSL https://molt.bot/install.sh | bash -s -- --install-method git
 ```
 
-This installs Moltbot **from a git checkout**, so the agent can read the code + docs and
+This installs Fortclaw **from a git checkout**, so the agent can read the code + docs and
 reason about the exact version you are running. You can always switch back to stable later
 by re-running the installer without `--install-method git`.
 
@@ -291,7 +291,7 @@ Other useful CLI checks: `moltbot status --all`, `moltbot logs --follow`,
 Quick debug loop: [First 60 seconds if something's broken](#first-60-seconds-if-somethings-broken).
 Install docs: [Install](/install), [Installer flags](/install/installer), [Updating](/install/updating).
 
-### Whats the recommended way to install and set up Moltbot
+### Whats the recommended way to install and set up Fortclaw
 
 The repo recommends running from source and using the onboarding wizard:
 
@@ -389,7 +389,7 @@ Yes. Copy the **state directory** and **workspace**, then run Doctor once. This
 keeps your bot “exactly the same” (memory, session history, auth, and channel
 state) as long as you copy **both** locations:
 
-1) Install Moltbot on the new machine.
+1) Install Fortclaw on the new machine.
 2) Copy `$CLAWDBOT_STATE_DIR` (default: `~/.clawdbot`) from the old machine.
 3) Copy your workspace (default: `~/clawd`).
 4) Run `moltbot doctor` and restart the Gateway service.
@@ -546,7 +546,7 @@ curl -fsSL https://molt.bot/install.sh | bash -s -- --install-method git
 
 More detail: [Install](/install) and [Installer flags](/install/installer).
 
-### How do I install Moltbot on Linux
+### How do I install Fortclaw on Linux
 
 Short answer: follow the Linux guide, then run the onboarding wizard.
 
@@ -554,7 +554,7 @@ Short answer: follow the Linux guide, then run the onboarding wizard.
 - Full walkthrough: [Getting Started](/start/getting-started).
 - Installer + updates: [Install & updates](/install/updating).
 
-### How do I install Moltbot on a VPS
+### How do I install Fortclaw on a VPS
 
 Any Linux VPS works. Install on the server, then use SSH/Tailscale to reach the Gateway.
 
@@ -621,7 +621,7 @@ It also warns if your configured model is unknown or missing auth.
 
 ### Do I need a Claude or OpenAI subscription to run this
 
-No. You can run Moltbot with **API keys** (Anthropic/OpenAI/others) or with
+No. You can run Fortclaw with **API keys** (Anthropic/OpenAI/others) or with
 **local‑only models** so your data stays on your device. Subscriptions (Claude
 Pro/Max or OpenAI Codex) are optional ways to authenticate those providers.
 
@@ -654,7 +654,7 @@ Copy the token it prints, then choose **Anthropic token (paste setup-token)** in
 
 ### Do you support Claude subscription auth (Claude Pro/Max)
 
-Yes — via **setup-token**. Moltbot no longer reuses Claude Code CLI OAuth tokens; use a setup-token or an Anthropic API key. Generate the token anywhere and paste it on the gateway host. See [Anthropic](/providers/anthropic) and [OAuth](/concepts/oauth).
+Yes — via **setup-token**. Fortclaw no longer reuses Claude Code CLI OAuth tokens; use a setup-token or an Anthropic API key. Generate the token anywhere and paste it on the gateway host. See [Anthropic](/providers/anthropic) and [OAuth](/concepts/oauth).
 
 Note: Claude subscription access is governed by Anthropic’s terms. For production or multi‑user workloads, API keys are usually the safer choice.
 
@@ -665,7 +665,7 @@ use a **Claude subscription** (setup‑token or Claude Code OAuth), wait for the
 reset or upgrade your plan. If you use an **Anthropic API key**, check the Anthropic Console
 for usage/billing and raise limits as needed.
 
-Tip: set a **fallback model** so Moltbot can keep replying while a provider is rate‑limited.
+Tip: set a **fallback model** so Fortclaw can keep replying while a provider is rate‑limited.
 See [Models](/cli/models) and [OAuth](/concepts/oauth).
 
 ### Is AWS Bedrock supported
@@ -674,11 +674,11 @@ Yes - via pi‑ai’s **Amazon Bedrock (Converse)** provider with **manual confi
 
 ### How does Codex auth work
 
-Moltbot supports **OpenAI Code (Codex)** via OAuth (ChatGPT sign-in). The wizard can run the OAuth flow and will set the default model to `openai-codex/gpt-5.2` when appropriate. See [Model providers](/concepts/model-providers) and [Wizard](/start/wizard).
+Fortclaw supports **OpenAI Code (Codex)** via OAuth (ChatGPT sign-in). The wizard can run the OAuth flow and will set the default model to `openai-codex/gpt-5.2` when appropriate. See [Model providers](/concepts/model-providers) and [Wizard](/start/wizard).
 
 ### Do you support OpenAI subscription auth Codex OAuth
 
-Yes. Moltbot fully supports **OpenAI Code (Codex) subscription OAuth**. The onboarding wizard
+Yes. Fortclaw fully supports **OpenAI Code (Codex) subscription OAuth**. The onboarding wizard
 can run the OAuth flow for you.
 
 See [OAuth](/concepts/oauth), [Model providers](/concepts/model-providers), and [Wizard](/start/wizard).
@@ -695,7 +695,7 @@ This stores OAuth tokens in auth profiles on the gateway host. Details: [Model p
 
 ### Is a local model OK for casual chats
 
-Usually no. Moltbot needs large context + strong safety; small cards truncate and leak. If you must, run the **largest** MiniMax M2.1 build you can locally (LM Studio) and see [/gateway/local-models](/gateway/local-models). Smaller/quantized models increase prompt-injection risk - see [Security](/gateway/security).
+Usually no. Fortclaw needs large context + strong safety; small cards truncate and leak. If you must, run the **largest** MiniMax M2.1 build you can locally (LM Studio) and see [/gateway/local-models](/gateway/local-models). Smaller/quantized models increase prompt-injection risk - see [Security](/gateway/security).
 
 ### How do I keep hosted model traffic in a specific region
 
@@ -703,7 +703,7 @@ Pick region-pinned endpoints. OpenRouter exposes US-hosted options for MiniMax, 
 
 ### Do I have to buy a Mac Mini to install this
 
-No. Moltbot runs on macOS or Linux (Windows via WSL2). A Mac mini is optional - some people
+No. Fortclaw runs on macOS or Linux (Windows via WSL2). A Mac mini is optional - some people
 buy one as an always‑on host, but a small VPS, home server, or Raspberry Pi‑class box works too.
 
 You only need a Mac **for macOS‑only tools**. For iMessage, you can keep the Gateway on Linux
@@ -715,7 +715,7 @@ Docs: [iMessage](/channels/imessage), [Nodes](/nodes), [Mac remote mode](/platfo
 ### Do I need a Mac mini for iMessage support
 
 You need **some macOS device** signed into Messages. It does **not** have to be a Mac mini -
-any Mac works. Moltbot’s iMessage integrations run on macOS (BlueBubbles or `imsg`), while
+any Mac works. Fortclaw’s iMessage integrations run on macOS (BlueBubbles or `imsg`), while
 the Gateway can run elsewhere.
 
 Common setups:
@@ -726,7 +726,7 @@ Common setups:
 Docs: [iMessage](/channels/imessage), [BlueBubbles](/channels/bluebubbles),
 [Mac remote mode](/platforms/mac/remote).
 
-### If I buy a Mac mini to run Moltbot can I connect it to my MacBook Pro
+### If I buy a Mac mini to run Fortclaw can I connect it to my MacBook Pro
 
 Yes. The **Mac mini can run the Gateway**, and your MacBook Pro can connect as a
 **node** (companion device). Nodes don’t run the Gateway - they provide extra
@@ -762,7 +762,7 @@ Third-party (less private):
 
 See [/channels/telegram](/channels/telegram#access-control-dms--groups).
 
-### Can multiple people use one WhatsApp number with different Moltbots
+### Can multiple people use one WhatsApp number with different Fortclaws
 
 Yes, via **multi‑agent routing**. Bind each sender’s WhatsApp **DM** (peer `kind: "dm"`, sender E.164 like `+15551234567`) to a different `agentId`, so each person gets their own workspace and session store. Replies still come from the **same WhatsApp account**, and DM access control (`channels.whatsapp.dmPolicy` / `channels.whatsapp.allowFrom`) is global per WhatsApp account. See [Multi-Agent Routing](/concepts/multi-agent) and [WhatsApp](/channels/whatsapp).
 
@@ -781,7 +781,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 brew install <formula>
 ```
 
-If you run Moltbot via systemd, ensure the service PATH includes `/home/linuxbrew/.linuxbrew/bin` (or your brew prefix) so `brew`-installed tools resolve in non‑login shells.
+If you run Fortclaw via systemd, ensure the service PATH includes `/home/linuxbrew/.linuxbrew/bin` (or your brew prefix) so `brew`-installed tools resolve in non‑login shells.
 Recent builds also prepend common user bin dirs on Linux systemd services (for example `~/.local/bin`, `~/.npm-global/bin`, `~/.local/share/pnpm`, `~/.bun/bin`) and honor `PNPM_HOME`, `NPM_CONFIG_PREFIX`, `BUN_INSTALL`, `VOLTA_HOME`, `ASDF_DATA_DIR`, `NVM_DIR`, and `FNM_DIR` when set.
 
 ### Whats the difference between the hackable git install and npm install
@@ -796,7 +796,7 @@ Docs: [Getting started](/start/getting-started), [Updating](/install/updating).
 ### Can I switch between npm and git installs later
 
 Yes. Install the other flavor, then run Doctor so the gateway service points at the new entrypoint.
-This **does not delete your data** - it only changes the Moltbot code install. Your state
+This **does not delete your data** - it only changes the Fortclaw code install. Your state
 (`~/.clawdbot`) and workspace (`~/clawd`) stay untouched.
 
 From npm → git:
@@ -835,11 +835,11 @@ lowest friction and you’re okay with sleep/restarts, run it locally.
 - **Pros:** always‑on, stable network, no laptop sleep issues, easier to keep running.
 - **Cons:** often run headless (use screenshots), remote file access only, you must SSH for updates.
 
-**Moltbot-specific note:** WhatsApp/Telegram/Slack/Mattermost (plugin)/Discord all work fine from a VPS. The only real trade-off is **headless browser** vs a visible window. See [Browser](/tools/browser).
+**Fortclaw-specific note:** WhatsApp/Telegram/Slack/Mattermost (plugin)/Discord all work fine from a VPS. The only real trade-off is **headless browser** vs a visible window. See [Browser](/tools/browser).
 
 **Recommended default:** VPS if you had gateway disconnects before. Local is great when you’re actively using the Mac and want local file access or UI automation with a visible browser.
 
-### How important is it to run Moltbot on a dedicated machine
+### How important is it to run Fortclaw on a dedicated machine
 
 Not required, but **recommended for reliability and isolation**.
 
@@ -851,7 +851,7 @@ For security guidance, read [Security](/gateway/security).
 
 ### What are the minimum VPS requirements and recommended OS
 
-Moltbot is lightweight. For a basic Gateway + one chat channel:
+Fortclaw is lightweight. For a basic Gateway + one chat channel:
 
 - **Absolute minimum:** 1 vCPU, 1GB RAM, ~500MB disk.
 - **Recommended:** 1-2 vCPU, 2GB RAM or more for headroom (logs, media, multiple channels). Node tools and browser automation can be resource hungry.
@@ -860,7 +860,7 @@ OS: use **Ubuntu LTS** (or any modern Debian/Ubuntu). The Linux install path is 
 
 Docs: [Linux](/platforms/linux), [VPS hosting](/vps).
 
-### Can I run Moltbot in a VM and what are the requirements
+### Can I run Fortclaw in a VM and what are the requirements
 
 Yes. Treat a VM the same as a VPS: it needs to be always on, reachable, and have enough
 RAM for the Gateway and any channels you enable.
@@ -874,15 +874,15 @@ If you are on Windows, **WSL2 is the easiest VM style setup** and has the best t
 compatibility. See [Windows](/platforms/windows), [VPS hosting](/vps).
 If you are running macOS in a VM, see [macOS VM](/platforms/macos-vm).
 
-## What is Moltbot?
+## What is Fortclaw?
 
-### What is Moltbot in one paragraph
+### What is Fortclaw in one paragraph
 
-Moltbot is a personal AI assistant you run on your own devices. It replies on the messaging surfaces you already use (WhatsApp, Telegram, Slack, Mattermost (plugin), Discord, Google Chat, Signal, iMessage, WebChat) and can also do voice + a live Canvas on supported platforms. The **Gateway** is the always-on control plane; the assistant is the product.
+Fortclaw is a personal AI assistant you run on your own devices. It replies on the messaging surfaces you already use (WhatsApp, Telegram, Slack, Mattermost (plugin), Discord, Google Chat, Signal, iMessage, WebChat) and can also do voice + a live Canvas on supported platforms. The **Gateway** is the always-on control plane; the assistant is the product.
 
 ### Whats the value proposition
 
-Moltbot is not “just a Claude wrapper.” It’s a **local-first control plane** that lets you run a
+Fortclaw is not “just a Claude wrapper.” It’s a **local-first control plane** that lets you run a
 capable assistant on **your own hardware**, reachable from the chat apps you already use, with
 stateful sessions, memory, and tools - without handing control of your workflows to a hosted
 SaaS.
@@ -913,7 +913,7 @@ Good first projects:
 It can handle large tasks, but it works best when you split them into phases and
 use sub agents for parallel work.
 
-### What are the top five everyday use cases for Moltbot
+### What are the top five everyday use cases for Fortclaw
 
 Everyday wins usually look like:
 - **Personal briefings:** summaries of inbox, calendar, and news you care about.
@@ -922,21 +922,21 @@ Everyday wins usually look like:
 - **Browser automation:** filling forms, collecting data, and repeating web tasks.
 - **Cross device coordination:** send a task from your phone, let the Gateway run it on a server, and get the result back in chat.
 
-### Can Moltbot help with lead gen outreach ads and blogs for a SaaS
+### Can Fortclaw help with lead gen outreach ads and blogs for a SaaS
 
 Yes for **research, qualification, and drafting**. It can scan sites, build shortlists,
 summarize prospects, and write outreach or ad copy drafts.
 
 For **outreach or ad runs**, keep a human in the loop. Avoid spam, follow local laws and
 platform policies, and review anything before it is sent. The safest pattern is to let
-Moltbot draft and you approve.
+Fortclaw draft and you approve.
 
 Docs: [Security](/gateway/security).
 
 ### What are the advantages vs Claude Code for web development
 
-Moltbot is a **personal assistant** and coordination layer, not an IDE replacement. Use
-Claude Code or Codex for the fastest direct coding loop inside a repo. Use Moltbot when you
+Fortclaw is a **personal assistant** and coordination layer, not an IDE replacement. Use
+Claude Code or Codex for the fastest direct coding loop inside a repo. Use Fortclaw when you
 want durable memory, cross-device access, and tool orchestration.
 
 Advantages:
@@ -956,7 +956,7 @@ Use managed overrides instead of editing the repo copy. Put your changes in `~/.
 
 ### Can I load skills from a custom folder
 
-Yes. Add extra directories via `skills.load.extraDirs` in `~/.clawdbot/moltbot.json` (lowest precedence). Default precedence remains: `<workspace>/skills` → `~/.clawdbot/skills` → bundled → `skills.load.extraDirs`. `clawdhub` installs into `./skills` by default, which Moltbot treats as `<workspace>/skills`.
+Yes. Add extra directories via `skills.load.extraDirs` in `~/.clawdbot/moltbot.json` (lowest precedence). Default precedence remains: `<workspace>/skills` → `~/.clawdbot/skills` → bundled → `skills.load.extraDirs`. `clawdhub` installs into `./skills` by default, which Fortclaw treats as `<workspace>/skills`.
 
 ### How can I use different models for different tasks
 
@@ -1013,7 +1013,7 @@ npm i -g clawdhub
 pnpm add -g clawdhub
 ```
 
-### Can Moltbot run tasks on a schedule or continuously in the background
+### Can Fortclaw run tasks on a schedule or continuously in the background
 
 Yes. Use the Gateway scheduler:
 
@@ -1034,7 +1034,7 @@ You have three supported patterns:
 Run the Gateway where the macOS binaries exist, then connect from Linux in [remote mode](#how-do-i-run-moltbot-in-remote-mode-client-connects-to-a-gateway-elsewhere) or over Tailscale. The skills load normally because the Gateway host is macOS.
 
 **Option B - use a macOS node (no SSH).**  
-Run the Gateway on Linux, pair a macOS node (menubar app), and set **Node Run Commands** to "Always Ask" or "Always Allow" on the Mac. Moltbot can treat macOS-only skills as eligible when the required binaries exist on the node. The agent runs those skills via the `nodes` tool. If you choose "Always Ask", approving "Always Allow" in the prompt adds that command to the allowlist.
+Run the Gateway on Linux, pair a macOS node (menubar app), and set **Node Run Commands** to "Always Ask" or "Always Allow" on the Mac. Fortclaw can treat macOS-only skills as eligible when the required binaries exist on the node. The agent runs those skills via the `nodes` tool. If you choose "Always Ask", approving "Always Allow" in the prompt adds that command to the allowlist.
 
 **Option C - proxy macOS binaries over SSH (advanced).**  
 Keep the Gateway on Linux, but make the required CLI binaries resolve to SSH wrappers that run on a Mac. Then override the skill to allow Linux so it stays eligible.
@@ -1056,7 +1056,7 @@ Keep the Gateway on Linux, but make the required CLI binaries resolve to SSH wra
    ```
 4) Start a new session so the skills snapshot refreshes.
 
-For iMessage specifically, you can also point `channels.imessage.cliPath` at an SSH wrapper (Moltbot only needs stdio). See [iMessage](/channels/imessage).
+For iMessage specifically, you can also point `channels.imessage.cliPath` at an SSH wrapper (Fortclaw only needs stdio). See [iMessage](/channels/imessage).
 
 ### Do you have a Notion or HeyGen integration
 
@@ -1080,7 +1080,7 @@ clawdhub install <skill-slug>
 clawdhub update --all
 ```
 
-ClawdHub installs into `./skills` under your current directory (or falls back to your configured Moltbot workspace); Moltbot treats that as `<workspace>/skills` on the next session. For shared skills across agents, place them in `~/.clawdbot/skills/<name>/SKILL.md`. Some skills expect binaries installed via Homebrew; on Linux that means Linuxbrew (see the Homebrew Linux FAQ entry above). See [Skills](/tools/skills) and [ClawdHub](/tools/clawdhub).
+ClawdHub installs into `./skills` under your current directory (or falls back to your configured Fortclaw workspace); Fortclaw treats that as `<workspace>/skills` on the next session. For shared skills across agents, place them in `~/.clawdbot/skills/<name>/SKILL.md`. Some skills expect binaries installed via Homebrew; on Linux that means Linuxbrew (see the Homebrew Linux FAQ entry above). See [Skills](/tools/skills) and [ClawdHub](/tools/clawdhub).
 
 ### How do I install the Chrome extension for browser takeover
 
@@ -1121,11 +1121,11 @@ Set `agents.defaults.sandbox.docker.binds` to `["host:path:mode"]` (e.g., `"/hom
 
 ### How does memory work
 
-Moltbot memory is just Markdown files in the agent workspace:
+Fortclaw memory is just Markdown files in the agent workspace:
 - Daily notes in `memory/YYYY-MM-DD.md`
 - Curated long-term notes in `MEMORY.md` (main/private sessions only)
 
-Moltbot also runs a **silent pre-compaction memory flush** to remind the model
+Fortclaw also runs a **silent pre-compaction memory flush** to remind the model
 to write durable notes before auto-compaction. This only runs when the workspace
 is writable (read-only sandboxes skip it). See [Memory](/concepts/memory).
 
@@ -1147,11 +1147,11 @@ does **not** grant embeddings access, so **signing in with Codex (OAuth or the
 Codex CLI login)** does not help for semantic memory search. OpenAI embeddings
 still need a real API key (`OPENAI_API_KEY` or `models.providers.openai.apiKey`).
 
-If you don’t set a provider explicitly, Moltbot auto-selects a provider when it
+If you don’t set a provider explicitly, Fortclaw auto-selects a provider when it
 can resolve an API key (auth profiles, `models.providers.*.apiKey`, or env vars).
 It prefers OpenAI if an OpenAI key resolves, otherwise Gemini if a Gemini key
 resolves. If neither key is available, memory search stays disabled until you
-configure it. If you have a local model path configured and present, Moltbot
+configure it. If you have a local model path configured and present, Fortclaw
 prefers `local`.
 
 If you’d rather stay local, set `memorySearch.provider = "local"` (and optionally
@@ -1171,9 +1171,9 @@ Docs: [Memory](/concepts/memory), [Context](/concepts/context).
 
 ## Where things live on disk
 
-### Is all data used with Moltbot saved locally
+### Is all data used with Fortclaw saved locally
 
-No - **Moltbot’s state is local**, but **external services still see what you send them**.
+No - **Fortclaw’s state is local**, but **external services still see what you send them**.
 
 - **Local by default:** sessions, memory files, config, and workspace live on the Gateway host
   (`~/.clawdbot` + your workspace directory).
@@ -1185,7 +1185,7 @@ No - **Moltbot’s state is local**, but **external services still see what you 
 
 Related: [Agent workspace](/concepts/agent-workspace), [Memory](/concepts/memory).
 
-### Where does Moltbot store its data
+### Where does Fortclaw store its data
 
 Everything lives under `$CLAWDBOT_STATE_DIR` (default: `~/.clawdbot`):
 
@@ -1242,7 +1242,7 @@ separately (see the migration question above).
 
 Docs: [Agent workspace](/concepts/agent-workspace).
 
-### How do I completely uninstall Moltbot
+### How do I completely uninstall Fortclaw
 
 See the dedicated guide: [Uninstall](/install/uninstall).
 
@@ -1253,7 +1253,7 @@ Relative paths resolve inside the workspace, but absolute paths can access other
 host locations unless sandboxing is enabled. If you need isolation, use
 [`agents.defaults.sandbox`](/gateway/sandboxing) or per‑agent sandbox settings. If you
 want a repo to be the default working directory, point that agent’s
-`workspace` to the repo root. The Moltbot repo is just source code; keep the
+`workspace` to the repo root. The Fortclaw repo is just source code; keep the
 workspace separate unless you intentionally want the agent to work inside it.
 
 Example (repo as default cwd):
@@ -1276,7 +1276,7 @@ Session state is owned by the **gateway host**. If you’re in remote mode, the 
 
 ### What format is the config Where is it
 
-Moltbot reads an optional **JSON5** config from `$CLAWDBOT_CONFIG_PATH` (default: `~/.clawdbot/moltbot.json`):
+Fortclaw reads an optional **JSON5** config from `$CLAWDBOT_CONFIG_PATH` (default: `~/.clawdbot/moltbot.json`):
 
 ```
 $CLAWDBOT_CONFIG_PATH
@@ -1360,7 +1360,7 @@ The common pattern is **one Gateway** (e.g. Raspberry Pi) plus **nodes** and **a
 
 Docs: [Nodes](/nodes), [Remote access](/gateway/remote), [Multi-Agent Routing](/concepts/multi-agent), [Sub-agents](/tools/subagents), [TUI](/tui).
 
-### Can the Moltbot browser run headless
+### Can the Fortclaw browser run headless
 
 Yes. It’s a config option:
 
@@ -1436,7 +1436,7 @@ Then verify auth and routing:
 
 Docs: [Tailscale](/gateway/tailscale), [Remote access](/gateway/remote), [Channels](/channels).
 
-### Can two Moltbots talk to each other local VPS
+### Can two Fortclaws talk to each other local VPS
 
 Yes. There is no built-in "bot-to-bot" bridge, but you can wire it up in a few
 reliable ways:
@@ -1578,9 +1578,9 @@ Docs: [Gateway protocol](/gateway/protocol), [Discovery](/gateway/discovery), [m
 
 ## Env vars and .env loading
 
-### How does Moltbot load environment variables
+### How does Fortclaw load environment variables
 
-Moltbot reads env vars from the parent process (shell, launchd/systemd, CI, etc.) and additionally loads:
+Fortclaw reads env vars from the parent process (shell, launchd/systemd, CI, etc.) and additionally loads:
 
 - `.env` from the current working directory
 - a global fallback `.env` from `~/.clawdbot/.env` (aka `$CLAWDBOT_STATE_DIR/.env`)
@@ -1624,7 +1624,7 @@ This runs your login shell and imports only missing expected keys (never overrid
 ### I set COPILOTGITHUBTOKEN but models status shows Shell env off Why
 
 `moltbot models status` reports whether **shell env import** is enabled. “Shell env: off”
-does **not** mean your env vars are missing - it just means Moltbot won’t load
+does **not** mean your env vars are missing - it just means Fortclaw won’t load
 your login shell automatically.
 
 If the Gateway runs as a service (launchd/systemd), it won’t inherit your shell
@@ -1665,7 +1665,7 @@ transcripts - it just starts a new session.
 }
 ```
 
-### Is there a way to make a team of Moltbots one CEO and many agents
+### Is there a way to make a team of Fortclaws one CEO and many agents
 
 Yes, via **multi-agent routing** and **sub-agents**. You can create one coordinator
 agent and several worker agents with their own workspaces and models.
@@ -1689,7 +1689,7 @@ What helps:
 - Use sub-agents for long or parallel work so the main chat stays smaller.
 - Pick a model with a larger context window if this happens often.
 
-### How do I completely reset Moltbot but keep it installed
+### How do I completely reset Fortclaw but keep it installed
 
 Use the reset command:
 
@@ -1761,14 +1761,14 @@ Heartbeats run every **30m** by default. Tune or disable them:
 ```
 
 If `HEARTBEAT.md` exists but is effectively empty (only blank lines and markdown
-headers like `# Heading`), Moltbot skips the heartbeat run to save API calls.
+headers like `# Heading`), Fortclaw skips the heartbeat run to save API calls.
 If the file is missing, the heartbeat still runs and the model decides what to do.
 
 Per-agent overrides use `agents.list[].heartbeat`. Docs: [Heartbeat](/gateway/heartbeat).
 
 ### Do I need to add a bot account to a WhatsApp group
 
-No. Moltbot runs on **your own account**, so if you’re in the group, Moltbot can see it.
+No. Fortclaw runs on **your own account**, so if you’re in the group, Fortclaw can see it.
 By default, group replies are blocked until you allow senders (`groupPolicy: "allowlist"`).
 
 If you want only **you** to be able to trigger group replies:
@@ -1803,7 +1803,7 @@ moltbot directory groups list --channel whatsapp
 
 Docs: [WhatsApp](/channels/whatsapp), [Directory](/cli/directory), [Logs](/cli/logs).
 
-### Why doesnt Moltbot reply in a group
+### Why doesnt Fortclaw reply in a group
 
 Two common causes:
 - Mention gating is on (default). You must @mention the bot (or match `mentionPatterns`).
@@ -1850,13 +1850,13 @@ Docs: [Multi‑Agent Routing](/concepts/multi-agent), [Slack](/channels/slack),
 
 ### What is the default model
 
-Moltbot’s default model is whatever you set as:
+Fortclaw’s default model is whatever you set as:
 
 ```
 agents.defaults.model.primary
 ```
 
-Models are referenced as `provider/model` (example: `anthropic/claude-opus-4-5`). If you omit the provider, Moltbot currently assumes `anthropic` as a temporary deprecation fallback - but you should still **explicitly** set `provider/model`.
+Models are referenced as `provider/model` (example: `anthropic/claude-opus-4-5`). If you omit the provider, Fortclaw currently assumes `anthropic` as a temporary deprecation fallback - but you should still **explicitly** set `provider/model`.
 
 ### What model do you recommend
 
@@ -2031,7 +2031,7 @@ Docs: [Models](/concepts/models), [Multi-Agent Routing](/concepts/multi-agent), 
 
 ### Are opus sonnet gpt builtin shortcuts
 
-Yes. Moltbot ships a few default shorthands (only applied when the model exists in `agents.defaults.models`):
+Yes. Fortclaw ships a few default shorthands (only applied when the model exists in `agents.defaults.models`):
 
 - `opus` → `anthropic/claude-opus-4-5`
 - `sonnet` → `anthropic/claude-sonnet-4-5`
@@ -2119,7 +2119,7 @@ Failover happens in two stages:
 1) **Auth profile rotation** within the same provider.
 2) **Model fallback** to the next model in `agents.defaults.model.fallbacks`.
 
-Cooldowns apply to failing profiles (exponential backoff), so Moltbot can keep responding even when a provider is rate‑limited or temporarily failing.
+Cooldowns apply to failing profiles (exponential backoff), so Fortclaw can keep responding even when a provider is rate‑limited or temporarily failing.
 
 ### What does this error mean
 
@@ -2160,7 +2160,7 @@ can’t find it in its auth store.
 
 ### Why did it also try Google Gemini and fail
 
-If your model config includes Google Gemini as a fallback (or you switched to a Gemini shorthand), Moltbot will try it during model fallback. If you haven’t configured Google credentials, you’ll see `No API key found for provider "google"`.
+If your model config includes Google Gemini as a fallback (or you switched to a Gemini shorthand), Fortclaw will try it during model fallback. If you haven’t configured Google credentials, you’ll see `No API key found for provider "google"`.
 
 Fix: either provide Google auth, or remove/avoid Google models in `agents.defaults.model.fallbacks` / aliases so fallback doesn’t route there.
 
@@ -2169,7 +2169,7 @@ Fix: either provide Google auth, or remove/avoid Google models in `agents.defaul
 Cause: the session history contains **thinking blocks without signatures** (often from
 an aborted/partial stream). Google Antigravity requires signatures for thinking blocks.
 
-Fix: Moltbot now strips unsigned thinking blocks for Google Antigravity Claude. If it still appears, start a **new session** or set `/thinking off` for that agent.
+Fix: Fortclaw now strips unsigned thinking blocks for Google Antigravity Claude. If it still appears, start a **new session** or set `/thinking off` for that agent.
 
 ## Auth profiles: what they are and how to manage them
 
@@ -2185,7 +2185,7 @@ An auth profile is a named credential record (OAuth or API key) tied to a provid
 
 ### What are typical profile IDs
 
-Moltbot uses provider‑prefixed IDs like:
+Fortclaw uses provider‑prefixed IDs like:
 
 - `anthropic:default` (common when no email identity exists)
 - `anthropic:<email>` for OAuth identities
@@ -2195,7 +2195,7 @@ Moltbot uses provider‑prefixed IDs like:
 
 Yes. Config supports optional metadata for profiles and an ordering per provider (`auth.order.<provider>`). This does **not** store secrets; it maps IDs to provider/mode and sets rotation order.
 
-Moltbot may temporarily skip a profile if it’s in a short **cooldown** (rate limits/timeouts/auth failures) or a longer **disabled** state (billing/insufficient credits). To inspect this, run `moltbot models status --json` and check `auth.unusableProfiles`. Tuning: `auth.cooldowns.billingBackoffHours*`.
+Fortclaw may temporarily skip a profile if it’s in a short **cooldown** (rate limits/timeouts/auth failures) or a longer **disabled** state (billing/insufficient credits). To inspect this, run `moltbot models status --json` and check `auth.unusableProfiles`. Tuning: `auth.cooldowns.billingBackoffHours*`.
 
 You can also set a **per-agent** order override (stored in that agent’s `auth-profiles.json`) via the CLI:
 
@@ -2221,7 +2221,7 @@ moltbot models auth order set --provider anthropic --agent main anthropic:defaul
 
 ### OAuth vs API key whats the difference
 
-Moltbot supports both:
+Fortclaw supports both:
 
 - **OAuth** often leverages subscription access (where applicable).
 - **API keys** use pay‑per‑token billing.
@@ -2261,11 +2261,11 @@ Run that from the same `--profile` / environment you want the service to use.
 
 ### What does another gateway instance is already listening mean
 
-Moltbot enforces a runtime lock by binding the WebSocket listener immediately on startup (default `ws://127.0.0.1:18789`). If the bind fails with `EADDRINUSE`, it throws `GatewayLockError` indicating another instance is already listening.
+Fortclaw enforces a runtime lock by binding the WebSocket listener immediately on startup (default `ws://127.0.0.1:18789`). If the bind fails with `EADDRINUSE`, it throws `GatewayLockError` indicating another instance is already listening.
 
 Fix: stop the other instance, free the port, or run with `moltbot gateway --port <port>`.
 
-### How do I run Moltbot in remote mode client connects to a Gateway elsewhere
+### How do I run Fortclaw in remote mode client connects to a Gateway elsewhere
 
 Set `gateway.mode: "remote"` and point to a remote WebSocket URL, optionally with a token/password:
 
@@ -2328,7 +2328,7 @@ Quick setup (recommended):
 - Set a unique `gateway.port` in each profile config (or pass `--port` for manual runs).
 - Install a per-profile service: `moltbot --profile <name> gateway install`.
 
-Profiles also suffix service names (`bot.molt.<profile>`; legacy `com.clawdbot.*`, `moltbot-gateway-<profile>.service`, `Moltbot Gateway (<profile>)`).
+Profiles also suffix service names (`bot.molt.<profile>`; legacy `com.clawdbot.*`, `moltbot-gateway-<profile>.service`, `Fortclaw Gateway (<profile>)`).
 Full guide: [Multiple gateways](/gateway/multiple-gateways).
 
 ### What does invalid handshake code 1008 mean
@@ -2375,7 +2375,7 @@ moltbot logs --follow
 Service/supervisor logs (when the gateway runs via launchd/systemd):
 - macOS: `$CLAWDBOT_STATE_DIR/logs/gateway.log` and `gateway.err.log` (default: `~/.clawdbot/logs/...`; profiles use `~/.clawdbot-<profile>/logs/...`)
 - Linux: `journalctl --user -u moltbot-gateway[-<profile>].service -n 200 --no-pager`
-- Windows: `schtasks /Query /TN "Moltbot Gateway (<profile>)" /V /FO LIST`
+- Windows: `schtasks /Query /TN "Fortclaw Gateway (<profile>)" /V /FO LIST`
 
 See [Troubleshooting](/gateway/troubleshooting#log-locations) for more.
 
@@ -2390,7 +2390,7 @@ moltbot gateway restart
 
 If you run the gateway manually, `moltbot gateway --force` can reclaim the port. See [Gateway](/gateway).
 
-### I closed my terminal on Windows how do I restart Moltbot
+### I closed my terminal on Windows how do I restart Fortclaw
 
 There are **two Windows install modes**:
 
@@ -2530,7 +2530,7 @@ Start the Gateway with `--verbose` to get more console detail. Then inspect the 
 
 ### My skill generated an imagePDF but nothing was sent
 
-Outbound attachments from the agent must include a `MEDIA:<path-or-url>` line (on its own line). See [Moltbot assistant setup](/start/clawd) and [Agent send](/tools/agent-send).
+Outbound attachments from the agent must include a `MEDIA:<path-or-url>` line (on its own line). See [Fortclaw assistant setup](/start/clawd) and [Agent send](/tools/agent-send).
 
 CLI sending:
 
@@ -2546,7 +2546,7 @@ See [Images](/nodes/images).
 
 ## Security and access control
 
-### Is it safe to expose Moltbot to inbound DMs
+### Is it safe to expose Fortclaw to inbound DMs
 
 Treat inbound DMs as untrusted input. Defaults are designed to reduce risk:
 
@@ -2616,7 +2616,7 @@ for that account.
 
 ### WhatsApp will it message my contacts How does pairing work
 
-No. Default WhatsApp DM policy is **pairing**. Unknown senders only get a pairing code and their message is **not processed**. Moltbot only replies to chats it receives or to explicit sends you trigger.
+No. Default WhatsApp DM policy is **pairing**. Unknown senders only get a pairing code and their message is **not processed**. Fortclaw only replies to chats it receives or to explicit sends you trigger.
 
 Approve pairing with:
 
@@ -2678,7 +2678,7 @@ Most commands must be sent as a **standalone** message that starts with `/`, but
 
 ### How do I send a Discord message from Telegram Crosscontext messaging denied
 
-Moltbot blocks **cross‑provider** messaging by default. If a tool call is bound
+Fortclaw blocks **cross‑provider** messaging by default. If a tool call is bound
 to Telegram, it won’t send to Discord unless you explicitly allow it.
 
 Enable cross‑provider messaging for the agent:
@@ -2719,7 +2719,7 @@ You can add options like `debounce:2s cap:25 drop:summarize` for followup modes.
 
 **Q: “What’s the default model for Anthropic with an API key?”**
 
-**A:** In Moltbot, credentials and model selection are separate. Setting `ANTHROPIC_API_KEY` (or storing an Anthropic API key in auth profiles) enables authentication, but the actual default model is whatever you configure in `agents.defaults.model.primary` (for example, `anthropic/claude-sonnet-4-5` or `anthropic/claude-opus-4-5`). If you see `No credentials found for profile "anthropic:default"`, it means the Gateway couldn’t find Anthropic credentials in the expected `auth-profiles.json` for the agent that’s running.
+**A:** In Fortclaw, credentials and model selection are separate. Setting `ANTHROPIC_API_KEY` (or storing an Anthropic API key in auth profiles) enables authentication, but the actual default model is whatever you configure in `agents.defaults.model.primary` (for example, `anthropic/claude-sonnet-4-5` or `anthropic/claude-opus-4-5`). If you see `No credentials found for profile "anthropic:default"`, it means the Gateway couldn’t find Anthropic credentials in the expected `auth-profiles.json` for the agent that’s running.
 
 ---
 

@@ -6,7 +6,7 @@ read_when:
 ---
 # Auth monitoring
 
-Moltbot exposes OAuth expiry health via `moltbot models status`. Use that for
+Fortclaw exposes OAuth expiry health via `moltbot models status`. Use that for
 automation and alerting; scripts are optional extras for phone workflows.
 
 ## Preferred: CLI check (portable)
@@ -32,10 +32,10 @@ gateway host and are tuned for systemd + Termux.
   so keep `moltbot` on `PATH` for timers.
 - `scripts/auth-monitor.sh`: cron/systemd timer target; sends alerts (ntfy or phone).
 - `scripts/systemd/moltbot-auth-monitor.{service,timer}`: systemd user timer.
-- `scripts/claude-auth-status.sh`: Claude Code + Moltbot auth checker (full/json/simple).
+- `scripts/claude-auth-status.sh`: Claude Code + Fortclaw auth checker (full/json/simple).
 - `scripts/mobile-reauth.sh`: guided re‑auth flow over SSH.
 - `scripts/termux-quick-auth.sh`: one‑tap widget status + open auth URL.
 - `scripts/termux-auth-widget.sh`: full guided widget flow.
-- `scripts/termux-sync-widget.sh`: sync Claude Code creds → Moltbot.
+- `scripts/termux-sync-widget.sh`: sync Claude Code creds → Fortclaw.
 
 If you don’t need phone automation or systemd timers, skip these scripts.

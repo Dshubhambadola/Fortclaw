@@ -1,19 +1,19 @@
 import Foundation
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite
-struct MoltbotOAuthStoreTests {
+struct FortclawOAuthStoreTests {
     @Test
     func returnsMissingWhenFileAbsent() {
         let url = FileManager().temporaryDirectory
             .appendingPathComponent("moltbot-oauth-\(UUID().uuidString)")
             .appendingPathComponent("oauth.json")
-        #expect(MoltbotOAuthStore.anthropicOAuthStatus(at: url) == .missingFile)
+        #expect(FortclawOAuthStore.anthropicOAuthStatus(at: url) == .missingFile)
     }
 
     @Test
-    func usesEnvOverrideForMoltbotOAuthDir() throws {
+    func usesEnvOverrideForFortclawOAuthDir() throws {
         let key = "CLAWDBOT_OAUTH_DIR"
         let previous = ProcessInfo.processInfo.environment[key]
         defer {
@@ -28,7 +28,7 @@ struct MoltbotOAuthStoreTests {
             .appendingPathComponent("moltbot-oauth-\(UUID().uuidString)", isDirectory: true)
         setenv(key, dir.path, 1)
 
-        #expect(MoltbotOAuthStore.oauthDir().standardizedFileURL == dir.standardizedFileURL)
+        #expect(FortclawOAuthStore.oauthDir().standardizedFileURL == dir.standardizedFileURL)
     }
 
     @Test
@@ -42,7 +42,7 @@ struct MoltbotOAuthStoreTests {
             ],
         ])
 
-        #expect(MoltbotOAuthStore.anthropicOAuthStatus(at: url).isConnected)
+        #expect(FortclawOAuthStore.anthropicOAuthStatus(at: url).isConnected)
     }
 
     @Test
@@ -55,7 +55,7 @@ struct MoltbotOAuthStoreTests {
             ],
         ])
 
-        #expect(MoltbotOAuthStore.anthropicOAuthStatus(at: url).isConnected)
+        #expect(FortclawOAuthStore.anthropicOAuthStatus(at: url).isConnected)
     }
 
     @Test
@@ -68,7 +68,7 @@ struct MoltbotOAuthStoreTests {
             ],
         ])
 
-        #expect(MoltbotOAuthStore.anthropicOAuthStatus(at: url) == .missingProviderEntry)
+        #expect(FortclawOAuthStore.anthropicOAuthStatus(at: url) == .missingProviderEntry)
     }
 
     @Test
@@ -81,7 +81,7 @@ struct MoltbotOAuthStoreTests {
             ],
         ])
 
-        #expect(MoltbotOAuthStore.anthropicOAuthStatus(at: url) == .missingTokens)
+        #expect(FortclawOAuthStore.anthropicOAuthStatus(at: url) == .missingTokens)
     }
 
     private func writeOAuthFile(_ json: [String: Any]) throws -> URL {

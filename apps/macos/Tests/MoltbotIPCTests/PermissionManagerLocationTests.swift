@@ -1,7 +1,7 @@
 import CoreLocation
 import Testing
 
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite("PermissionManager Location")
 struct PermissionManagerLocationTests {

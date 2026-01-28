@@ -8,7 +8,7 @@ read_when:
 
 # `moltbot browser`
 
-Manage Moltbot’s browser control server and run browser actions (tabs, snapshots, screenshots, navigation, clicks, typing).
+Manage Fortclaw’s browser control server and run browser actions (tabs, snapshots, screenshots, navigation, clicks, typing).
 
 Related:
 - Browser tool + API: [Browser tool](/tools/browser)
@@ -34,7 +34,7 @@ moltbot browser --browser-profile clawd snapshot
 ## Profiles
 
 Profiles are named browser routing configs. In practice:
-- `clawd`: launches/attaches to a dedicated Moltbot-managed Chrome instance (isolated user data dir).
+- `clawd`: launches/attaches to a dedicated Fortclaw-managed Chrome instance (isolated user data dir).
 - `chrome`: controls your existing Chrome tab(s) via the Chrome extension relay.
 
 ```bash

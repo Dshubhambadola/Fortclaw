@@ -7,7 +7,7 @@ metadata: {"moltbot":{"emoji":"📋","requires":{"bins":["jq"],"env":["TRELLO_AP
 
 # Trello Skill
 
-Manage Trello boards, lists, and cards directly from Moltbot.
+Manage Trello boards, lists, and cards directly from Fortclaw.
 
 ## Setup
 

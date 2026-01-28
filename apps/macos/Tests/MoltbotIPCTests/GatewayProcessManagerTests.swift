@@ -1,8 +1,8 @@
-import MoltbotKit
+import FortclawKit
 import Foundation
 import os
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite(.serialized)
 @MainActor

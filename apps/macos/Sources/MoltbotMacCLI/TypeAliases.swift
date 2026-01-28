@@ -1,5 +1,5 @@
-import MoltbotKit
-import MoltbotProtocol
+import FortclawKit
+import FortclawProtocol
 
-typealias ProtoAnyCodable = MoltbotProtocol.AnyCodable
-typealias KitAnyCodable = MoltbotKit.AnyCodable
+typealias ProtoAnyCodable = FortclawProtocol.AnyCodable
+typealias KitAnyCodable = FortclawKit.AnyCodable

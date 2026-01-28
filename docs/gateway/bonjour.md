@@ -6,7 +6,7 @@ read_when:
 ---
 # Bonjour / mDNS discovery
 
-Moltbot uses Bonjour (mDNS / DNS‑SD) as a **LAN‑only convenience** to discover
+Fortclaw uses Bonjour (mDNS / DNS‑SD) as a **LAN‑only convenience** to discover
 an active Gateway (WebSocket endpoint). It is best‑effort and does **not** replace SSH or
 Tailnet-based connectivity.
 
@@ -24,7 +24,7 @@ High‑level steps:
 3) Configure Tailscale **split DNS** so `moltbot.internal` resolves via that
    DNS server for clients (including iOS).
 
-Moltbot standardizes on `moltbot.internal.` for this mode. iOS/Android nodes
+Fortclaw standardizes on `moltbot.internal.` for this mode. iOS/Android nodes
 browse both `local.` and `moltbot.internal.` automatically.
 
 ### Gateway config (recommended)

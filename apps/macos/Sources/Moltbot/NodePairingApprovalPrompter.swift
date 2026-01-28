@@ -1,8 +1,8 @@
 import AppKit
-import MoltbotDiscovery
-import MoltbotIPC
-import MoltbotKit
-import MoltbotProtocol
+import FortclawDiscovery
+import FortclawIPC
+import FortclawKit
+import FortclawProtocol
 import Foundation
 import Observation
 import OSLog

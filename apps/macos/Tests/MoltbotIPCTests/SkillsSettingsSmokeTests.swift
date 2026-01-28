@@ -1,6 +1,6 @@
-import MoltbotProtocol
+import FortclawProtocol
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite(.serialized)
 @MainActor

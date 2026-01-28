@@ -15,7 +15,7 @@ open Clawdbot.xcodeproj
 ```
 
 ## Shared packages
-- `../shared/MoltbotKit` — shared types/constants used by iOS (and later macOS bridge + gateway routing).
+- `../shared/FortclawKit` — shared types/constants used by iOS (and later macOS bridge + gateway routing).
 
 ## fastlane
 ```bash

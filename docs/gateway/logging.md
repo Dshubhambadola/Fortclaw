@@ -9,7 +9,7 @@ read_when:
 
 For a user-facing overview (CLI + Control UI + config), see [/logging](/logging).
 
-Moltbot has two log “surfaces”:
+Fortclaw has two log “surfaces”:
 
 - **Console output** (what you see in the terminal / Debug UI).
 - **File logs** (JSON lines) written by the gateway logger.

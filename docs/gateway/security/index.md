@@ -28,7 +28,7 @@ It flags common footguns (Gateway auth exposure, browser control exposure, eleva
 
 Running an AI agent with shell access on your machine is... *spicy*. Here’s how to not get pwned.
 
-Moltbot is both a product and an experiment: you’re wiring frontier-model behavior into real messaging surfaces and real tools. **There is no “perfectly secure” setup.** The goal is to be deliberate about:
+Fortclaw is both a product and an experiment: you’re wiring frontier-model behavior into real messaging surfaces and real tools. **There is no “perfectly secure” setup.** The goal is to be deliberate about:
 - who can talk to your bot
 - where the bot is allowed to act
 - what the bot can touch
@@ -45,7 +45,7 @@ Start with the smallest access that still works, then widen it as you gain confi
 - **Plugins** (extensions exist without an explicit allowlist).
 - **Model hygiene** (warn when configured models look legacy; not a hard block).
 
-If you run `--deep`, Moltbot also attempts a best-effort live Gateway probe.
+If you run `--deep`, Fortclaw also attempts a best-effort live Gateway probe.
 
 ## Credential storage map
 
@@ -102,7 +102,7 @@ When `trustedProxies` is configured, the Gateway will use `X-Forwarded-For` head
 
 ## Local session logs live on disk
 
-Moltbot stores session transcripts on disk under `~/.moltbot/agents/<agentId>/sessions/*.jsonl`.
+Fortclaw stores session transcripts on disk under `~/.moltbot/agents/<agentId>/sessions/*.jsonl`.
 This is required for session continuity and (optionally) session memory indexing, but it also means
 **any process/user with filesystem access can read those logs**. Treat disk access as the trust
 boundary and lock down permissions on `~/.moltbot` (see the audit section below). If you need
@@ -118,7 +118,7 @@ If a macOS node is paired, the Gateway can invoke `system.run` on that node. Thi
 
 ## Dynamic skills (watcher / remote nodes)
 
-Moltbot can refresh the skills list mid-session:
+Fortclaw can refresh the skills list mid-session:
 - **Skills watcher**: changes to `SKILL.md` can update the skills snapshot on the next agent turn.
 - **Remote nodes**: connecting a macOS node can make macOS-only skills eligible (based on bin probing).
 
@@ -141,7 +141,7 @@ People who message you can:
 
 Most failures here are not fancy exploits — they’re “someone messaged the bot and the bot did what they asked.”
 
-Moltbot’s stance:
+Fortclaw’s stance:
 - **Identity first:** decide who can talk to the bot (DM pairing / allowlists / explicit “open”).
 - **Scope next:** decide where the bot is allowed to act (group allowlists + mention gating, tools, sandboxing, device permissions).
 - **Model last:** assume the model can be manipulated; design so manipulation has limited blast radius.
@@ -166,7 +166,7 @@ Plugins run **in-process** with the Gateway. Treat them as trusted code:
 - Restart the Gateway after plugin changes.
 - If you install plugins from npm (`moltbot plugins install <npm-spec>`), treat it like running untrusted code:
   - The install path is `~/.moltbot/extensions/<pluginId>/` (or `$CLAWDBOT_STATE_DIR/extensions/<pluginId>/`).
-  - Moltbot uses `npm pack` and then runs `npm install --omit=dev` in that directory (npm lifecycle scripts can execute code during install).
+  - Fortclaw uses `npm pack` and then runs `npm install --omit=dev` in that directory (npm lifecycle scripts can execute code during install).
   - Prefer pinned, exact versions (`@scope/pkg@1.2.3`), and inspect the unpacked code on disk before enabling.
 
 Details: [Plugins](/plugin)
@@ -191,7 +191,7 @@ Details + files on disk: [Pairing](/start/pairing)
 
 ## DM session isolation (multi-user mode)
 
-By default, Moltbot routes **all DMs into the main session** so your assistant has continuity across devices and channels. If **multiple people** can DM the bot (open DMs or a multi-person allowlist), consider isolating DM sessions:
+By default, Fortclaw routes **all DMs into the main session** so your assistant has continuity across devices and channels. If **multiple people** can DM the bot (open DMs or a multi-person allowlist), consider isolating DM sessions:
 
 ```json5
 {
@@ -203,7 +203,7 @@ This prevents cross-user context leakage while keeping group chats isolated. If 
 
 ## Allowlists (DM + groups) — terminology
 
-Moltbot has two separate “who can trigger me?” layers:
+Fortclaw has two separate “who can trigger me?” layers:
 
 - **DM allowlist** (`allowFrom` / `channels.discord.dm.allowFrom` / `channels.slack.dm.allowFrom`): who is allowed to talk to the bot in direct messages.
   - When `dmPolicy="pairing"`, approvals are written to `~/.moltbot/credentials/<channel>-allowFrom.json` (merged with config allowlists).
@@ -415,9 +415,9 @@ Rotation checklist (token/password):
 
 ### 0.6) Tailscale Serve identity headers
 
-When `gateway.auth.allowTailscale` is `true` (default for Serve), Moltbot
+When `gateway.auth.allowTailscale` is `true` (default for Serve), Fortclaw
 accepts Tailscale Serve identity headers (`tailscale-user-login`) as
-authentication. Moltbot verifies the identity by resolving the
+authentication. Fortclaw verifies the identity by resolving the
 `x-forwarded-for` address through the local Tailscale daemon (`tailscale whois`)
 and matching it to the header. This only triggers for requests that hit loopback
 and include `x-forwarded-for`, `x-forwarded-proto`, and `x-forwarded-host` as
@@ -429,7 +429,7 @@ you terminate TLS or proxy in front of the gateway, disable
 
 Trusted proxies:
 - If you terminate TLS in front of the Gateway, set `gateway.trustedProxies` to your proxy IPs.
-- Moltbot will trust `x-forwarded-for` (or `x-real-ip`) from those IPs to determine the client IP for local pairing checks and HTTP auth/local checks.
+- Fortclaw will trust `x-forwarded-for` (or `x-real-ip`) from those IPs to determine the client IP for local pairing checks and HTTP auth/local checks.
 - Ensure your proxy **overwrites** `x-forwarded-for` and blocks direct access to the Gateway port.
 
 See [Tailscale](/gateway/tailscale) and [Web overview](/web).
@@ -695,7 +695,7 @@ If your AI does something bad:
 
 ### Collect for a report
 
-- Timestamp, gateway host OS + Moltbot version
+- Timestamp, gateway host OS + Fortclaw version
 - The session transcript(s) + a short log tail (after redacting)
 - What the attacker sent + what the agent did
 - Whether the Gateway was exposed beyond loopback (LAN/Tailscale Funnel/Serve)
@@ -747,7 +747,7 @@ Mario asking for find ~
 
 ## Reporting Security Issues
 
-Found a vulnerability in Moltbot? Please report responsibly:
+Found a vulnerability in Fortclaw? Please report responsibly:
 
 1. Email: security@clawd.bot
 2. Don't post publicly until fixed

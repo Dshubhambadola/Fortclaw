@@ -152,7 +152,7 @@ const moltbotTheme = {
   },
 };
 
-class MoltbotA2UIHost extends LitElement {
+class FortclawA2UIHost extends LitElement {
   static properties = {
     surfaces: { state: true },
     pendingAction: { state: true },
@@ -488,4 +488,4 @@ class MoltbotA2UIHost extends LitElement {
   }
 }
 
-customElements.define("moltbot-a2ui-host", MoltbotA2UIHost);
+customElements.define("moltbot-a2ui-host", FortclawA2UIHost);

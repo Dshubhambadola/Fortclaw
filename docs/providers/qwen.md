@@ -1,7 +1,7 @@
 ---
-summary: "Use Qwen OAuth (free tier) in Moltbot"
+summary: "Use Qwen OAuth (free tier) in Fortclaw"
 read_when:
-  - You want to use Qwen with Moltbot
+  - You want to use Qwen with Fortclaw
   - You want free-tier OAuth access to Qwen Coder
 ---
 # Qwen
@@ -39,7 +39,7 @@ moltbot models set qwen-portal/coder-model
 
 ## Reuse Qwen Code CLI login
 
-If you already logged in with the Qwen Code CLI, Moltbot will sync credentials
+If you already logged in with the Qwen Code CLI, Fortclaw will sync credentials
 from `~/.qwen/oauth_creds.json` when it loads the auth store. You still need a
 `models.providers.qwen-portal` entry (use the login command above to create one).
 

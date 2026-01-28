@@ -6,7 +6,7 @@ private struct RootCommand {
 }
 
 @main
-struct MoltbotMacCLI {
+struct FortclawMacCLI {
     static func main() async {
         let args = Array(CommandLine.arguments.dropFirst())
         let command = parseRootCommand(args)

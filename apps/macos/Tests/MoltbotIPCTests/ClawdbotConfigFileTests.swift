@@ -1,9 +1,9 @@
 import Foundation
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite(.serialized)
-struct MoltbotConfigFileTests {
+struct FortclawConfigFileTests {
     @Test
     func configPathRespectsEnvOverride() async {
         let override = FileManager().temporaryDirectory
@@ -12,7 +12,7 @@ struct MoltbotConfigFileTests {
             .path
 
         await TestIsolation.withEnvValues(["CLAWDBOT_CONFIG_PATH": override]) {
-            #expect(MoltbotConfigFile.url().path == override)
+            #expect(FortclawConfigFile.url().path == override)
         }
     }
 
@@ -25,17 +25,17 @@ struct MoltbotConfigFileTests {
             .path
 
         await TestIsolation.withEnvValues(["CLAWDBOT_CONFIG_PATH": override]) {
-            MoltbotConfigFile.saveDict([
+            FortclawConfigFile.saveDict([
                 "gateway": [
                     "remote": [
                         "url": "ws://gateway.ts.net:19999",
                     ],
                 ],
             ])
-            #expect(MoltbotConfigFile.remoteGatewayPort() == 19999)
-            #expect(MoltbotConfigFile.remoteGatewayPort(matchingHost: "gateway.ts.net") == 19999)
-            #expect(MoltbotConfigFile.remoteGatewayPort(matchingHost: "gateway") == 19999)
-            #expect(MoltbotConfigFile.remoteGatewayPort(matchingHost: "other.ts.net") == nil)
+            #expect(FortclawConfigFile.remoteGatewayPort() == 19999)
+            #expect(FortclawConfigFile.remoteGatewayPort(matchingHost: "gateway.ts.net") == 19999)
+            #expect(FortclawConfigFile.remoteGatewayPort(matchingHost: "gateway") == 19999)
+            #expect(FortclawConfigFile.remoteGatewayPort(matchingHost: "other.ts.net") == nil)
         }
     }
 
@@ -48,15 +48,15 @@ struct MoltbotConfigFileTests {
             .path
 
         await TestIsolation.withEnvValues(["CLAWDBOT_CONFIG_PATH": override]) {
-            MoltbotConfigFile.saveDict([
+            FortclawConfigFile.saveDict([
                 "gateway": [
                     "remote": [
                         "url": "wss://old-host:111",
                     ],
                 ],
             ])
-            MoltbotConfigFile.setRemoteGatewayUrl(host: "new-host", port: 2222)
-            let root = MoltbotConfigFile.loadDict()
+            FortclawConfigFile.setRemoteGatewayUrl(host: "new-host", port: 2222)
+            let root = FortclawConfigFile.loadDict()
             let url = ((root["gateway"] as? [String: Any])?["remote"] as? [String: Any])?["url"] as? String
             #expect(url == "wss://new-host:2222")
         }
@@ -72,8 +72,8 @@ struct MoltbotConfigFileTests {
             "CLAWDBOT_CONFIG_PATH": nil,
             "CLAWDBOT_STATE_DIR": dir,
         ]) {
-            #expect(MoltbotConfigFile.stateDirURL().path == dir)
-            #expect(MoltbotConfigFile.url().path == "\(dir)/moltbot.json")
+            #expect(FortclawConfigFile.stateDirURL().path == dir)
+            #expect(FortclawConfigFile.url().path == "\(dir)/moltbot.json")
         }
     }
 }

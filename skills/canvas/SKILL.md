@@ -1,6 +1,6 @@
 # Canvas Skill
 
-Display HTML content on connected Moltbot nodes (Mac app, iOS, Android).
+Display HTML content on connected Fortclaw nodes (Mac app, iOS, Android).
 
 ## Overview
 

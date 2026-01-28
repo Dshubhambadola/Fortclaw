@@ -1,4 +1,4 @@
-import { resolveChannelMediaMaxBytes, type MoltbotConfig, type PluginRuntime } from "clawdbot/plugin-sdk";
+import { resolveChannelMediaMaxBytes, type FortclawConfig, type PluginRuntime } from "clawdbot/plugin-sdk";
 import type { MSTeamsAccessTokenProvider } from "./attachments/types.js";
 import type {
   MSTeamsConversationStore,
@@ -84,7 +84,7 @@ async function findConversationReference(recipient: {
 }
 
 export async function resolveMSTeamsSendContext(params: {
-  cfg: MoltbotConfig;
+  cfg: FortclawConfig;
   to: string;
 }): Promise<MSTeamsProactiveContext> {
   const msteamsCfg = params.cfg.channels?.msteams;

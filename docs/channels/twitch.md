@@ -1,11 +1,11 @@
 ---
 summary: "Twitch chat bot configuration and setup"
 read_when:
-  - Setting up Twitch chat integration for Moltbot
+  - Setting up Twitch chat integration for Fortclaw
 ---
 # Twitch (plugin)
 
-Twitch chat support via IRC connection. Moltbot connects as a Twitch user (bot account) to receive and send messages in channels.
+Twitch chat support via IRC connection. Fortclaw connects as a Twitch user (bot account) to receive and send messages in channels.
 
 ## Plugin required
 

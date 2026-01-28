@@ -1,7 +1,7 @@
-import MoltbotProtocol
+import FortclawProtocol
 import Foundation
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite
 @MainActor

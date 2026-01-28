@@ -34,7 +34,7 @@ Target formats (`--target`):
 
 Name lookup:
 - For supported providers (Discord/Slack/etc), channel names like `Help` or `#help` are resolved via the directory cache.
-- On cache miss, Moltbot will attempt a live directory lookup when the provider supports it.
+- On cache miss, Fortclaw will attempt a live directory lookup when the provider supports it.
 
 ## Common flags
 

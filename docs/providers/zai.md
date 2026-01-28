@@ -1,13 +1,13 @@
 ---
-summary: "Use Z.AI (GLM models) with Moltbot"
+summary: "Use Z.AI (GLM models) with Fortclaw"
 read_when:
-  - You want Z.AI / GLM models in Moltbot
+  - You want Z.AI / GLM models in Fortclaw
   - You need a simple ZAI_API_KEY setup
 ---
 # Z.AI
 
 Z.AI is the API platform for **GLM** models. It provides REST APIs for GLM and uses API keys
-for authentication. Create your API key in the Z.AI console. Moltbot uses the `zai` provider
+for authentication. Create your API key in the Z.AI console. Fortclaw uses the `zai` provider
 with a Z.AI API key.
 
 ## CLI setup

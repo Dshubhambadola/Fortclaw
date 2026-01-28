@@ -1,7 +1,7 @@
 import Darwin
 import Foundation
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite struct LogLocatorTests {
     @Test func launchdGatewayLogPathEnsuresTmpDirExists() throws {

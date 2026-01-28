@@ -34,7 +34,7 @@ enum AgentWorkspace {
 
     static func resolveWorkspaceURL(from userInput: String?) -> URL {
         let trimmed = userInput?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        if trimmed.isEmpty { return MoltbotConfigFile.defaultWorkspaceURL() }
+        if trimmed.isEmpty { return FortclawConfigFile.defaultWorkspaceURL() }
         let expanded = (trimmed as NSString).expandingTildeInPath
         return URL(fileURLWithPath: expanded, isDirectory: true)
     }
@@ -154,7 +154,7 @@ enum AgentWorkspace {
 
     static func defaultTemplate() -> String {
         let fallback = """
-        # AGENTS.md - Moltbot Workspace
+        # AGENTS.md - Fortclaw Workspace
 
         This folder is the assistant's working directory.
 

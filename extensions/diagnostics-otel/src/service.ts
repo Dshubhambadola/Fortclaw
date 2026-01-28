@@ -10,7 +10,7 @@ import { NodeSDK } from "@opentelemetry/sdk-node";
 import { ParentBasedSampler, TraceIdRatioBasedSampler } from "@opentelemetry/sdk-trace-base";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
 
-import type { MoltbotPluginService, DiagnosticEventPayload } from "clawdbot/plugin-sdk";
+import type { FortclawPluginService, DiagnosticEventPayload } from "clawdbot/plugin-sdk";
 import { onDiagnosticEvent, registerLogTransport } from "clawdbot/plugin-sdk";
 
 const DEFAULT_SERVICE_NAME = "moltbot";
@@ -32,7 +32,7 @@ function resolveSampleRate(value: number | undefined): number | undefined {
   return value;
 }
 
-export function createDiagnosticsOtelService(): MoltbotPluginService {
+export function createDiagnosticsOtelService(): FortclawPluginService {
   let sdk: NodeSDK | null = null;
   let logProvider: LoggerProvider | null = null;
   let stopLogTransport: (() => void) | null = null;
@@ -562,5 +562,5 @@ export function createDiagnosticsOtelService(): MoltbotPluginService {
         sdk = null;
       }
     },
-  } satisfies MoltbotPluginService;
+  } satisfies FortclawPluginService;
 }

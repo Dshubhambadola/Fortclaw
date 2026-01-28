@@ -1,5 +1,5 @@
-import MoltbotKit
-import MoltbotProtocol
+import FortclawKit
+import FortclawProtocol
 import Foundation
 import Observation
 import OSLog
@@ -9,10 +9,10 @@ private let onboardingWizardLogger = Logger(subsystem: "bot.molt", category: "on
 
 // MARK: - Swift 6 AnyCodable Bridging Helpers
 
-// Bridge between MoltbotProtocol.AnyCodable and the local module to avoid
+// Bridge between FortclawProtocol.AnyCodable and the local module to avoid
 // Swift 6 strict concurrency type conflicts.
 
-private typealias ProtocolAnyCodable = MoltbotProtocol.AnyCodable
+private typealias ProtocolAnyCodable = FortclawProtocol.AnyCodable
 
 private func bridgeToLocal(_ value: ProtocolAnyCodable) -> AnyCodable {
     if let data = try? JSONEncoder().encode(value),
@@ -187,7 +187,7 @@ final class OnboardingWizardModel {
     }
 
     private func shouldSkipWizard() -> Bool {
-        let root = MoltbotConfigFile.loadDict()
+        let root = FortclawConfigFile.loadDict()
         if let wizard = root["wizard"] as? [String: Any], !wizard.isEmpty {
             return true
         }

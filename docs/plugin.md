@@ -1,5 +1,5 @@
 ---
-summary: "Moltbot plugins/extensions: discovery, config, and safety"
+summary: "Fortclaw plugins/extensions: discovery, config, and safety"
 read_when:
   - Adding or modifying plugins/extensions
   - Documenting plugin install or load rules
@@ -8,11 +8,11 @@ read_when:
 
 ## Quick start (new to plugins?)
 
-A plugin is just a **small code module** that extends Moltbot with extra
+A plugin is just a **small code module** that extends Fortclaw with extra
 features (commands, tools, and Gateway RPC).
 
 Most of the time, you’ll use plugins when you want a feature that’s not built
-into core Moltbot yet (or you want to keep optional features out of your main
+into core Fortclaw yet (or you want to keep optional features out of your main
 install).
 
 Fast path:
@@ -49,7 +49,7 @@ See [Voice Call](/plugins/voice-call) for a concrete example plugin.
 - Qwen OAuth (provider auth) — bundled as `qwen-portal-auth` (disabled by default)
 - Copilot Proxy (provider auth) — local VS Code Copilot Proxy bridge; distinct from built-in `github-copilot` device login (bundled, disabled by default)
 
-Moltbot plugins are **TypeScript modules** loaded at runtime via jiti. **Config
+Fortclaw plugins are **TypeScript modules** loaded at runtime via jiti. **Config
 validation does not execute plugin code**; it uses the plugin manifest and JSON
 Schema instead. See [Plugin manifest](/plugins/manifest).
 
@@ -73,7 +73,7 @@ Plugins can access selected core helpers via `api.runtime`. For telephony TTS:
 
 ```ts
 const result = await api.runtime.tts.textToSpeechTelephony({
-  text: "Hello from Moltbot",
+  text: "Hello from Fortclaw",
   cfg: api.config,
 });
 ```
@@ -85,7 +85,7 @@ Notes:
 
 ## Discovery & precedence
 
-Moltbot scans, in order:
+Fortclaw scans, in order:
 
 1) Config paths
 - `plugins.load.paths` (file or directory)
@@ -98,7 +98,7 @@ Moltbot scans, in order:
 - `~/.clawdbot/extensions/*.ts`
 - `~/.clawdbot/extensions/*/index.ts`
 
-4) Bundled extensions (shipped with Moltbot, **disabled by default**)
+4) Bundled extensions (shipped with Fortclaw, **disabled by default**)
 - `<moltbot>/extensions/*`
 
 Bundled plugins must be enabled explicitly via `plugins.entries.<id>.enabled`
@@ -162,7 +162,7 @@ Example:
 }
 ```
 
-Moltbot can also merge **external channel catalogs** (for example, an MPM
+Fortclaw can also merge **external channel catalogs** (for example, an MPM
 registry export). Drop a JSON file at one of:
 - `~/.clawdbot/mpm/plugins.json`
 - `~/.clawdbot/mpm/catalog.json`
@@ -179,7 +179,7 @@ Default plugin ids:
 - Package packs: `package.json` `name`
 - Standalone file: file base name (`~/.../voice-call.ts` → `voice-call`)
 
-If a plugin exports `id`, Moltbot uses it but warns when it doesn’t match the
+If a plugin exports `id`, Fortclaw uses it but warns when it doesn’t match the
 configured id.
 
 ## Config
@@ -237,7 +237,7 @@ are disabled with diagnostics.
 
 The Control UI uses `config.schema` (JSON Schema + `uiHints`) to render better forms.
 
-Moltbot augments `uiHints` at runtime based on discovered plugins:
+Fortclaw augments `uiHints` at runtime based on discovered plugins:
 
 - Adds per-plugin labels for `plugins.entries.<id>` / `.enabled` / `.config`
 - Merges optional plugin-provided config field hints under:
@@ -319,7 +319,7 @@ Notes:
 ## Provider plugins (model auth)
 
 Plugins can register **model provider auth** flows so users can run OAuth or
-API-key setup inside Moltbot (no external scripts needed).
+API-key setup inside Fortclaw (no external scripts needed).
 
 Register a provider via `api.registerProvider(...)`. Each provider exposes one
 or more auth methods (OAuth, API key, device code, etc.). These methods power:
@@ -536,7 +536,7 @@ Command handler context:
 - `isAuthorizedSender`: Whether the sender is an authorized user
 - `args`: Arguments passed after the command (if `acceptsArgs: true`)
 - `commandBody`: The full command text
-- `config`: The current Moltbot config
+- `config`: The current Fortclaw config
 
 Command options:
 

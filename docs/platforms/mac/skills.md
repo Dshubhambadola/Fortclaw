@@ -6,7 +6,7 @@ read_when:
 ---
 # Skills (macOS)
 
-The macOS app surfaces Moltbot skills via the gateway; it does not parse skills locally.
+The macOS app surfaces Fortclaw skills via the gateway; it does not parse skills locally.
 
 ## Data source
 - `skills.status` (gateway) returns all skills plus eligibility and missing requirements

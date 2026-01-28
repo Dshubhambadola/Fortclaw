@@ -1,16 +1,16 @@
 ---
-summary: "Moltbot on Raspberry Pi (budget self-hosted setup)"
+summary: "Fortclaw on Raspberry Pi (budget self-hosted setup)"
 read_when:
-  - Setting up Moltbot on a Raspberry Pi
-  - Running Moltbot on ARM devices
+  - Setting up Fortclaw on a Raspberry Pi
+  - Running Fortclaw on ARM devices
   - Building a cheap always-on personal AI
 ---
 
-# Moltbot on Raspberry Pi
+# Fortclaw on Raspberry Pi
 
 ## Goal
 
-Run a persistent, always-on Moltbot Gateway on a Raspberry Pi for **~$35-80** one-time cost (no monthly fees).
+Run a persistent, always-on Fortclaw Gateway on a Raspberry Pi for **~$35-80** one-time cost (no monthly fees).
 
 Perfect for:
 - 24/7 personal AI assistant
@@ -105,7 +105,7 @@ echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 ```
 
-## 6) Install Moltbot
+## 6) Install Fortclaw
 
 ### Option A: Standard Install (Recommended)
 
@@ -218,7 +218,7 @@ htop
 
 ### Binary Compatibility
 
-Most Moltbot features work on ARM64, but some external binaries may need ARM builds:
+Most Fortclaw features work on ARM64, but some external binaries may need ARM builds:
 
 | Tool | ARM64 Status | Notes |
 |------|--------------|-------|

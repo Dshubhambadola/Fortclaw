@@ -5,7 +5,7 @@ read_when:
 ---
 # Session Management
 
-Moltbot treats **one direct-chat session per agent** as primary. Direct chats collapse to `agent:<agentId>:<mainKey>` (default `main`), while group/channel chats get their own keys. `session.mainKey` is honored.
+Fortclaw treats **one direct-chat session per agent** as primary. Direct chats collapse to `agent:<agentId>:<mainKey>` (default `main`), while group/channel chats get their own keys. `session.mainKey` is honored.
 
 Use `session.dmScope` to control how **direct messages** are grouped:
 - `main` (default): all DMs share the main session for continuity.
@@ -15,7 +15,7 @@ Use `session.dmScope` to control how **direct messages** are grouped:
 Use `session.identityLinks` to map provider-prefixed peer ids to a canonical identity so the same person shares a DM session across channels when using `per-peer`, `per-channel-peer`, or `per-account-channel-peer`.
 
 ## Gateway is the source of truth
-All session state is **owned by the gateway** (the “master” Moltbot). UI clients (macOS app, WebChat, etc.) must query the gateway for session lists and token counts instead of reading local files.
+All session state is **owned by the gateway** (the “master” Fortclaw). UI clients (macOS app, WebChat, etc.) must query the gateway for session lists and token counts instead of reading local files.
 
 - In **remote mode**, the session store you care about lives on the remote gateway host, not your Mac.
 - Token counts shown in UIs come from the gateway’s store fields (`inputTokens`, `outputTokens`, `totalTokens`, `contextTokens`). Clients do not parse JSONL transcripts to “fix up” totals.
@@ -27,14 +27,14 @@ All session state is **owned by the gateway** (the “master” Moltbot). UI cli
 - The store is a map `sessionKey -> { sessionId, updatedAt, ... }`. Deleting entries is safe; they are recreated on demand.
 - Group entries may include `displayName`, `channel`, `subject`, `room`, and `space` to label sessions in UIs.
 - Session entries include `origin` metadata (label + routing hints) so UIs can explain where a session came from.
-- Moltbot does **not** read legacy Pi/Tau session folders.
+- Fortclaw does **not** read legacy Pi/Tau session folders.
 
 ## Session pruning
-Moltbot trims **old tool results** from the in-memory context right before LLM calls by default.
+Fortclaw trims **old tool results** from the in-memory context right before LLM calls by default.
 This does **not** rewrite JSONL history. See [/concepts/session-pruning](/concepts/session-pruning).
 
 ## Pre-compaction memory flush
-When a session nears auto-compaction, Moltbot can run a **silent memory flush**
+When a session nears auto-compaction, Fortclaw can run a **silent memory flush**
 turn that reminds the model to write durable notes to disk. This only runs when
 the workspace is writable. See [Memory](/concepts/memory) and
 [Compaction](/concepts/compaction).
@@ -60,10 +60,10 @@ the workspace is writable. See [Memory](/concepts/memory) and
 - Reset policy: sessions are reused until they expire, and expiry is evaluated on the next inbound message.
 - Daily reset: defaults to **4:00 AM local time on the gateway host**. A session is stale once its last update is earlier than the most recent daily reset time.
 - Idle reset (optional): `idleMinutes` adds a sliding idle window. When both daily and idle resets are configured, **whichever expires first** forces a new session.
-- Legacy idle-only: if you set `session.idleMinutes` without any `session.reset`/`resetByType` config, Moltbot stays in idle-only mode for backward compatibility.
+- Legacy idle-only: if you set `session.idleMinutes` without any `session.reset`/`resetByType` config, Fortclaw stays in idle-only mode for backward compatibility.
 - Per-type overrides (optional): `resetByType` lets you override the policy for `dm`, `group`, and `thread` sessions (thread = Slack/Discord threads, Telegram topics, Matrix threads when provided by the connector).
 - Per-channel overrides (optional): `resetByChannel` overrides the reset policy for a channel (applies to all session types for that channel and takes precedence over `reset`/`resetByType`).
-- Reset triggers: exact `/new` or `/reset` (plus any extras in `resetTriggers`) start a fresh session id and pass the remainder of the message through. `/new <model>` accepts a model alias, `provider/model`, or provider name (fuzzy match) to set the new session model. If `/new` or `/reset` is sent alone, Moltbot runs a short “hello” greeting turn to confirm the reset.
+- Reset triggers: exact `/new` or `/reset` (plus any extras in `resetTriggers`) start a fresh session id and pass the remainder of the message through. `/new <model>` accepts a model alias, `provider/model`, or provider name (fuzzy match) to set the new session model. If `/new` or `/reset` is sent alone, Fortclaw runs a short “hello” greeting turn to confirm the reset.
 - Manual reset: delete specific keys from the store or remove the JSONL transcript; the next message recreates them.
 - Isolated cron jobs always mint a fresh `sessionId` per run (no idle reuse).
 

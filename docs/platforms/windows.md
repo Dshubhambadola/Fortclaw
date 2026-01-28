@@ -1,12 +1,12 @@
 ---
 summary: "Windows (WSL2) support + companion app status"
 read_when:
-  - Installing Moltbot on Windows
+  - Installing Fortclaw on Windows
   - Looking for Windows companion app status
 ---
 # Windows (WSL2)
 
-Moltbot on Windows is recommended **via WSL2** (Ubuntu recommended). The
+Fortclaw on Windows is recommended **via WSL2** (Ubuntu recommended). The
 CLI + Gateway run inside Linux, which keeps the runtime consistent and makes
 tooling far more compatible (Node/Bun/pnpm, Linux binaries, skills). Native
 Windows installs are untested and more problematic.
@@ -132,7 +132,7 @@ Re-open Ubuntu, then verify:
 systemctl --user status
 ```
 
-### 3) Install Moltbot (inside WSL)
+### 3) Install Fortclaw (inside WSL)
 
 Follow the Linux Getting Started flow inside WSL:
 

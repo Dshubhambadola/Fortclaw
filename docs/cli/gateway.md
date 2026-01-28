@@ -1,5 +1,5 @@
 ---
-summary: "Moltbot Gateway CLI (`moltbot gateway`) — run, query, and discover gateways"
+summary: "Fortclaw Gateway CLI (`moltbot gateway`) — run, query, and discover gateways"
 read_when:
   - Running the Gateway from the CLI (dev or servers)
   - Debugging Gateway auth, bind modes, and connectivity
@@ -8,7 +8,7 @@ read_when:
 
 # Gateway CLI
 
-The Gateway is Moltbot’s WebSocket server (channels, nodes, sessions, hooks).
+The Gateway is Fortclaw’s WebSocket server (channels, nodes, sessions, hooks).
 
 Subcommands in this page live under `moltbot gateway …`.
 

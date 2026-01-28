@@ -1,7 +1,7 @@
-import MoltbotIPC
+import FortclawIPC
 import CoreLocation
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite(.serialized)
 @MainActor

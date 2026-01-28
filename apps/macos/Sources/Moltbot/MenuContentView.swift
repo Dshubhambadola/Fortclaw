@@ -4,7 +4,7 @@ import Foundation
 import Observation
 import SwiftUI
 
-/// Menu contents for the Moltbot menu bar extra.
+/// Menu contents for the Fortclaw menu bar extra.
 struct MenuContent: View {
     @Bindable var state: AppState
     let updater: UpdaterProviding?
@@ -149,7 +149,7 @@ struct MenuContent: View {
             Button("Settings…") { self.open(tab: .general) }
                 .keyboardShortcut(",", modifiers: [.command])
             self.debugMenu
-            Button("About Moltbot") { self.open(tab: .about) }
+            Button("About Fortclaw") { self.open(tab: .about) }
             if let updater, updater.isAvailable, self.updateStatus.isUpdateReady {
                 Button("Update ready, restart now?") { updater.checkForUpdates(nil) }
             }
@@ -185,11 +185,11 @@ struct MenuContent: View {
     private var connectionLabel: String {
         switch self.state.connectionMode {
         case .unconfigured:
-            "Moltbot Not Configured"
+            "Fortclaw Not Configured"
         case .remote:
-            "Remote Moltbot Active"
+            "Remote Fortclaw Active"
         case .local:
-            "Moltbot Active"
+            "Fortclaw Active"
         }
     }
 

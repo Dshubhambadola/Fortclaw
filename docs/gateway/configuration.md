@@ -5,9 +5,9 @@ read_when:
 ---
 # Configuration 🔧
 
-Moltbot reads an optional **JSON5** config from `~/.clawdbot/moltbot.json` (comments + trailing commas allowed).
+Fortclaw reads an optional **JSON5** config from `~/.clawdbot/moltbot.json` (comments + trailing commas allowed).
 
-If the file is missing, Moltbot uses safe-ish defaults (embedded Pi agent + per-sender sessions + workspace `~/clawd`). You usually only need a config to:
+If the file is missing, Fortclaw uses safe-ish defaults (embedded Pi agent + per-sender sessions + workspace `~/clawd`). You usually only need a config to:
 - restrict who can trigger the bot (`channels.whatsapp.allowFrom`, `channels.telegram.allowFrom`, etc.)
 - control group allowlists + mention behavior (`channels.whatsapp.groups`, `channels.telegram.groups`, `channels.discord.guilds`, `agents.list[].groupChat`)
 - customize message prefixes (`messages`)
@@ -19,7 +19,7 @@ If the file is missing, Moltbot uses safe-ish defaults (embedded Pi agent + per-
 
 ## Strict config validation
 
-Moltbot only accepts configurations that fully match the schema.
+Fortclaw only accepts configurations that fully match the schema.
 Unknown keys, malformed types, or invalid values cause the Gateway to **refuse to start** for safety.
 
 When validation fails:
@@ -266,7 +266,7 @@ Included files can themselves contain `$include` directives (up to 10 levels dee
 
 ### Env vars + `.env`
 
-Moltbot reads env vars from the parent process (shell, launchd/systemd, CI, etc.).
+Fortclaw reads env vars from the parent process (shell, launchd/systemd, CI, etc.).
 
 Additionally, it loads:
 - `.env` from the current working directory (if present)
@@ -292,7 +292,7 @@ See [/environment](/environment) for full precedence and sources.
 
 ### `env.shellEnv` (optional)
 
-Opt-in convenience: if enabled and none of the expected keys are set yet, Moltbot runs your login shell and imports only the missing expected keys (never overrides).
+Opt-in convenience: if enabled and none of the expected keys are set yet, Fortclaw runs your login shell and imports only the missing expected keys (never overrides).
 This effectively sources your shell profile.
 
 ```json5
@@ -354,7 +354,7 @@ You can reference environment variables directly in any config string value usin
 
 ### Auth storage (OAuth + API keys)
 
-Moltbot stores **per-agent** auth profiles (OAuth + API keys) in:
+Fortclaw stores **per-agent** auth profiles (OAuth + API keys) in:
 - `<agentDir>/auth-profiles.json` (default: `~/.clawdbot/agents/<agentId>/agent/auth-profiles.json`)
 
 See also: [/concepts/oauth](/concepts/oauth)
@@ -372,7 +372,7 @@ Overrides:
 - OAuth dir (legacy import only): `CLAWDBOT_OAUTH_DIR`
 - Agent dir (default agent root override): `CLAWDBOT_AGENT_DIR` (preferred), `PI_CODING_AGENT_DIR` (legacy)
 
-On first use, Moltbot imports `oauth.json` entries into `auth-profiles.json`.
+On first use, Fortclaw imports `oauth.json` entries into `auth-profiles.json`.
 
 ### `auth`
 
@@ -398,7 +398,7 @@ rotation order used for failover.
 
 Optional per-agent identity used for defaults and UX. This is written by the macOS onboarding assistant.
 
-If set, Moltbot derives defaults (only when you haven’t set them explicitly):
+If set, Fortclaw derives defaults (only when you haven’t set them explicitly):
 - `messages.ackReaction` from the **active agent**’s `identity.emoji` (falls back to 👀)
 - `agents.list[].groupChat.mentionPatterns` from the agent’s `identity.name`/`identity.emoji` (so “@Samantha” works in groups across Telegram/Slack/Discord/Google Chat/iMessage/WhatsApp)
 - `identity.avatar` accepts a workspace-relative image path or a remote URL/data URL. Local files must live inside the agent workspace.
@@ -980,7 +980,7 @@ Set `web.enabled: false` to keep it off by default.
 
 ### `channels.telegram` (bot transport)
 
-Moltbot starts Telegram only when a `channels.telegram` config section exists. The bot token is resolved from `channels.telegram.botToken` (or `channels.telegram.tokenFile`), with `TELEGRAM_BOT_TOKEN` as a fallback for the default account.
+Fortclaw starts Telegram only when a `channels.telegram` config section exists. The bot token is resolved from `channels.telegram.botToken` (or `channels.telegram.tokenFile`), with `TELEGRAM_BOT_TOKEN` as a fallback for the default account.
 Set `channels.telegram.enabled: false` to disable automatic startup.
 Multi-account support lives under `channels.telegram.accounts` (see the multi-account section above). Env tokens only apply to the default account.
 Set `channels.telegram.configWrites: false` to block Telegram-initiated config writes (including supergroup ID migrations and `/config set|unset`).
@@ -1118,7 +1118,7 @@ Multi-account support lives under `channels.discord.accounts` (see the multi-acc
 }
 ```
 
-Moltbot starts Discord only when a `channels.discord` config section exists. The token is resolved from `channels.discord.token`, with `DISCORD_BOT_TOKEN` as a fallback for the default account (unless `channels.discord.enabled` is `false`). Use `user:<id>` (DM) or `channel:<id>` (guild channel) when specifying delivery targets for cron/CLI commands; bare numeric IDs are ambiguous and rejected.
+Fortclaw starts Discord only when a `channels.discord` config section exists. The token is resolved from `channels.discord.token`, with `DISCORD_BOT_TOKEN` as a fallback for the default account (unless `channels.discord.enabled` is `false`). Use `user:<id>` (DM) or `channel:<id>` (guild channel) when specifying delivery targets for cron/CLI commands; bare numeric IDs are ambiguous and rejected.
 Guild slugs are lowercase with spaces replaced by `-`; channel keys use the slugged channel name (no leading `#`). Prefer guild ids as keys to avoid rename ambiguity.
 Bot-authored messages are ignored by default. Enable with `channels.discord.allowBots` (own messages are still filtered to prevent self-reply loops).
 Reaction notification modes:
@@ -1228,7 +1228,7 @@ Slack runs in Socket Mode and requires both a bot token and app token:
 
 Multi-account support lives under `channels.slack.accounts` (see the multi-account section above). Env tokens only apply to the default account.
 
-Moltbot starts Slack when the provider is enabled and both tokens are set (via config or `SLACK_BOT_TOKEN` + `SLACK_APP_TOKEN`). Use `user:<id>` (DM) or `channel:<id>` when specifying delivery targets for cron/CLI commands.
+Fortclaw starts Slack when the provider is enabled and both tokens are set (via config or `SLACK_BOT_TOKEN` + `SLACK_APP_TOKEN`). Use `user:<id>` (DM) or `channel:<id>` when specifying delivery targets for cron/CLI commands.
 Set `channels.slack.configWrites: false` to block Slack-initiated config writes (including channel ID migrations and `/config set|unset`).
 
 Bot-authored messages are ignored by default. Enable with `channels.slack.allowBots` or `channels.slack.channels.<id>.allowBots`.
@@ -1276,7 +1276,7 @@ Mattermost requires a bot token plus the base URL for your server:
 }
 ```
 
-Moltbot starts Mattermost when the account is configured (bot token + base URL) and enabled. The token + base URL are resolved from `channels.mattermost.botToken` + `channels.mattermost.baseUrl` or `MATTERMOST_BOT_TOKEN` + `MATTERMOST_URL` for the default account (unless `channels.mattermost.enabled` is `false`).
+Fortclaw starts Mattermost when the account is configured (bot token + base URL) and enabled. The token + base URL are resolved from `channels.mattermost.botToken` + `channels.mattermost.baseUrl` or `MATTERMOST_BOT_TOKEN` + `MATTERMOST_URL` for the default account (unless `channels.mattermost.enabled` is `false`).
 
 Chat modes:
 - `oncall` (default): respond to channel messages only when @mentioned.
@@ -1315,7 +1315,7 @@ Reaction notification modes:
 
 ### `channels.imessage` (imsg CLI)
 
-Moltbot spawns `imsg rpc` (JSON-RPC over stdio). No daemon or port required.
+Fortclaw spawns `imsg rpc` (JSON-RPC over stdio). No daemon or port required.
 
 ```json5
 {
@@ -1369,7 +1369,7 @@ own per-scope workspaces under `agents.defaults.sandbox.workspaceRoot`.
 
 ### `agents.defaults.repoRoot`
 
-Optional repository root to show in the system prompt’s Runtime line. If unset, Moltbot
+Optional repository root to show in the system prompt’s Runtime line. If unset, Fortclaw
 tries to detect a `.git` directory by walking upward from the workspace (and current
 working directory). The path must exist to be used.
 
@@ -1396,7 +1396,7 @@ Use this for pre-seeded deployments where your workspace files come from a repo.
 Max characters of each workspace bootstrap file injected into the system prompt
 before truncation. Default: `20000`.
 
-When a file exceeds this limit, Moltbot logs a warning and injects a truncated
+When a file exceeds this limit, Fortclaw logs a warning and injects a truncated
 head/tail with a marker.
 
 ```json5
@@ -1408,7 +1408,7 @@ head/tail with a marker.
 ### `agents.defaults.userTimezone`
 
 Sets the user’s timezone for **system prompt context** (not for timestamps in
-message envelopes). If unset, Moltbot uses the host timezone at runtime.
+message envelopes). If unset, Fortclaw uses the host timezone at runtime.
 
 ```json5
 {
@@ -1479,7 +1479,7 @@ Example output: `[claude-opus-4-5 | think:high] Here's my response...`
 WhatsApp inbound prefix is configured via `channels.whatsapp.messagePrefix` (deprecated:
 `messages.messagePrefix`). Default stays **unchanged**: `"[moltbot]"` when
 `channels.whatsapp.allowFrom` is empty, otherwise `""` (no prefix). When using
-`"[moltbot]"`, Moltbot will instead use `[{identity.name}]` when the routed
+`"[moltbot]"`, Fortclaw will instead use `[{identity.name}]` when the routed
 agent has `identity.name` set.
 
 `ackReaction` sends a best-effort emoji reaction to acknowledge inbound messages
@@ -1497,7 +1497,7 @@ active agent’s `identity.emoji` when set, otherwise `"👀"`. Set it to `""` t
 
 #### `messages.tts`
 
-Enable text-to-speech for outbound replies. When on, Moltbot generates audio
+Enable text-to-speech for outbound replies. When on, Fortclaw generates audio
 using ElevenLabs or OpenAI and attaches it to responses. Telegram uses Opus
 voice notes; other channels send MP3 audio.
 
@@ -1613,7 +1613,7 @@ Z.AI GLM-4.x models automatically enable thinking mode unless you:
 - set `--thinking off`, or
 - define `agents.defaults.models["zai/<model>"].params.thinking` yourself.
 
-Moltbot also ships a few built-in alias shorthands. Defaults only apply when the model
+Fortclaw also ships a few built-in alias shorthands. Defaults only apply when the model
 is already present in `agents.defaults.models`:
 
 - `opus` -> `anthropic/claude-opus-4-5`
@@ -1908,7 +1908,7 @@ See [/concepts/typing-indicators](/concepts/typing-indicators) for behavior deta
 
 `agents.defaults.model.primary` should be set as `provider/model` (e.g. `anthropic/claude-opus-4-5`).
 Aliases come from `agents.defaults.models.*.alias` (e.g. `Opus`).
-If you omit the provider, Moltbot currently assumes `anthropic` as a temporary
+If you omit the provider, Fortclaw currently assumes `anthropic` as a temporary
 deprecation fallback.
 Z.AI models are available as `zai/<model>` (e.g. `zai/glm-4.7`) and require
 `ZAI_API_KEY` (or legacy `Z_AI_API_KEY`) in the environment.
@@ -2101,7 +2101,7 @@ Tool groups (shorthands) work in **global** and **per-agent** tool policies:
 - `group:automation`: `cron`, `gateway`
 - `group:messaging`: `message`
 - `group:nodes`: `nodes`
-- `group:moltbot`: all built-in Moltbot tools (excludes provider plugins)
+- `group:moltbot`: all built-in Fortclaw tools (excludes provider plugins)
 
 `tools.elevated` controls elevated (host) exec access:
 - `enabled`: allow elevated mode (default true)
@@ -2289,13 +2289,13 @@ Defaults: all allowlists are unset (no restriction). `allowHostControl` defaults
 
 ### `models` (custom providers + base URLs)
 
-Moltbot uses the **pi-coding-agent** model catalog. You can add custom providers
+Fortclaw uses the **pi-coding-agent** model catalog. You can add custom providers
 (LiteLLM, local OpenAI-compatible servers, Anthropic proxies, etc.) by writing
 `~/.clawdbot/agents/<agentId>/agent/models.json` or by defining the same schema inside your
-Moltbot config under `models.providers`.
+Fortclaw config under `models.providers`.
 Provider-by-provider overview + examples: [/concepts/model-providers](/concepts/model-providers).
 
-When `models.providers` is present, Moltbot writes/merges a `models.json` into
+When `models.providers` is present, Fortclaw writes/merges a `models.json` into
 `~/.clawdbot/agents/<agentId>/agent/` on startup:
 - default behavior: **merge** (keeps existing providers, overrides on name)
 - set `models.mode: "replace"` to overwrite the file contents
@@ -2338,7 +2338,7 @@ Select the model via `agents.defaults.model.primary` (provider/model).
 
 ### OpenCode Zen (multi-model proxy)
 
-OpenCode Zen is a multi-model gateway with per-model endpoints. Moltbot uses
+OpenCode Zen is a multi-model gateway with per-model endpoints. Fortclaw uses
 the built-in `opencode` provider from pi-ai; set `OPENCODE_API_KEY` (or
 `OPENCODE_ZEN_API_KEY`) from https://opencode.ai/auth.
 
@@ -2665,7 +2665,7 @@ Fields:
   - `atHour`: local hour (0-23) for the daily reset boundary.
   - `idleMinutes`: sliding idle window in minutes. When daily + idle are both configured, whichever expires first wins.
 - `resetByType`: per-session overrides for `dm`, `group`, and `thread`.
-  - If you only set legacy `session.idleMinutes` without any `reset`/`resetByType`, Moltbot stays in idle-only mode for backward compatibility.
+  - If you only set legacy `session.idleMinutes` without any `reset`/`resetByType`, Fortclaw stays in idle-only mode for backward compatibility.
 - `heartbeatIdleMinutes`: optional idle override for heartbeat checks (daily reset still applies when enabled).
 - `agentToAgent.maxPingPongTurns`: max reply-back turns between requester/target (0–5, default 5).
 - `sendPolicy.default`: `allow` or `deny` fallback when no rule matches.
@@ -2760,7 +2760,7 @@ Example:
 
 ### `browser` (clawd-managed browser)
 
-Moltbot can start a **dedicated, isolated** Chrome/Brave/Edge/Chromium instance for clawd and expose a small loopback control service.
+Fortclaw can start a **dedicated, isolated** Chrome/Brave/Edge/Chromium instance for clawd and expose a small loopback control service.
 Profiles can point at a **remote** Chromium-based browser via `profiles.<name>.cdpUrl`. Remote
 profiles are attach-only (start/stop/reset are disabled).
 
@@ -2773,7 +2773,7 @@ Defaults:
 - control service: loopback only (port derived from `gateway.port`, default `18791`)
 - CDP URL: `http://127.0.0.1:18792` (control service + 1, legacy single-profile)
 - profile color: `#FF4500` (lobster-orange)
-- Note: the control server is started by the running gateway (Moltbot.app menubar, or `moltbot gateway`).
+- Note: the control server is started by the running gateway (Fortclaw.app menubar, or `moltbot gateway`).
 - Auto-detect order: default browser if Chromium-based; otherwise Chrome → Brave → Edge → Chromium → Chrome Canary.
 
 ```json5
@@ -2811,7 +2811,7 @@ If unset, clients fall back to a muted light-blue.
     // Optional: Control UI assistant identity override.
     // If unset, the Control UI uses the active agent identity (config or IDENTITY.md).
     assistant: {
-      name: "Moltbot",
+      name: "Fortclaw",
       avatar: "CB" // emoji, short text, or image URL/data URI
     }
   }
@@ -2858,7 +2858,7 @@ Related docs:
 
 Trusted proxies:
 - `gateway.trustedProxies`: list of reverse proxy IPs that terminate TLS in front of the Gateway.
-- When a connection comes from one of these IPs, Moltbot uses `x-forwarded-for` (or `x-real-ip`) to determine the client IP for local pairing checks and HTTP auth/local checks.
+- When a connection comes from one of these IPs, Fortclaw uses `x-forwarded-for` (or `x-real-ip`) to determine the client IP for local pairing checks and HTTP auth/local checks.
 - Only list proxies you fully control, and ensure they **overwrite** incoming `x-forwarded-for`.
 
 Notes:
@@ -2877,7 +2877,7 @@ Auth and Tailscale:
 - `gateway.auth.password` can be set here, or via `CLAWDBOT_GATEWAY_PASSWORD` (recommended).
 - `gateway.auth.allowTailscale` allows Tailscale Serve identity headers
   (`tailscale-user-login`) to satisfy auth when the request arrives on loopback
-  with `x-forwarded-for`, `x-forwarded-proto`, and `x-forwarded-host`. Moltbot
+  with `x-forwarded-for`, `x-forwarded-proto`, and `x-forwarded-host`. Fortclaw
   verifies the identity by resolving the `x-forwarded-for` address via
   `tailscale whois` before accepting it. When `true`, Serve requests do not need
   a token/password; set `false` to require explicit credentials. Defaults to
@@ -2893,7 +2893,7 @@ Remote client defaults (CLI):
 - `gateway.remote.password` supplies the password for remote calls (leave unset for no auth).
 
 macOS app behavior:
-- Moltbot.app watches `~/.clawdbot/moltbot.json` and switches modes live when `gateway.mode` or `gateway.remote.url` changes.
+- Fortclaw.app watches `~/.clawdbot/moltbot.json` and switches modes live when `gateway.mode` or `gateway.remote.url` changes.
 - If `gateway.mode` is unset but `gateway.remote.url` is set, the macOS app treats it as remote mode.
 - When you change connection mode in the macOS app, it writes `gateway.mode` (and `gateway.remote.url` + `gateway.remote.transport` in remote mode) back to the config file.
 
@@ -3088,7 +3088,7 @@ Gateway auto-start:
 - Avoid running a separate `gog gmail watch serve` alongside the Gateway; it will
   fail with `listen tcp 127.0.0.1:8788: bind: address already in use`.
 
-Note: when `tailscale.mode` is on, Moltbot defaults `serve.path` to `/` so
+Note: when `tailscale.mode` is on, Fortclaw defaults `serve.path` to `/` so
 Tailscale can proxy `/gmail-pubsub` correctly (it strips the set-path prefix).
 If you need the backend to receive the prefixed path, set
 `hooks.gmail.tailscale.target` to a full URL (and align `serve.path`).

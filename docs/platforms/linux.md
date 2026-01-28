@@ -59,7 +59,7 @@ moltbot doctor
 ```
 
 ## System control (systemd user unit)
-Moltbot installs a systemd **user** service by default. Use a **system**
+Fortclaw installs a systemd **user** service by default. Use a **system**
 service for shared or always-on servers. The full unit example and guidance
 live in the [Gateway runbook](/gateway).
 
@@ -69,7 +69,7 @@ Create `~/.config/systemd/user/moltbot-gateway[-<profile>].service`:
 
 ```
 [Unit]
-Description=Moltbot Gateway (profile: <profile>, v<version>)
+Description=Fortclaw Gateway (profile: <profile>, v<version>)
 After=network-online.target
 Wants=network-online.target
 

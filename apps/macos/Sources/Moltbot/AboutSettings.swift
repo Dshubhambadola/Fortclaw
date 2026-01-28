@@ -29,7 +29,7 @@ struct AboutSettings: View {
             }
 
             VStack(spacing: 3) {
-                Text("Moltbot")
+                Text("Fortclaw")
                     .font(.title3.bold())
                 Text("Version \(self.versionString)")
                     .foregroundStyle(.secondary)
@@ -108,7 +108,7 @@ struct AboutSettings: View {
     }
 
     private var buildTimestamp: String? {
-        guard let raw = Bundle.main.object(forInfoDictionaryKey: "MoltbotBuildTimestamp") as? String
+        guard let raw = Bundle.main.object(forInfoDictionaryKey: "FortclawBuildTimestamp") as? String
         else { return nil }
         let parser = ISO8601DateFormatter()
         parser.formatOptions = [.withInternetDateTime]
@@ -122,7 +122,7 @@ struct AboutSettings: View {
     }
 
     private var gitCommit: String {
-        Bundle.main.object(forInfoDictionaryKey: "MoltbotGitCommit") as? String ?? "unknown"
+        Bundle.main.object(forInfoDictionaryKey: "FortclawGitCommit") as? String ?? "unknown"
     }
 
     private var bundleID: String {

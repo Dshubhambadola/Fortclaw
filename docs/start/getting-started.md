@@ -163,7 +163,7 @@ Pairing doc: [Pairing](/start/pairing)
 
 ## From source (development)
 
-If you’re hacking on Moltbot itself, run from source:
+If you’re hacking on Fortclaw itself, run from source:
 
 ```bash
 git clone https://github.com/moltbot/moltbot.git
@@ -180,7 +180,7 @@ If you don’t have a global install yet, run the onboarding step via `pnpm molt
 Gateway (from this repo):
 
 ```bash
-node moltbot.mjs gateway --port 18789 --verbose
+node fortclaw.mjs gateway --port 18789 --verbose
 ```
 
 ## 7) Verify end-to-end
@@ -188,7 +188,7 @@ node moltbot.mjs gateway --port 18789 --verbose
 In a new terminal, send a test message:
 
 ```bash
-moltbot message send --target +15555550123 --message "Hello from Moltbot"
+moltbot message send --target +15555550123 --message "Hello from Fortclaw"
 ```
 
 If `moltbot health` shows “no auth configured”, go back to the wizard and set OAuth/key auth — the agent won’t be able to respond without it.

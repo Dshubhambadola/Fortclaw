@@ -8,7 +8,7 @@ metadata: {"moltbot":{"emoji":"📱","requires":{"bins":["wacli"]},"install":[{"
 # wacli
 
 Use `wacli` only when the user explicitly asks you to message someone else on WhatsApp or when they ask to sync/search WhatsApp history.
-Do NOT use `wacli` for normal user chats; Moltbot routes WhatsApp conversations automatically.
+Do NOT use `wacli` for normal user chats; Fortclaw routes WhatsApp conversations automatically.
 If the user is chatting with you on WhatsApp, you should not reach for this tool unless they ask you to contact a third party.
 
 Safety

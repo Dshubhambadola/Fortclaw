@@ -1,5 +1,5 @@
 ---
-summary: "How Moltbot sandboxing works: modes, scopes, workspace access, and images"
+summary: "How Fortclaw sandboxing works: modes, scopes, workspace access, and images"
 title: Sandboxing
 read_when: "You want a dedicated explanation of sandboxing or need to tune agents.defaults.sandbox."
 status: active
@@ -7,7 +7,7 @@ status: active
 
 # Sandboxing
 
-Moltbot can run **tools inside Docker containers** to reduce blast radius.
+Fortclaw can run **tools inside Docker containers** to reduce blast radius.
 This is **optional** and controlled by configuration (`agents.defaults.sandbox` or
 `agents.list[].sandbox`). If sandboxing is off, tools run on the host.
 The Gateway stays on the host; tool execution runs in an isolated sandbox
@@ -52,7 +52,7 @@ Group/channel sessions use their own keys, so they count as non-main and will be
 
 Inbound media is copied into the active sandbox workspace (`media/inbound/*`).
 Skills note: the `read` tool is sandbox-rooted. With `workspaceAccess: "none"`,
-Moltbot mirrors eligible skills into the sandbox workspace (`.../skills`) so
+Fortclaw mirrors eligible skills into the sandbox workspace (`.../skills`) so
 they can be read. With `"rw"`, workspace skills are readable from
 `/workspace/skills`.
 

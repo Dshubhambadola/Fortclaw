@@ -1,4 +1,4 @@
-import MoltbotKit
+import FortclawKit
 import Foundation
 import Testing
 
@@ -21,7 +21,7 @@ import Testing
             key: nil)))
     }
 
-    @Test func parseRejectsNonMoltbotScheme() {
+    @Test func parseRejectsNonFortclawScheme() {
         let url = URL(string: "https://example.com/agent?message=hi")!
         #expect(DeepLinkParser.parse(url) == nil)
     }

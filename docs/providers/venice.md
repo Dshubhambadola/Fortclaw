@@ -1,7 +1,7 @@
 ---
-summary: "Use Venice AI privacy-focused models in Moltbot"
+summary: "Use Venice AI privacy-focused models in Fortclaw"
 read_when:
-  - You want privacy-focused inference in Moltbot
+  - You want privacy-focused inference in Fortclaw
   - You want Venice AI setup guidance
 ---
 # Venice AI (Venius highlight)
@@ -10,7 +10,7 @@ read_when:
 
 Venice AI provides privacy-focused AI inference with support for uncensored models and access to major proprietary models through their anonymized proxy. All inference is private by default—no training on your data, no logging.
 
-## Why Venice in Moltbot
+## Why Venice in Fortclaw
 
 - **Private inference** for open-source models (no logging).
 - **Uncensored models** when you need them.
@@ -45,7 +45,7 @@ Venice offers two privacy levels — understanding this is key to choosing your 
 2. Go to **Settings → API Keys → Create new key**
 3. Copy your API key (format: `vapi_xxxxxxxxxxxx`)
 
-### 2. Configure Moltbot
+### 2. Configure Fortclaw
 
 **Option A: Environment Variable**
 
@@ -81,7 +81,7 @@ moltbot chat --model venice/llama-3.3-70b "Hello, are you working?"
 
 ## Model Selection
 
-After setup, Moltbot shows all available Venice models. Pick based on your needs:
+After setup, Fortclaw shows all available Venice models. Pick based on your needs:
 
 - **Default (our pick)**: `venice/llama-3.3-70b` for private, balanced performance.
 - **Best overall quality**: `venice/claude-opus-45` for hard jobs (Opus remains the strongest).
@@ -159,7 +159,7 @@ moltbot models list | grep venice
 
 ## Model Discovery
 
-Moltbot automatically discovers models from the Venice API when `VENICE_API_KEY` is set. If the API is unreachable, it falls back to a static catalog.
+Fortclaw automatically discovers models from the Venice API when `VENICE_API_KEY` is set. If the API is unreachable, it falls back to a static catalog.
 
 The `/models` endpoint is public (no auth needed for listing), but inference requires a valid API key.
 

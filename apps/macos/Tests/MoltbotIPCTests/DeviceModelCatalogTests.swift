@@ -1,5 +1,5 @@
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite
 struct DeviceModelCatalogTests {

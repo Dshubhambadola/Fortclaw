@@ -275,7 +275,7 @@ final class AppState {
             UserDefaults.standard.set(IconOverrideSelection.system.rawValue, forKey: iconOverrideKey)
         }
 
-        let configRoot = MoltbotConfigFile.loadDict()
+        let configRoot = FortclawConfigFile.loadDict()
         let configRemoteUrl = GatewayRemoteConfig.resolveUrlString(root: configRoot)
         let configRemoteTransport = GatewayRemoteConfig.resolveTransport(root: configRoot)
         let resolvedConnectionMode = ConnectionModeResolver.resolve(root: configRoot).mode
@@ -353,7 +353,7 @@ final class AppState {
     }
 
     private func startConfigWatcher() {
-        let configUrl = MoltbotConfigFile.url()
+        let configUrl = FortclawConfigFile.url()
         self.configWatcher = ConfigFileWatcher(url: configUrl) { [weak self] in
             Task { @MainActor in
                 self?.applyConfigFromDisk()
@@ -363,7 +363,7 @@ final class AppState {
     }
 
     private func applyConfigFromDisk() {
-        let root = MoltbotConfigFile.loadDict()
+        let root = FortclawConfigFile.loadDict()
         self.applyConfigOverrides(root)
     }
 
@@ -451,7 +451,7 @@ final class AppState {
 
         Task { @MainActor in
             // Keep app-only connection settings local to avoid overwriting remote gateway config.
-            var root = MoltbotConfigFile.loadDict()
+            var root = FortclawConfigFile.loadDict()
             var gateway = root["gateway"] as? [String: Any] ?? [:]
             var changed = false
 
@@ -541,7 +541,7 @@ final class AppState {
             } else {
                 root["gateway"] = gateway
             }
-            MoltbotConfigFile.saveDict(root)
+            FortclawConfigFile.saveDict(root)
         }
     }
 

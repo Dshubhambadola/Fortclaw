@@ -1,8 +1,8 @@
-import MoltbotKit
+import FortclawKit
 import CoreLocation
 import Foundation
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 struct MacNodeRuntimeTests {
     @Test func handleInvokeRejectsUnknownCommand() async {
@@ -14,28 +14,28 @@ struct MacNodeRuntimeTests {
 
     @Test func handleInvokeRejectsEmptySystemRun() async throws {
         let runtime = MacNodeRuntime()
-        let params = MoltbotSystemRunParams(command: [])
+        let params = FortclawSystemRunParams(command: [])
         let json = try String(data: JSONEncoder().encode(params), encoding: .utf8)
         let response = await runtime.handleInvoke(
-            BridgeInvokeRequest(id: "req-2", command: MoltbotSystemCommand.run.rawValue, paramsJSON: json))
+            BridgeInvokeRequest(id: "req-2", command: FortclawSystemCommand.run.rawValue, paramsJSON: json))
         #expect(response.ok == false)
     }
 
     @Test func handleInvokeRejectsEmptySystemWhich() async throws {
         let runtime = MacNodeRuntime()
-        let params = MoltbotSystemWhichParams(bins: [])
+        let params = FortclawSystemWhichParams(bins: [])
         let json = try String(data: JSONEncoder().encode(params), encoding: .utf8)
         let response = await runtime.handleInvoke(
-            BridgeInvokeRequest(id: "req-2b", command: MoltbotSystemCommand.which.rawValue, paramsJSON: json))
+            BridgeInvokeRequest(id: "req-2b", command: FortclawSystemCommand.which.rawValue, paramsJSON: json))
         #expect(response.ok == false)
     }
 
     @Test func handleInvokeRejectsEmptyNotification() async throws {
         let runtime = MacNodeRuntime()
-        let params = MoltbotSystemNotifyParams(title: "", body: "")
+        let params = FortclawSystemNotifyParams(title: "", body: "")
         let json = try String(data: JSONEncoder().encode(params), encoding: .utf8)
         let response = await runtime.handleInvoke(
-            BridgeInvokeRequest(id: "req-3", command: MoltbotSystemCommand.notify.rawValue, paramsJSON: json))
+            BridgeInvokeRequest(id: "req-3", command: FortclawSystemCommand.notify.rawValue, paramsJSON: json))
         #expect(response.ok == false)
     }
 
@@ -43,7 +43,7 @@ struct MacNodeRuntimeTests {
         await TestIsolation.withUserDefaultsValues([cameraEnabledKey: false]) {
             let runtime = MacNodeRuntime()
             let response = await runtime.handleInvoke(
-                BridgeInvokeRequest(id: "req-4", command: MoltbotCameraCommand.list.rawValue))
+                BridgeInvokeRequest(id: "req-4", command: FortclawCameraCommand.list.rawValue))
             #expect(response.ok == false)
             #expect(response.error?.message.contains("CAMERA_DISABLED") == true)
         }
@@ -68,7 +68,7 @@ struct MacNodeRuntimeTests {
             func locationAuthorizationStatus() -> CLAuthorizationStatus { .authorizedAlways }
             func locationAccuracyAuthorization() -> CLAccuracyAuthorization { .fullAccuracy }
             func currentLocation(
-                desiredAccuracy: MoltbotLocationAccuracy,
+                desiredAccuracy: FortclawLocationAccuracy,
                 maxAgeMs: Int?,
                 timeoutMs: Int?) async throws -> CLLocation
             {

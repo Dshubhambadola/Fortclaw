@@ -1,14 +1,14 @@
 ---
 summary: "Nostr DM channel via NIP-04 encrypted messages"
 read_when:
-  - You want Moltbot to receive DMs via Nostr
+  - You want Fortclaw to receive DMs via Nostr
   - You're setting up decentralized messaging
 ---
 # Nostr
 
 **Status:** Optional plugin (disabled by default).
 
-Nostr is a decentralized protocol for social networking. This channel enables Moltbot to receive and respond to encrypted direct messages (DMs) via NIP-04.
+Nostr is a decentralized protocol for social networking. This channel enables Fortclaw to receive and respond to encrypted direct messages (DMs) via NIP-04.
 
 ## Install (on demand)
 
@@ -92,7 +92,7 @@ Example:
       "privateKey": "${NOSTR_PRIVATE_KEY}",
       "profile": {
         "name": "moltbot",
-        "displayName": "Moltbot",
+        "displayName": "Fortclaw",
         "about": "Personal assistant DM bot",
         "picture": "https://example.com/avatar.png",
         "banner": "https://example.com/banner.png",

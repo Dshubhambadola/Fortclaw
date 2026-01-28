@@ -1,4 +1,4 @@
-import MoltbotKit
+import FortclawKit
 import Foundation
 
 struct WideAreaGatewayBeacon: Sendable, Equatable {
@@ -50,7 +50,7 @@ enum WideAreaGatewayDiscovery {
             return []
         }
 
-        let domain = MoltbotBonjour.wideAreaGatewayServiceDomain
+        let domain = FortclawBonjour.wideAreaGatewayServiceDomain
         let domainTrimmed = domain.trimmingCharacters(in: CharacterSet(charactersIn: "."))
         let probeName = "_moltbot-gw._tcp.\(domainTrimmed)"
         guard let ptrLines = context.dig(
@@ -154,7 +154,7 @@ enum WideAreaGatewayDiscovery {
         remaining: () -> TimeInterval,
         dig: @escaping @Sendable (_ args: [String], _ timeout: TimeInterval) -> String?) -> String?
     {
-        let domain = MoltbotBonjour.wideAreaGatewayServiceDomain
+        let domain = FortclawBonjour.wideAreaGatewayServiceDomain
         let domainTrimmed = domain.trimmingCharacters(in: CharacterSet(charactersIn: "."))
         let probeName = "_moltbot-gw._tcp.\(domainTrimmed)"
 

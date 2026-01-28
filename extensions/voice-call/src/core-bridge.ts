@@ -86,7 +86,7 @@ function findPackageRoot(startDir: string, name: string): string | null {
   }
 }
 
-function resolveMoltbotRoot(): string {
+function resolveFortclawRoot(): string {
   if (coreRootCache) return coreRootCache;
   const override = process.env.MOLTBOT_ROOT?.trim() || process.env.CLAWDBOT_ROOT?.trim();
   if (override) {
@@ -122,7 +122,7 @@ function resolveMoltbotRoot(): string {
 }
 
 async function importCoreModule<T>(relativePath: string): Promise<T> {
-  const root = resolveMoltbotRoot();
+  const root = resolveFortclawRoot();
   const distPath = path.join(root, "dist", relativePath);
   if (!fs.existsSync(distPath)) {
     throw new Error(

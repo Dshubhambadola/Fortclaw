@@ -5,7 +5,7 @@ read_when:
 ---
 # Tlon (plugin)
 
-Tlon is a decentralized messenger built on Urbit. Moltbot connects to your Urbit ship and can
+Tlon is a decentralized messenger built on Urbit. Fortclaw connects to your Urbit ship and can
 respond to DMs and group chat messages. Group replies require an @ mention by default and can
 be further restricted via allowlists.
 
@@ -129,5 +129,5 @@ Use these with `moltbot message send` or cron delivery:
 ## Notes
 
 - Group replies require a mention (e.g. `~your-bot-ship`) to respond.
-- Thread replies: if the inbound message is in a thread, Moltbot replies in-thread.
+- Thread replies: if the inbound message is in a thread, Fortclaw replies in-thread.
 - Media: `sendMedia` falls back to text + URL (no native upload).

@@ -1,6 +1,6 @@
 import AppKit
-import MoltbotKit
-import MoltbotProtocol
+import FortclawKit
+import FortclawProtocol
 import Foundation
 import Observation
 import OSLog

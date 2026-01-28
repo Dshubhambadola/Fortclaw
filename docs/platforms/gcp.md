@@ -1,18 +1,18 @@
 ---
-summary: "Run Moltbot Gateway 24/7 on a GCP Compute Engine VM (Docker) with durable state"
+summary: "Run Fortclaw Gateway 24/7 on a GCP Compute Engine VM (Docker) with durable state"
 read_when:
-  - You want Moltbot running 24/7 on GCP
+  - You want Fortclaw running 24/7 on GCP
   - You want a production-grade, always-on Gateway on your own VM
   - You want full control over persistence, binaries, and restart behavior
 ---
 
-# Moltbot on GCP Compute Engine (Docker, Production VPS Guide)
+# Fortclaw on GCP Compute Engine (Docker, Production VPS Guide)
 
 ## Goal
 
-Run a persistent Moltbot Gateway on a GCP Compute Engine VM using Docker, with durable state, baked-in binaries, and safe restart behavior.
+Run a persistent Fortclaw Gateway on a GCP Compute Engine VM using Docker, with durable state, baked-in binaries, and safe restart behavior.
 
-If you want "Moltbot 24/7 for ~$5-12/mo", this is a reliable setup on Google Cloud.
+If you want "Fortclaw 24/7 for ~$5-12/mo", this is a reliable setup on Google Cloud.
 Pricing varies by machine type and region; pick the smallest VM that fits your workload and scale up if you hit OOMs.
 
 ## What are we doing (simple terms)?
@@ -20,7 +20,7 @@ Pricing varies by machine type and region; pick the smallest VM that fits your w
 - Create a GCP project and enable billing
 - Create a Compute Engine VM
 - Install Docker (isolated app runtime)
-- Start the Moltbot Gateway in Docker
+- Start the Fortclaw Gateway in Docker
 - Persist `~/.clawdbot` + `~/clawd` on the host (survives restarts/rebuilds)
 - Access the Control UI from your laptop via an SSH tunnel
 
@@ -40,7 +40,7 @@ For the generic Docker flow, see [Docker](/install/docker).
 2) Create Compute Engine VM (e2-small, Debian 12, 20GB)
 3) SSH into the VM
 4) Install Docker
-5) Clone Moltbot repository
+5) Clone Fortclaw repository
 6) Create persistent host directories
 7) Configure `.env` and `docker-compose.yml`
 8) Bake required binaries, build, and launch
@@ -87,7 +87,7 @@ All steps can be done via the web UI at https://console.cloud.google.com
 **CLI:**
 
 ```bash
-gcloud projects create my-moltbot-project --name="Moltbot Gateway"
+gcloud projects create my-moltbot-project --name="Fortclaw Gateway"
 gcloud config set project my-moltbot-project
 ```
 
@@ -185,7 +185,7 @@ docker compose version
 
 ---
 
-## 6) Clone the Moltbot repository
+## 6) Clone the Fortclaw repository
 
 ```bash
 git clone https://github.com/moltbot/moltbot.git
@@ -400,7 +400,7 @@ Paste your gateway token.
 
 ## What persists where (source of truth)
 
-Moltbot runs in Docker, but Docker is not the source of truth.
+Fortclaw runs in Docker, but Docker is not the source of truth.
 All long-lived state must survive restarts, rebuilds, and reboots.
 
 | Component | Location | Persistence mechanism | Notes |
@@ -420,7 +420,7 @@ All long-lived state must survive restarts, rebuilds, and reboots.
 
 ## Updates
 
-To update Moltbot on the VM:
+To update Fortclaw on the VM:
 
 ```bash
 cd ~/moltbot
@@ -475,7 +475,7 @@ For automation or CI/CD pipelines, create a dedicated service account with minim
 1. Create a service account:
    ```bash
    gcloud iam service-accounts create moltbot-deploy \
-     --display-name="Moltbot Deployment"
+     --display-name="Fortclaw Deployment"
    ```
 
 2. Grant Compute Instance Admin role (or narrower custom role):

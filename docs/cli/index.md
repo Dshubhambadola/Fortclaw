@@ -1,5 +1,5 @@
 ---
-summary: "Moltbot CLI reference for `moltbot` commands, subcommands, and options"
+summary: "Fortclaw CLI reference for `moltbot` commands, subcommands, and options"
 read_when:
   - Adding or modifying CLI commands or options
   - Documenting new command surfaces
@@ -69,7 +69,7 @@ This page describes the current CLI behavior. If commands change, update this do
 
 ## Color palette
 
-Moltbot uses a lobster palette for CLI output.
+Fortclaw uses a lobster palette for CLI output.
 
 - `accent` (#FF5A2D): headings, labels, primary highlights.
 - `accentBright` (#FF7A3D): command names, emphasis.
@@ -526,7 +526,7 @@ Notes:
 - Overview includes Gateway + node host service status when available.
 
 ### Usage tracking
-Moltbot can surface provider usage/quota when OAuth/API creds are available.
+Fortclaw can surface provider usage/quota when OAuth/API creds are available.
 
 Surfaces:
 - `/status` (adds a short provider usage line when available)
@@ -624,7 +624,7 @@ Subcommands:
 Notes:
 - `gateway status` probes the Gateway RPC by default using the service’s resolved port/config (override with `--url/--token/--password`).
 - `gateway status` supports `--no-probe`, `--deep`, and `--json` for scripting.
-- `gateway status` also surfaces legacy or extra gateway services when it can detect them (`--deep` adds system-level scans). Profile-named Moltbot services are treated as first-class and aren't flagged as "extra".
+- `gateway status` also surfaces legacy or extra gateway services when it can detect them (`--deep` adds system-level scans). Profile-named Fortclaw services are treated as first-class and aren't flagged as "extra".
 - `gateway status` prints which config path the CLI uses vs which config the service likely uses (service env), plus the resolved probe target URL.
 - `gateway install|uninstall|start|stop|restart` support `--json` for scripting (default output stays human-friendly).
 - `gateway install` defaults to Node runtime; bun is **not recommended** (WhatsApp/Telegram bugs).

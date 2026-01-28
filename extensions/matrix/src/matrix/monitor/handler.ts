@@ -252,7 +252,7 @@ export function createMatrixRoomMessageHandler(params: MatrixMonitorHandlerParam
                   await sendMessageMatrix(
                     `room:${roomId}`,
                     [
-                      "Moltbot: access not configured.",
+                      "Fortclaw: access not configured.",
                       "",
                       `Pairing code: ${code}`,
                       "",

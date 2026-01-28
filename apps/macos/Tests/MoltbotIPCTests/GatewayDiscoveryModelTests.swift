@@ -1,4 +1,4 @@
-import MoltbotDiscovery
+import FortclawDiscovery
 import Testing
 
 @Suite
@@ -35,7 +35,7 @@ struct GatewayDiscoveryModelTests {
         #expect(GatewayDiscoveryModel.isLocalGateway(
             lanHost: nil,
             tailnetDns: nil,
-            displayName: "Peter's Mac Studio (Moltbot)",
+            displayName: "Peter's Mac Studio (Fortclaw)",
             serviceName: nil,
             local: local))
     }
@@ -72,13 +72,13 @@ struct GatewayDiscoveryModelTests {
             lanHost: nil,
             tailnetDns: nil,
             displayName: nil,
-            serviceName: "steipetacstudio (Moltbot)",
+            serviceName: "steipetacstudio (Fortclaw)",
             local: local))
         #expect(GatewayDiscoveryModel.isLocalGateway(
             lanHost: nil,
             tailnetDns: nil,
             displayName: nil,
-            serviceName: "steipete (Moltbot)",
+            serviceName: "steipete (Fortclaw)",
             local: local))
     }
 

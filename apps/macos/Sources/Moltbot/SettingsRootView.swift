@@ -111,8 +111,8 @@ struct SettingsRootView: View {
 
     private var nixManagedBanner: some View {
         // Prefer gateway-resolved paths; fall back to local env defaults if disconnected.
-        let configPath = self.snapshotPaths.configPath ?? MoltbotPaths.configURL.path
-        let stateDir = self.snapshotPaths.stateDir ?? MoltbotPaths.stateDirURL.path
+        let configPath = self.snapshotPaths.configPath ?? FortclawPaths.configURL.path
+        let stateDir = self.snapshotPaths.stateDir ?? FortclawPaths.stateDirURL.path
 
         return VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 8) {

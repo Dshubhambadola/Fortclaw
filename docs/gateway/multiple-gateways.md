@@ -1,5 +1,5 @@
 ---
-summary: "Run multiple Moltbot Gateways on one host (isolation, ports, and profiles)"
+summary: "Run multiple Fortclaw Gateways on one host (isolation, ports, and profiles)"
 read_when:
   - Running more than one Gateway on the same machine
   - You need isolated config/state/ports per Gateway

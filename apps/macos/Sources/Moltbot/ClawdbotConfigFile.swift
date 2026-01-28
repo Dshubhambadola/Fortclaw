@@ -1,19 +1,19 @@
-import MoltbotProtocol
+import FortclawProtocol
 import Foundation
 
-enum MoltbotConfigFile {
+enum FortclawConfigFile {
     private static let logger = Logger(subsystem: "bot.molt", category: "config")
 
     static func url() -> URL {
-        MoltbotPaths.configURL
+        FortclawPaths.configURL
     }
 
     static func stateDirURL() -> URL {
-        MoltbotPaths.stateDirURL
+        FortclawPaths.stateDirURL
     }
 
     static func defaultWorkspaceURL() -> URL {
-        MoltbotPaths.workspaceURL
+        FortclawPaths.workspaceURL
     }
 
     static func loadDict() -> [String: Any] {

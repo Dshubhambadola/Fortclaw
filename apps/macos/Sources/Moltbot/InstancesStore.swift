@@ -1,5 +1,5 @@
-import MoltbotKit
-import MoltbotProtocol
+import FortclawKit
+import FortclawProtocol
 import Cocoa
 import Foundation
 import Observation
@@ -293,7 +293,7 @@ final class InstancesStore {
         }
     }
 
-    func handlePresenceEventPayload(_ payload: MoltbotProtocol.AnyCodable) {
+    func handlePresenceEventPayload(_ payload: FortclawProtocol.AnyCodable) {
         do {
             let wrapper = try GatewayPayloadDecoding.decode(payload, as: PresenceEventPayload.self)
             self.applyPresence(wrapper.presence)

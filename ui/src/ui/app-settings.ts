@@ -16,7 +16,7 @@ import { startThemeTransition, type ThemeTransitionContext } from "./theme-trans
 import { scheduleChatScroll, scheduleLogsScroll } from "./app-scroll";
 import { startLogsPolling, stopLogsPolling, startDebugPolling, stopDebugPolling } from "./app-polling";
 import { refreshChat } from "./app-chat";
-import type { MoltbotApp } from "./app";
+import type { FortclawApp } from "./app";
 
 type SettingsHost = {
   settings: UiSettings;
@@ -144,15 +144,15 @@ export function setTheme(
 export async function refreshActiveTab(host: SettingsHost) {
   if (host.tab === "overview") await loadOverview(host);
   if (host.tab === "channels") await loadChannelsTab(host);
-  if (host.tab === "instances") await loadPresence(host as unknown as MoltbotApp);
-  if (host.tab === "sessions") await loadSessions(host as unknown as MoltbotApp);
+  if (host.tab === "instances") await loadPresence(host as unknown as FortclawApp);
+  if (host.tab === "sessions") await loadSessions(host as unknown as FortclawApp);
   if (host.tab === "cron") await loadCron(host);
-  if (host.tab === "skills") await loadSkills(host as unknown as MoltbotApp);
+  if (host.tab === "skills") await loadSkills(host as unknown as FortclawApp);
   if (host.tab === "nodes") {
-    await loadNodes(host as unknown as MoltbotApp);
-    await loadDevices(host as unknown as MoltbotApp);
-    await loadConfig(host as unknown as MoltbotApp);
-    await loadExecApprovals(host as unknown as MoltbotApp);
+    await loadNodes(host as unknown as FortclawApp);
+    await loadDevices(host as unknown as FortclawApp);
+    await loadConfig(host as unknown as FortclawApp);
+    await loadExecApprovals(host as unknown as FortclawApp);
   }
   if (host.tab === "chat") {
     await refreshChat(host as unknown as Parameters<typeof refreshChat>[0]);
@@ -162,16 +162,16 @@ export async function refreshActiveTab(host: SettingsHost) {
     );
   }
   if (host.tab === "config") {
-    await loadConfigSchema(host as unknown as MoltbotApp);
-    await loadConfig(host as unknown as MoltbotApp);
+    await loadConfigSchema(host as unknown as FortclawApp);
+    await loadConfig(host as unknown as FortclawApp);
   }
   if (host.tab === "debug") {
-    await loadDebug(host as unknown as MoltbotApp);
+    await loadDebug(host as unknown as FortclawApp);
     host.eventLog = host.eventLogBuffer;
   }
   if (host.tab === "logs") {
     host.logsAtBottom = true;
-    await loadLogs(host as unknown as MoltbotApp, { reset: true });
+    await loadLogs(host as unknown as FortclawApp, { reset: true });
     scheduleLogsScroll(
       host as unknown as Parameters<typeof scheduleLogsScroll>[0],
       true,
@@ -307,26 +307,26 @@ export function syncUrlWithSessionKey(
 
 export async function loadOverview(host: SettingsHost) {
   await Promise.all([
-    loadChannels(host as unknown as MoltbotApp, false),
-    loadPresence(host as unknown as MoltbotApp),
-    loadSessions(host as unknown as MoltbotApp),
-    loadCronStatus(host as unknown as MoltbotApp),
-    loadDebug(host as unknown as MoltbotApp),
+    loadChannels(host as unknown as FortclawApp, false),
+    loadPresence(host as unknown as FortclawApp),
+    loadSessions(host as unknown as FortclawApp),
+    loadCronStatus(host as unknown as FortclawApp),
+    loadDebug(host as unknown as FortclawApp),
   ]);
 }
 
 export async function loadChannelsTab(host: SettingsHost) {
   await Promise.all([
-    loadChannels(host as unknown as MoltbotApp, true),
-    loadConfigSchema(host as unknown as MoltbotApp),
-    loadConfig(host as unknown as MoltbotApp),
+    loadChannels(host as unknown as FortclawApp, true),
+    loadConfigSchema(host as unknown as FortclawApp),
+    loadConfig(host as unknown as FortclawApp),
   ]);
 }
 
 export async function loadCron(host: SettingsHost) {
   await Promise.all([
-    loadChannels(host as unknown as MoltbotApp, false),
-    loadCronStatus(host as unknown as MoltbotApp),
-    loadCronJobs(host as unknown as MoltbotApp),
+    loadChannels(host as unknown as FortclawApp, false),
+    loadCronStatus(host as unknown as FortclawApp),
+    loadCronJobs(host as unknown as FortclawApp),
   ]);
 }

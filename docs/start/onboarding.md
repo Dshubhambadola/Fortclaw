@@ -1,5 +1,5 @@
 ---
-summary: "First-run onboarding flow for Moltbot (macOS app)"
+summary: "First-run onboarding flow for Fortclaw (macOS app)"
 read_when:
   - Designing the macOS onboarding assistant
   - Implementing auth or identity setup
@@ -75,7 +75,7 @@ from your normal conversation.
 
 ## Agent bootstrap ritual
 
-On the first agent run, Moltbot bootstraps a workspace (default `~/clawd`):
+On the first agent run, Fortclaw bootstraps a workspace (default `~/clawd`):
 
 - Seeds `AGENTS.md`, `BOOTSTRAP.md`, `IDENTITY.md`, `USER.md`
 - Runs a short Q&A ritual (one question at a time)

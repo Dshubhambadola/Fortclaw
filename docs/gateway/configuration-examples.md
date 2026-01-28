@@ -1,9 +1,9 @@
 ---
-summary: "Schema-accurate configuration examples for common Moltbot setups"
+summary: "Schema-accurate configuration examples for common Fortclaw setups"
 read_when:
-  - Learning how to configure Moltbot
+  - Learning how to configure Fortclaw
   - Looking for configuration examples
-  - Setting up Moltbot for the first time
+  - Setting up Fortclaw for the first time
 ---
 # Configuration Examples
 

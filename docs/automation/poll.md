@@ -53,7 +53,7 @@ Params:
 ## Channel differences
 - WhatsApp: 2-12 options, `maxSelections` must be within option count, ignores `durationHours`.
 - Discord: 2-10 options, `durationHours` clamped to 1-768 hours (default 24). `maxSelections > 1` enables multi-select; Discord does not support a strict selection count.
-- MS Teams: Adaptive Card polls (Moltbot-managed). No native poll API; `durationHours` is ignored.
+- MS Teams: Adaptive Card polls (Fortclaw-managed). No native poll API; `durationHours` is ignored.
 
 ## Agent tool (Message)
 Use the `message` tool with `poll` action (`to`, `pollQuestion`, `pollOption`, optional `pollMulti`, `pollDurationHours`, `channel`).

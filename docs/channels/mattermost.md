@@ -1,5 +1,5 @@
 ---
-summary: "Mattermost bot setup and Moltbot config"
+summary: "Mattermost bot setup and Fortclaw config"
 read_when:
   - Setting up Mattermost
   - Debugging Mattermost routing
@@ -25,7 +25,7 @@ moltbot plugins install ./extensions/mattermost
 ```
 
 If you choose Mattermost during configure/onboarding and a git checkout is detected,
-Moltbot will offer the local install path automatically.
+Fortclaw will offer the local install path automatically.
 
 Details: [Plugins](/plugin)
 
@@ -33,7 +33,7 @@ Details: [Plugins](/plugin)
 1) Install the Mattermost plugin.
 2) Create a Mattermost bot account and copy the **bot token**.
 3) Copy the Mattermost **base URL** (e.g., `https://chat.example.com`).
-4) Configure Moltbot and start the gateway.
+4) Configure Fortclaw and start the gateway.
 
 Minimal config:
 ```json5

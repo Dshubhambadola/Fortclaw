@@ -1,5 +1,5 @@
 ---
-summary: "Use OpenCode Zen (curated models) with Moltbot"
+summary: "Use OpenCode Zen (curated models) with Fortclaw"
 read_when:
   - You want OpenCode Zen for model access
   - You want a curated list of coding-friendly models

@@ -1,7 +1,7 @@
 ---
 summary: "CLI reference for `moltbot webhooks` (webhook helpers + Gmail Pub/Sub)"
 read_when:
-  - You want to wire Gmail Pub/Sub events into Moltbot
+  - You want to wire Gmail Pub/Sub events into Fortclaw
   - You want webhook helper commands
 ---
 

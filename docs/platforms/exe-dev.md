@@ -1,5 +1,5 @@
 ---
-summary: "Run Moltbot Gateway on exe.dev (VM + HTTPS proxy) for remote access"
+summary: "Run Fortclaw Gateway on exe.dev (VM + HTTPS proxy) for remote access"
 read_when:
   - You want a cheap always-on Linux host for the Gateway
   - You want remote Control UI access without running your own VPS
@@ -7,7 +7,7 @@ read_when:
 
 # exe.dev
 
-Goal: Moltbot Gateway running on an exe.dev VM, reachable from your laptop via: `https://<vm-name>.exe.xyz`
+Goal: Fortclaw Gateway running on an exe.dev VM, reachable from your laptop via: `https://<vm-name>.exe.xyz`
 
 This page assumes exe.dev's default **exeuntu** image. If you picked a different distro, map packages accordingly.
 
@@ -27,11 +27,11 @@ This page assumes exe.dev's default **exeuntu** image. If you picked a different
 
 ## Automated Install with Shelley
 
-Shelley, [exe.dev](https://exe.dev)'s agent, can install Moltbot instantly with our
+Shelley, [exe.dev](https://exe.dev)'s agent, can install Fortclaw instantly with our
 prompt. The prompt used is as below:
 
 ```
-Set up Moltbot (https://docs.molt.bot/install) on this VM. Use the non-interactive and accept-risk flags for moltbot onboarding. Add the supplied auth or token as needed. Configure nginx to forward from the default port 18789 to the root location on the default enabled site config, making sure to enable Websocket support. Pairing is done by "moltbot devices list" and "moltbot device approve <request id>". Make sure the dashboard shows that Moltbot's health is OK. exe.dev handles forwarding from port 8000 to port 80/443 and HTTPS for us, so the final "reachable" should be <vm-name>.exe.xyz, without port specification.
+Set up Fortclaw (https://docs.molt.bot/install) on this VM. Use the non-interactive and accept-risk flags for moltbot onboarding. Add the supplied auth or token as needed. Configure nginx to forward from the default port 18789 to the root location on the default enabled site config, making sure to enable Websocket support. Pairing is done by "moltbot devices list" and "moltbot device approve <request id>". Make sure the dashboard shows that Fortclaw's health is OK. exe.dev handles forwarding from port 8000 to port 80/443 and HTTPS for us, so the final "reachable" should be <vm-name>.exe.xyz, without port specification.
 ```
 
 ## Manual installation
@@ -50,7 +50,7 @@ Then connect:
 ssh <vm-name>.exe.xyz
 ```
 
-Tip: keep this VM **stateful**. Moltbot stores state under `~/.clawdbot/` and `~/clawd/`.
+Tip: keep this VM **stateful**. Fortclaw stores state under `~/.clawdbot/` and `~/clawd/`.
 
 ## 2) Install prerequisites (on the VM)
 
@@ -59,15 +59,15 @@ sudo apt-get update
 sudo apt-get install -y git curl jq ca-certificates openssl
 ```
 
-## 3) Install Moltbot
+## 3) Install Fortclaw
 
-Run the Moltbot install script:
+Run the Fortclaw install script:
 
 ```bash
 curl -fsSL https://molt.bot/install.sh | bash
 ```
 
-## 4) Setup nginx to proxy Moltbot to port 8000
+## 4) Setup nginx to proxy Fortclaw to port 8000
 
 Edit `/etc/nginx/sites-enabled/default` with
 
@@ -101,7 +101,7 @@ server {
 }
 ```
 
-## 5) Access Moltbot and grant privileges
+## 5) Access Fortclaw and grant privileges
 
 Access `https://<vm-name>.exe.xyz/?token=YOUR-TOKEN-FROM-TERMINAL`. Approve
 devices with `moltbot devices list` and `moltbot device approve`. When in doubt,

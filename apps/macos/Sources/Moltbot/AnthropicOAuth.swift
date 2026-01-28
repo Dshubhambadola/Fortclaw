@@ -18,7 +18,7 @@ enum AnthropicAuthMode: Equatable {
 
     var shortLabel: String {
         switch self {
-        case .oauthFile: "OAuth (Moltbot token file)"
+        case .oauthFile: "OAuth (Fortclaw token file)"
         case .oauthEnv: "OAuth (env var)"
         case .apiKeyEnv: "API key (env var)"
         case .missing: "Missing credentials"
@@ -36,7 +36,7 @@ enum AnthropicAuthMode: Equatable {
 enum AnthropicAuthResolver {
     static func resolve(
         environment: [String: String] = ProcessInfo.processInfo.environment,
-        oauthStatus: MoltbotOAuthStore.AnthropicOAuthStatus = MoltbotOAuthStore
+        oauthStatus: FortclawOAuthStore.AnthropicOAuthStatus = FortclawOAuthStore
             .anthropicOAuthStatus()) -> AnthropicAuthMode
     {
         if oauthStatus.isConnected { return .oauthFile }
@@ -194,7 +194,7 @@ enum AnthropicOAuth {
     }
 }
 
-enum MoltbotOAuthStore {
+enum FortclawOAuthStore {
     static let oauthFilename = "oauth.json"
     private static let providerKey = "anthropic"
     private static let moltbotOAuthDirEnv = "CLAWDBOT_OAUTH_DIR"
@@ -215,12 +215,12 @@ enum MoltbotOAuthStore {
 
         var shortDescription: String {
             switch self {
-            case .missingFile: "Moltbot OAuth token file not found"
-            case .unreadableFile: "Moltbot OAuth token file not readable"
-            case .invalidJSON: "Moltbot OAuth token file invalid"
-            case .missingProviderEntry: "No Anthropic entry in Moltbot OAuth token file"
+            case .missingFile: "Fortclaw OAuth token file not found"
+            case .unreadableFile: "Fortclaw OAuth token file not readable"
+            case .invalidJSON: "Fortclaw OAuth token file invalid"
+            case .missingProviderEntry: "No Anthropic entry in Fortclaw OAuth token file"
             case .missingTokens: "Anthropic entry missing tokens"
-            case .connected: "Moltbot OAuth credentials found"
+            case .connected: "Fortclaw OAuth credentials found"
             }
         }
     }

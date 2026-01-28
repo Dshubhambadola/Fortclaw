@@ -13,7 +13,7 @@ Quick provider overview + examples: [/concepts/model-providers](/concepts/model-
 
 ## How model selection works
 
-Moltbot selects models in this order:
+Fortclaw selects models in this order:
 
 1) **Primary** model (`agents.defaults.model.primary` or `agents.defaults.model`).
 2) **Fallbacks** in `agents.defaults.model.fallbacks` (in order).
@@ -21,7 +21,7 @@ Moltbot selects models in this order:
    next model.
 
 Related:
-- `agents.defaults.models` is the allowlist/catalog of models Moltbot can use (plus aliases).
+- `agents.defaults.models` is the allowlist/catalog of models Fortclaw can use (plus aliases).
 - `agents.defaults.imageModel` is used **only when** the primary model can’t accept images.
 - Per-agent defaults can override `agents.defaults.model` via `agents.list[].model` plus bindings (see [/concepts/multi-agent](/concepts/multi-agent)).
 
@@ -59,7 +59,7 @@ Provider configuration examples (including OpenCode Zen) live in
 
 If `agents.defaults.models` is set, it becomes the **allowlist** for `/model` and for
 session overrides. When a user selects a model that isn’t in that allowlist,
-Moltbot returns:
+Fortclaw returns:
 
 ```
 Model "provider/model" is not allowed. Use /model to list available models.
@@ -104,7 +104,7 @@ Notes:
 - `/model status` is the detailed view (auth candidates and, when configured, provider endpoint `baseUrl` + `api` mode).
 - Model refs are parsed by splitting on the **first** `/`. Use `provider/model` when typing `/model <ref>`.
 - If the model ID itself contains `/` (OpenRouter-style), you must include the provider prefix (example: `/model openrouter/moonshotai/kimi-k2`).
-- If you omit the provider, Moltbot treats the input as an alias or a model for the **default provider** (only works when there is no `/` in the model ID).
+- If you omit the provider, Fortclaw treats the input as an alias or a model for the **default provider** (only works when there is no `/` in the model ID).
 
 Full command behavior/config: [Slash commands](/tools/slash-commands).
 

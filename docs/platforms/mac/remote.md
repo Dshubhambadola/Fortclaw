@@ -1,16 +1,16 @@
 ---
-summary: "macOS app flow for controlling a remote Moltbot gateway over SSH"
+summary: "macOS app flow for controlling a remote Fortclaw gateway over SSH"
 read_when:
   - Setting up or debugging remote mac control
 ---
-# Remote Moltbot (macOS ⇄ remote host)
+# Remote Fortclaw (macOS ⇄ remote host)
 
 
-This flow lets the macOS app act as a full remote control for a Moltbot gateway running on another host (desktop/server). It’s the app’s **Remote over SSH** (remote run) feature. All features—health checks, Voice Wake forwarding, and Web Chat—reuse the same remote SSH configuration from *Settings → General*.
+This flow lets the macOS app act as a full remote control for a Fortclaw gateway running on another host (desktop/server). It’s the app’s **Remote over SSH** (remote run) feature. All features—health checks, Voice Wake forwarding, and Web Chat—reuse the same remote SSH configuration from *Settings → General*.
 
 ## Modes
 - **Local (this Mac)**: Everything runs on the laptop. No SSH involved.
-- **Remote over SSH (default)**: Moltbot commands are executed on the remote host. The mac app opens an SSH connection with `-o BatchMode` plus your chosen identity/key and a local port-forward.
+- **Remote over SSH (default)**: Fortclaw commands are executed on the remote host. The mac app opens an SSH connection with `-o BatchMode` plus your chosen identity/key and a local port-forward.
 - **Remote direct (ws/wss)**: No SSH tunnel. The mac app connects to the gateway URL directly (for example, via Tailscale Serve or a public HTTPS reverse proxy).
 
 ## Remote transports
@@ -19,13 +19,13 @@ Remote mode supports two transports:
 - **Direct (ws/wss)**: Connects straight to the gateway URL. The gateway sees the real client IP.
 
 ## Prereqs on the remote host
-1) Install Node + pnpm and build/install the Moltbot CLI (`pnpm install && pnpm build && pnpm link --global`).
+1) Install Node + pnpm and build/install the Fortclaw CLI (`pnpm install && pnpm build && pnpm link --global`).
 2) Ensure `moltbot` is on PATH for non-interactive shells (symlink into `/usr/local/bin` or `/opt/homebrew/bin` if needed).
 3) Open SSH with key auth. We recommend **Tailscale** IPs for stable reachability off-LAN.
 
 ## macOS app setup
 1) Open *Settings → General*.
-2) Under **Moltbot runs**, pick **Remote over SSH** and set:
+2) Under **Fortclaw runs**, pick **Remote over SSH** and set:
    - **Transport**: **SSH tunnel** or **Direct (ws/wss)**.
    - **SSH target**: `user@host` (optional `:port`).
      - If the gateway is on the same LAN and advertises Bonjour, pick it from the discovered list to auto-fill this field.

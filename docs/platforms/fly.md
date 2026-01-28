@@ -1,11 +1,11 @@
 ---
 title: Fly.io
-description: Deploy Moltbot on Fly.io
+description: Deploy Fortclaw on Fly.io
 ---
 
 # Fly.io Deployment
 
-**Goal:** Moltbot Gateway running on a [Fly.io](https://fly.io) machine with persistent storage, automatic HTTPS, and Discord/channel access.
+**Goal:** Fortclaw Gateway running on a [Fly.io](https://fly.io) machine with persistent storage, automatic HTTPS, and Discord/channel access.
 
 ## What you need
 

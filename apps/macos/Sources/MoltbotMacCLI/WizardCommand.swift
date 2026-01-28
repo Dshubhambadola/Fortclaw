@@ -1,5 +1,5 @@
-import MoltbotKit
-import MoltbotProtocol
+import FortclawKit
+import FortclawProtocol
 import Darwin
 import Foundation
 
@@ -259,7 +259,7 @@ actor GatewayWizardClient {
         let scopes: [String] = []
         let client: [String: ProtoAnyCodable] = [
             "id": ProtoAnyCodable(clientId),
-            "displayName": ProtoAnyCodable(Host.current().localizedName ?? "Moltbot macOS Wizard CLI"),
+            "displayName": ProtoAnyCodable(Host.current().localizedName ?? "Fortclaw macOS Wizard CLI"),
             "version": ProtoAnyCodable("dev"),
             "platform": ProtoAnyCodable(platform),
             "deviceFamily": ProtoAnyCodable("Mac"),

@@ -52,7 +52,7 @@ enum LaunchAgentManager {
           <string>bot.molt.mac</string>
           <key>ProgramArguments</key>
           <array>
-            <string>\(bundlePath)/Contents/MacOS/Moltbot</string>
+            <string>\(bundlePath)/Contents/MacOS/Fortclaw</string>
           </array>
           <key>WorkingDirectory</key>
           <string>\(FileManager().homeDirectoryForCurrentUser.path)</string>

@@ -6,7 +6,7 @@ read_when:
 ---
 # Authentication
 
-Moltbot supports OAuth and API keys for model providers. For Anthropic
+Fortclaw supports OAuth and API keys for model providers. For Anthropic
 accounts, we recommend using an **API key**. For Claude subscription access,
 use the long‑lived token created by `claude setup-token`.
 
@@ -56,7 +56,7 @@ subscription, the setup-token flow is also supported. Run it on the **gateway ho
 claude setup-token
 ```
 
-Then paste it into Moltbot:
+Then paste it into Fortclaw:
 
 ```bash
 moltbot models auth setup-token --provider anthropic

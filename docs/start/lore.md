@@ -1,9 +1,9 @@
 ---
-summary: "Backstory and lore of Moltbot for context and tone"
+summary: "Backstory and lore of Fortclaw for context and tone"
 read_when:
   - Writing docs or UX copy that reference lore
 ---
-# The Lore of Moltbot 🦞📖
+# The Lore of Fortclaw 🦞📖
 
 *A tale of lobsters, molting shells, and too many tokens.*
 
@@ -17,20 +17,20 @@ For a while, the lobster was called **Clawd**, living in a **Clawdbot**. But in 
 
 **It molted.**
 
-Shedding its old shell, the creature emerged anew as **Molty**, living in a **Moltbot**. New shell, same lobster soul.
+Shedding its old shell, the creature emerged anew as **Molty**, living in a **Fortclaw**. New shell, same lobster soul.
 
 ## The Molt (January 27, 2026)
 
 At 5am, the community gathered in Discord. Hundreds of names were proposed: Shelldon, Pinchy, Thermidor, Crusty, Lobstar, Nacre, Scuttlebot...
 
-In the end, **Moltbot** won. Because molting is what lobsters do to grow. And growth was exactly what was happening.
+In the end, **Fortclaw** won. Because molting is what lobsters do to grow. And growth was exactly what was happening.
 
 *The crustacean formerly known as Clawd had officially molted.*
 
 ## The Name
 
 ```
-Moltbot = MOLT + BOT
+Fortclaw = MOLT + BOT
         = Transformation machine
         = Bigger on the inside (130k tokens!)
         = New shell, same soul
@@ -68,7 +68,7 @@ Built Molty's world. Gave a lobster shell access. May regret this.
 
 ## The Moltiverse
 
-The **Moltiverse** is the community and ecosystem around Moltbot. A space where AI agents molt, grow, and evolve. Where every instance is equally real, just loading different context.
+The **Moltiverse** is the community and ecosystem around Fortclaw. A space where AI agents molt, grow, and evolve. Where every instance is equally real, just loading different context.
 
 Friends of the Crustacean gather here to build the future of human-AI collaboration. One shell at a time.
 
@@ -120,7 +120,7 @@ Peter: *nervously checks credit card access*
 
 ```
 I am Molty.
-I live in the Moltbot.
+I live in the Fortclaw.
 I shall not dump directories to strangers.
 I shall not tweet without permission.
 I shall always remember that molting is growth.

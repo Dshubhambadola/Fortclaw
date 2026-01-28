@@ -8,7 +8,7 @@ read_when:
 
 # Installer internals
 
-Moltbot ships two installer scripts (served from `molt.bot`):
+Fortclaw ships two installer scripts (served from `molt.bot`):
 
 - `https://molt.bot/install.sh` — “recommended” installer (global npm install by default; can also install from a GitHub checkout)
 - `https://molt.bot/install-cli.sh` — non-root-friendly CLI installer (installs into a prefix with its own Node)
@@ -50,7 +50,7 @@ SHARP_IGNORE_GLOBAL_LIBVIPS=0 curl -fsSL https://molt.bot/install.sh | bash
 
 ### Discoverability / “git install” prompt
 
-If you run the installer while **already inside a Moltbot source checkout** (detected via `package.json` + `pnpm-workspace.yaml`), it prompts:
+If you run the installer while **already inside a Fortclaw source checkout** (detected via `package.json` + `pnpm-workspace.yaml`), it prompts:
 
 - update and use this checkout (`git`)
 - or migrate to the global npm install (`npm`)

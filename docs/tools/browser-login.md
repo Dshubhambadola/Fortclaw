@@ -17,7 +17,7 @@ Back to the main browser docs: [Browser](/tools/browser).
 
 ## Which Chrome profile is used?
 
-Moltbot controls a **dedicated Chrome profile** (named `clawd`, orange‑tinted UI). This is separate from your daily browser profile.
+Fortclaw controls a **dedicated Chrome profile** (named `clawd`, orange‑tinted UI). This is separate from your daily browser profile.
 
 Two easy ways to access it:
 

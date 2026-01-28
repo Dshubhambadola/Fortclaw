@@ -4,7 +4,7 @@ description: Remote-control tmux sessions for interactive CLIs by sending keystr
 metadata: {"moltbot":{"emoji":"🧵","os":["darwin","linux"],"requires":{"bins":["tmux"]}}}
 ---
 
-# tmux Skill (Moltbot)
+# tmux Skill (Fortclaw)
 
 Use tmux only when you need an interactive TTY. Prefer exec background mode for long-running, non-interactive tasks.
 

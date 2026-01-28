@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 
-import type { MoltbotConfig } from "clawdbot/plugin-sdk";
+import type { FortclawConfig } from "clawdbot/plugin-sdk";
 import {
   logAckFailure,
   logInboundDrop,
@@ -26,7 +26,7 @@ export type BlueBubblesRuntimeEnv = {
 
 export type BlueBubblesMonitorOptions = {
   account: ResolvedBlueBubblesAccount;
-  config: MoltbotConfig;
+  config: FortclawConfig;
   runtime: BlueBubblesRuntimeEnv;
   abortSignal: AbortSignal;
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void;
@@ -243,7 +243,7 @@ function logGroupAllowlistHint(params: {
 
 type WebhookTarget = {
   account: ResolvedBlueBubblesAccount;
-  config: MoltbotConfig;
+  config: FortclawConfig;
   runtime: BlueBubblesRuntimeEnv;
   core: BlueBubblesCoreRuntime;
   path: string;
@@ -340,7 +340,7 @@ const targetDebouncers = new Map<
 >();
 
 function resolveBlueBubblesDebounceMs(
-  config: MoltbotConfig,
+  config: FortclawConfig,
   core: BlueBubblesCoreRuntime,
 ): number {
   const inbound = config.messages?.inbound;
@@ -940,7 +940,7 @@ function maskSecret(value: string): string {
 }
 
 function resolveBlueBubblesAckReaction(params: {
-  cfg: MoltbotConfig;
+  cfg: FortclawConfig;
   agentId: string;
   core: BlueBubblesCoreRuntime;
   runtime: BlueBubblesRuntimeEnv;

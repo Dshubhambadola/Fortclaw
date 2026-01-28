@@ -15,7 +15,7 @@ UI surfaces.
 
 Canvas state is stored under Application Support:
 
-- `~/Library/Application Support/Moltbot/canvas/<session>/...`
+- `~/Library/Application Support/Fortclaw/canvas/<session>/...`
 
 The Canvas panel serves those files via a **custom URL scheme**:
 

@@ -23,7 +23,7 @@ import {
   parseExecApprovalResolved,
   removeExecApproval,
 } from "./controllers/exec-approval";
-import type { MoltbotApp } from "./app";
+import type { FortclawApp } from "./app";
 import type { ExecApprovalRequest } from "./controllers/exec-approval";
 import { loadAssistantIdentity } from "./controllers/assistant-identity";
 
@@ -133,10 +133,10 @@ export function connectGateway(host: GatewayHost) {
       (host as unknown as { chatStream: string | null }).chatStream = null;
       (host as unknown as { chatStreamStartedAt: number | null }).chatStreamStartedAt = null;
       resetToolStream(host as unknown as Parameters<typeof resetToolStream>[0]);
-      void loadAssistantIdentity(host as unknown as MoltbotApp);
-      void loadAgents(host as unknown as MoltbotApp);
-      void loadNodes(host as unknown as MoltbotApp, { quiet: true });
-      void loadDevices(host as unknown as MoltbotApp, { quiet: true });
+      void loadAssistantIdentity(host as unknown as FortclawApp);
+      void loadAgents(host as unknown as FortclawApp);
+      void loadNodes(host as unknown as FortclawApp, { quiet: true });
+      void loadDevices(host as unknown as FortclawApp, { quiet: true });
       void refreshActiveTab(host as unknown as Parameters<typeof refreshActiveTab>[0]);
     },
     onClose: ({ code, reason }) => {
@@ -188,14 +188,14 @@ function handleGatewayEventUnsafe(host: GatewayHost, evt: GatewayEventFrame) {
         payload.sessionKey,
       );
     }
-    const state = handleChatEvent(host as unknown as MoltbotApp, payload);
+    const state = handleChatEvent(host as unknown as FortclawApp, payload);
     if (state === "final" || state === "error" || state === "aborted") {
       resetToolStream(host as unknown as Parameters<typeof resetToolStream>[0]);
       void flushChatQueueForEvent(
         host as unknown as Parameters<typeof flushChatQueueForEvent>[0],
       );
     }
-    if (state === "final") void loadChatHistory(host as unknown as MoltbotApp);
+    if (state === "final") void loadChatHistory(host as unknown as FortclawApp);
     return;
   }
 
@@ -214,7 +214,7 @@ function handleGatewayEventUnsafe(host: GatewayHost, evt: GatewayEventFrame) {
   }
 
   if (evt.event === "device.pair.requested" || evt.event === "device.pair.resolved") {
-    void loadDevices(host as unknown as MoltbotApp, { quiet: true });
+    void loadDevices(host as unknown as FortclawApp, { quiet: true });
   }
 
   if (evt.event === "exec.approval.requested") {

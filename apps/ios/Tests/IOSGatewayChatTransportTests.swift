@@ -1,6 +1,6 @@
-import MoltbotKit
+import FortclawKit
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite struct IOSGatewayChatTransportTests {
     @Test func requestsFailFastWhenGatewayNotConnected() async {

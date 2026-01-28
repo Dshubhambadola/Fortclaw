@@ -1,7 +1,7 @@
 import AppKit
-import MoltbotDiscovery
-import MoltbotIPC
-import MoltbotKit
+import FortclawDiscovery
+import FortclawIPC
+import FortclawKit
 import Observation
 import SwiftUI
 
@@ -24,8 +24,8 @@ struct GeneralSettings: View {
             VStack(alignment: .leading, spacing: 18) {
                 VStack(alignment: .leading, spacing: 12) {
                     SettingsToggleRow(
-                        title: "Moltbot active",
-                        subtitle: "Pause to stop the Moltbot gateway; no messages will be processed.",
+                        title: "Fortclaw active",
+                        subtitle: "Pause to stop the Fortclaw gateway; no messages will be processed.",
                         binding: self.activeBinding)
 
                     self.connectionSection
@@ -34,12 +34,12 @@ struct GeneralSettings: View {
 
                     SettingsToggleRow(
                         title: "Launch at login",
-                        subtitle: "Automatically start Moltbot after you sign in.",
+                        subtitle: "Automatically start Fortclaw after you sign in.",
                         binding: self.$state.launchAtLogin)
 
                     SettingsToggleRow(
                         title: "Show Dock icon",
-                        subtitle: "Keep Moltbot visible in the Dock instead of menu-bar-only mode.",
+                        subtitle: "Keep Fortclaw visible in the Dock instead of menu-bar-only mode.",
                         binding: self.$state.showDockIcon)
 
                     SettingsToggleRow(
@@ -71,7 +71,7 @@ struct GeneralSettings: View {
                 Spacer(minLength: 12)
                 HStack {
                     Spacer()
-                    Button("Quit Moltbot") { NSApp.terminate(nil) }
+                    Button("Quit Fortclaw") { NSApp.terminate(nil) }
                         .buttonStyle(.borderedProminent)
                 }
             }
@@ -98,7 +98,7 @@ struct GeneralSettings: View {
 
     private var connectionSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Moltbot runs")
+            Text("Fortclaw runs")
                 .font(.title3.weight(.semibold))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -172,7 +172,7 @@ struct GeneralSettings: View {
                                 .frame(width: 280)
                         }
                         LabeledContent("CLI path") {
-                            TextField("/Applications/Moltbot.app/.../moltbot", text: self.$state.remoteCliPath)
+                            TextField("/Applications/Fortclaw.app/.../moltbot", text: self.$state.remoteCliPath)
                                 .textFieldStyle(.roundedBorder)
                                 .frame(width: 280)
                         }
@@ -683,7 +683,7 @@ extension GeneralSettings {
                 host: host,
                 port: gateway.sshPort)
             self.state.remoteCliPath = gateway.cliPath ?? ""
-            MoltbotConfigFile.setRemoteGatewayUrl(host: host, port: gateway.gatewayPort)
+            FortclawConfigFile.setRemoteGatewayUrl(host: host, port: gateway.gatewayPort)
         }
     }
 }

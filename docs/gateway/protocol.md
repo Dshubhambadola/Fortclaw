@@ -9,7 +9,7 @@ read_when:
 # Gateway protocol (WebSocket)
 
 The Gateway WS protocol is the **single control plane + node transport** for
-Moltbot. All clients (CLI, web UI, macOS app, iOS/Android nodes, headless
+Fortclaw. All clients (CLI, web UI, macOS app, iOS/Android nodes, headless
 nodes) connect over WebSocket and declare their **role** + **scope** at
 handshake time.
 

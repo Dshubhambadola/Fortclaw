@@ -1,4 +1,4 @@
-import MoltbotIPC
+import FortclawIPC
 import Foundation
 
 extension OnboardingView {
@@ -127,9 +127,9 @@ extension OnboardingView {
     }
 
     func refreshAnthropicOAuthStatus() {
-        _ = MoltbotOAuthStore.importLegacyAnthropicOAuthIfNeeded()
+        _ = FortclawOAuthStore.importLegacyAnthropicOAuthIfNeeded()
         let previous = self.anthropicAuthDetectedStatus
-        let status = MoltbotOAuthStore.anthropicOAuthStatus()
+        let status = FortclawOAuthStore.anthropicOAuthStatus()
         self.anthropicAuthDetectedStatus = status
         self.anthropicAuthConnected = status.isConnected
 
@@ -154,7 +154,7 @@ extension OnboardingView {
         self.anthropicAuthVerificationFailed = false
         defer { self.anthropicAuthVerifying = false }
 
-        guard let refresh = MoltbotOAuthStore.loadAnthropicOAuthRefreshToken(), !refresh.isEmpty else {
+        guard let refresh = FortclawOAuthStore.loadAnthropicOAuthRefreshToken(), !refresh.isEmpty else {
             self.anthropicAuthStatus = "OAuth verification failed: missing refresh token."
             self.anthropicAuthVerificationFailed = true
             return
@@ -162,7 +162,7 @@ extension OnboardingView {
 
         do {
             let updated = try await AnthropicOAuth.refresh(refreshToken: refresh)
-            try MoltbotOAuthStore.saveAnthropicOAuth(updated)
+            try FortclawOAuthStore.saveAnthropicOAuth(updated)
             self.refreshAnthropicOAuthStatus()
             self.anthropicAuthVerified = true
             self.anthropicAuthVerifiedAt = Date()

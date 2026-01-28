@@ -1,7 +1,7 @@
-import MoltbotDiscovery
+import FortclawDiscovery
 import SwiftUI
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite(.serialized)
 @MainActor

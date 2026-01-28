@@ -2,7 +2,7 @@
 title: "Vercel AI Gateway"
 summary: "Vercel AI Gateway setup (auth + model selection)"
 read_when:
-  - You want to use Vercel AI Gateway with Moltbot
+  - You want to use Vercel AI Gateway with Fortclaw
   - You need the API key env var or CLI auth choice
 ---
 # Vercel AI Gateway

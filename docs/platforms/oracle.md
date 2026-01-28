@@ -1,18 +1,18 @@
 ---
-summary: "Moltbot on Oracle Cloud (Always Free ARM)"
+summary: "Fortclaw on Oracle Cloud (Always Free ARM)"
 read_when:
-  - Setting up Moltbot on Oracle Cloud
-  - Looking for low-cost VPS hosting for Moltbot
-  - Want 24/7 Moltbot on a small server
+  - Setting up Fortclaw on Oracle Cloud
+  - Looking for low-cost VPS hosting for Fortclaw
+  - Want 24/7 Fortclaw on a small server
 ---
 
-# Moltbot on Oracle Cloud (OCI)
+# Fortclaw on Oracle Cloud (OCI)
 
 ## Goal
 
-Run a persistent Moltbot Gateway on Oracle Cloud's **Always Free** ARM tier.
+Run a persistent Fortclaw Gateway on Oracle Cloud's **Always Free** ARM tier.
 
-Oracle’s free tier can be a great fit for Moltbot (especially if you already have an OCI account), but it comes with tradeoffs:
+Oracle’s free tier can be a great fit for Fortclaw (especially if you already have an OCI account), but it comes with tradeoffs:
 
 - ARM architecture (most things work, but some binaries may be x86-only)
 - Capacity and signup can be finicky
@@ -94,7 +94,7 @@ tailscale status
 
 **From now on, connect via Tailscale:** `ssh ubuntu@moltbot` (or use the Tailscale IP).
 
-## 5) Install Moltbot
+## 5) Install Fortclaw
 
 ```bash
 curl -fsSL https://molt.bot/install.sh | bash

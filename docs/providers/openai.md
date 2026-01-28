@@ -1,7 +1,7 @@
 ---
-summary: "Use OpenAI via API keys or Codex subscription in Moltbot"
+summary: "Use OpenAI via API keys or Codex subscription in Fortclaw"
 read_when:
-  - You want to use OpenAI models in Moltbot
+  - You want to use OpenAI models in Fortclaw
   - You want Codex subscription auth instead of API keys
 ---
 # OpenAI

@@ -1,5 +1,5 @@
 ---
-summary: "Setup guide: keep your Moltbot setup tailored while staying up-to-date"
+summary: "Setup guide: keep your Fortclaw setup tailored while staying up-to-date"
 read_when:
   - Setting up a new machine
   - You want “latest + greatest” without breaking your personal setup
@@ -42,7 +42,7 @@ If you don’t have a global install yet, run it via `pnpm moltbot setup`.
 
 ## Stable workflow (macOS app first)
 
-1) Install + launch **Moltbot.app** (menu bar).
+1) Install + launch **Fortclaw.app** (menu bar).
 2) Complete the onboarding/permissions checklist (TCC prompts).
 3) Ensure Gateway is **Local** and running (the app manages it).
 4) Link surfaces (example: WhatsApp):
@@ -83,7 +83,7 @@ pnpm gateway:watch
 
 ### 2) Point the macOS app at your running Gateway
 
-In **Moltbot.app**:
+In **Fortclaw.app**:
 
 - Connection Mode: **Local**
 The app will attach to the running gateway on the configured port.
@@ -140,5 +140,5 @@ user service (no lingering needed). See [Gateway runbook](/gateway) for the syst
 - [Gateway runbook](/gateway) (flags, supervision, ports)
 - [Gateway configuration](/gateway/configuration) (config schema + examples)
 - [Discord](/channels/discord) and [Telegram](/channels/telegram) (reply tags + replyToMode settings)
-- [Moltbot assistant setup](/start/clawd)
+- [Fortclaw assistant setup](/start/clawd)
 - [macOS app](/platforms/macos) (gateway lifecycle)

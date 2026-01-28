@@ -1,7 +1,7 @@
 import type {
   ChannelMessageActionAdapter,
   ChannelMessageActionName,
-  MoltbotConfig,
+  FortclawConfig,
 } from "clawdbot/plugin-sdk";
 import { jsonResult, readStringParam } from "clawdbot/plugin-sdk";
 
@@ -10,7 +10,7 @@ import { sendMessageZalo } from "./send.js";
 
 const providerId = "zalo";
 
-function listEnabledAccounts(cfg: MoltbotConfig) {
+function listEnabledAccounts(cfg: FortclawConfig) {
   return listEnabledZaloAccounts(cfg).filter(
     (account) => account.enabled && account.tokenSource !== "none",
   );
@@ -18,7 +18,7 @@ function listEnabledAccounts(cfg: MoltbotConfig) {
 
 export const zaloMessageActions: ChannelMessageActionAdapter = {
   listActions: ({ cfg }) => {
-    const accounts = listEnabledAccounts(cfg as MoltbotConfig);
+    const accounts = listEnabledAccounts(cfg as FortclawConfig);
     if (accounts.length === 0) return [];
     const actions = new Set<ChannelMessageActionName>(["send"]);
     return Array.from(actions);
@@ -44,7 +44,7 @@ export const zaloMessageActions: ChannelMessageActionAdapter = {
       const result = await sendMessageZalo(to ?? "", content ?? "", {
         accountId: accountId ?? undefined,
         mediaUrl: mediaUrl ?? undefined,
-        cfg: cfg as MoltbotConfig,
+        cfg: cfg as FortclawConfig,
       });
 
       if (!result.ok) {

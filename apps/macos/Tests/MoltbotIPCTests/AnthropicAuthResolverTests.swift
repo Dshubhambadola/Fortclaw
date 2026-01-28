@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite
 struct AnthropicAuthResolverTests {
@@ -21,7 +21,7 @@ struct AnthropicAuthResolverTests {
         let data = try JSONSerialization.data(withJSONObject: payload, options: [.prettyPrinted, .sortedKeys])
         try data.write(to: oauthFile, options: [.atomic])
 
-        let status = MoltbotOAuthStore.anthropicOAuthStatus(at: oauthFile)
+        let status = FortclawOAuthStore.anthropicOAuthStatus(at: oauthFile)
         let mode = AnthropicAuthResolver.resolve(environment: [
             "ANTHROPIC_API_KEY": "sk-ant-ignored",
         ], oauthStatus: status)

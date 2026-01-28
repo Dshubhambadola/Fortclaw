@@ -1,13 +1,13 @@
 ---
-summary: "Run Moltbot in a sandboxed macOS VM (local or hosted) when you need isolation or iMessage"
+summary: "Run Fortclaw in a sandboxed macOS VM (local or hosted) when you need isolation or iMessage"
 read_when:
-  - You want Moltbot isolated from your main macOS environment
+  - You want Fortclaw isolated from your main macOS environment
   - You want iMessage integration (BlueBubbles) in a sandbox
   - You want a resettable macOS environment you can clone
   - You want to compare local vs hosted macOS VM options
 ---
 
-# Moltbot on macOS VMs (Sandboxing)
+# Fortclaw on macOS VMs (Sandboxing)
 
 ## Recommended default (most users)
 
@@ -21,7 +21,7 @@ Use a macOS VM when you specifically need macOS-only capabilities (iMessage/Blue
 
 ### Local VM on your Apple Silicon Mac (Lume)
 
-Run Moltbot in a sandboxed macOS VM on your existing Apple Silicon Mac using [Lume](https://cua.ai/docs/lume).
+Run Fortclaw in a sandboxed macOS VM on your existing Apple Silicon Mac using [Lume](https://cua.ai/docs/lume).
 
 This gives you:
 - Full macOS environment in isolation (your host stays clean)
@@ -45,7 +45,7 @@ Once you have SSH access to a macOS VM, continue at step 6 below.
 2. `lume create moltbot --os macos --ipsw latest`
 3. Complete Setup Assistant, enable Remote Login (SSH)
 4. `lume run moltbot --no-display`
-5. SSH in, install Moltbot, configure channels
+5. SSH in, install Fortclaw, configure channels
 6. Done
 
 ---
@@ -127,7 +127,7 @@ Replace `youruser` with the account you created, and the IP with your VM's IP.
 
 ---
 
-## 6) Install Moltbot
+## 6) Install Fortclaw
 
 Inside the VM:
 
@@ -181,7 +181,7 @@ lume stop moltbot
 lume run moltbot --no-display
 ```
 
-The VM runs in the background. Moltbot's daemon keeps the gateway running.
+The VM runs in the background. Fortclaw's daemon keeps the gateway running.
 
 To check status:
 
@@ -193,7 +193,7 @@ ssh youruser@192.168.64.X "moltbot status"
 
 ## Bonus: iMessage integration
 
-This is the killer feature of running on macOS. Use [BlueBubbles](https://bluebubbles.app) to add iMessage to Moltbot.
+This is the killer feature of running on macOS. Use [BlueBubbles](https://bluebubbles.app) to add iMessage to Fortclaw.
 
 Inside the VM:
 
@@ -202,7 +202,7 @@ Inside the VM:
 3. Enable the Web API and set a password
 4. Point BlueBubbles webhooks at your gateway (example: `https://your-gateway-host:3000/bluebubbles-webhook?password=<password>`)
 
-Add to your Moltbot config:
+Add to your Fortclaw config:
 
 ```json
 {

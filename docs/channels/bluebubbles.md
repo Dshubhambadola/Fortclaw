@@ -12,7 +12,7 @@ Status: bundled plugin that talks to the BlueBubbles macOS server over HTTP. **R
 ## Overview
 - Runs on macOS via the BlueBubbles helper app ([bluebubbles.app](https://bluebubbles.app)).
 - Recommended/tested: macOS Sequoia (15). macOS Tahoe (26) works; edit is currently broken on Tahoe, and group icon updates may report success but not sync.
-- Moltbot talks to it through its REST API (`GET /api/v1/ping`, `POST /message/text`, `POST /chat/:id/*`).
+- Fortclaw talks to it through its REST API (`GET /api/v1/ping`, `POST /message/text`, `POST /chat/:id/*`).
 - Incoming messages arrive via webhooks; outgoing replies, typing indicators, read receipts, and tapbacks are REST calls.
 - Attachments and stickers are ingested as inbound media (and surfaced to the agent when possible).
 - Pairing/allowlist works the same way as other channels (`/start/pairing` etc) with `channels.bluebubbles.allowFrom` + pairing codes.
@@ -99,7 +99,7 @@ Per-group configuration:
 ## Typing + read receipts
 - **Typing indicators**: Sent automatically before and during response generation.
 - **Read receipts**: Controlled by `channels.bluebubbles.sendReadReceipts` (default: `true`).
-- **Typing indicators**: Moltbot sends typing start events; BlueBubbles clears typing automatically on send or timeout (manual stop via DELETE is unreliable).
+- **Typing indicators**: Fortclaw sends typing start events; BlueBubbles clears typing automatically on send or timeout (manual stop via DELETE is unreliable).
 
 ```json5
 {
@@ -151,7 +151,7 @@ Available actions:
   - Voice memos: set `asVoice: true` with **MP3** or **CAF** audio to send as an iMessage voice message. BlueBubbles converts MP3 → CAF when sending voice memos.
 
 ### Message IDs (short vs full)
-Moltbot may surface *short* message IDs (e.g., `1`, `2`) to save tokens.
+Fortclaw may surface *short* message IDs (e.g., `1`, `2`) to save tokens.
 - `MessageSid` / `ReplyToId` can be short IDs.
 - `MessageSidFull` / `ReplyToIdFull` contain the provider full IDs.
 - Short IDs are in-memory; they can expire on restart or cache eviction.
@@ -213,7 +213,7 @@ Prefer `chat_guid` for stable routing:
 - `chat_id:123`
 - `chat_identifier:...`
 - Direct handles: `+15555550123`, `user@example.com`
-  - If a direct handle does not have an existing DM chat, Moltbot will create one via `POST /api/v1/chat/new`. This requires the BlueBubbles Private API to be enabled.
+  - If a direct handle does not have an existing DM chat, Fortclaw will create one via `POST /api/v1/chat/new`. This requires the BlueBubbles Private API to be enabled.
 
 ## Security
 - Webhook requests are authenticated by comparing `guid`/`password` query params or headers against `channels.bluebubbles.password`. Requests from `localhost` are also accepted.
@@ -227,7 +227,7 @@ Prefer `chat_guid` for stable routing:
 - Reactions require the BlueBubbles private API (`POST /api/v1/message/react`); ensure the server version exposes it.
 - Edit/unsend require macOS 13+ and a compatible BlueBubbles server version. On macOS 26 (Tahoe), edit is currently broken due to private API changes.
 - Group icon updates can be flaky on macOS 26 (Tahoe): the API may return success but the new icon does not sync.
-- Moltbot auto-hides known-broken actions based on the BlueBubbles server's macOS version. If edit still appears on macOS 26 (Tahoe), disable it manually with `channels.bluebubbles.actions.edit=false`.
+- Fortclaw auto-hides known-broken actions based on the BlueBubbles server's macOS version. If edit still appears on macOS 26 (Tahoe), disable it manually with `channels.bluebubbles.actions.edit=false`.
 - For status/health info: `moltbot status --all` or `moltbot status --deep`.
 
 For general channel workflow reference, see [Channels](/channels) and the [Plugins](/plugins) guide.

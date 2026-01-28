@@ -1,5 +1,5 @@
 ---
-summary: "Where Moltbot loads environment variables and the precedence order"
+summary: "Where Fortclaw loads environment variables and the precedence order"
 read_when:
   - You need to know which env vars are loaded, and in what order
   - You are debugging missing API keys in the Gateway
@@ -7,7 +7,7 @@ read_when:
 ---
 # Environment variables
 
-Moltbot pulls environment variables from multiple sources. The rule is **never override existing values**.
+Fortclaw pulls environment variables from multiple sources. The rule is **never override existing values**.
 
 ## Precedence (highest → lowest)
 

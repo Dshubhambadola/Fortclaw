@@ -97,7 +97,7 @@ function resolveOnboardingMode(): boolean {
 }
 
 @customElement("moltbot-app")
-export class MoltbotApp extends LitElement {
+export class FortclawApp extends LitElement {
   @state() settings: UiSettings = loadSettings();
   @state() password = "";
   @state() tab: Tab = "chat";

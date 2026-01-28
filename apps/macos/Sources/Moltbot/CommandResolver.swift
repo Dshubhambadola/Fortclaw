@@ -191,7 +191,7 @@ enum CommandResolver {
         self.findExecutable(named: self.helperName, searchPaths: searchPaths)
     }
 
-    static func projectMoltbotExecutable(projectRoot: URL? = nil) -> String? {
+    static func projectFortclawExecutable(projectRoot: URL? = nil) -> String? {
         #if DEBUG
         let root = projectRoot ?? self.projectRoot()
         let candidate = root.appendingPathComponent("node_modules/.bin").appendingPathComponent(self.helperName).path
@@ -206,7 +206,7 @@ enum CommandResolver {
         return FileManager().isReadableFile(atPath: candidate) ? candidate : nil
     }
 
-    static func hasAnyMoltbotInvoker(searchPaths: [String]? = nil) -> Bool {
+    static func hasAnyFortclawInvoker(searchPaths: [String]? = nil) -> Bool {
         if self.moltbotExecutable(searchPaths: searchPaths) != nil { return true }
         if self.findExecutable(named: "pnpm", searchPaths: searchPaths) != nil { return true }
         if self.findExecutable(named: "node", searchPaths: searchPaths) != nil,
@@ -238,7 +238,7 @@ enum CommandResolver {
         switch runtimeResult {
         case let .success(runtime):
             let root = self.projectRoot()
-            if let moltbotPath = self.projectMoltbotExecutable(projectRoot: root) {
+            if let moltbotPath = self.projectFortclawExecutable(projectRoot: root) {
                 return [moltbotPath, subcommand] + extraArgs
             }
 
@@ -394,7 +394,7 @@ enum CommandResolver {
         defaults: UserDefaults = .standard,
         configRoot: [String: Any]? = nil) -> RemoteSettings
     {
-        let root = configRoot ?? MoltbotConfigFile.loadDict()
+        let root = configRoot ?? FortclawConfigFile.loadDict()
         let mode = ConnectionModeResolver.resolve(root: root, defaults: defaults).mode
         let target = defaults.string(forKey: remoteTargetKey) ?? ""
         let identity = defaults.string(forKey: remoteIdentityKey) ?? ""

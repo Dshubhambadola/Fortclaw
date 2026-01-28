@@ -1,4 +1,4 @@
-import MoltbotProtocol
+import FortclawProtocol
 import Foundation
 
 struct SkillsStatusReport: Codable {

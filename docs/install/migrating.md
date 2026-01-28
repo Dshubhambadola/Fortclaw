@@ -1,12 +1,12 @@
 ---
-summary: "Move (migrate) a Moltbot install from one machine to another"
+summary: "Move (migrate) a Fortclaw install from one machine to another"
 read_when:
-  - You are moving Moltbot to a new laptop/server
+  - You are moving Fortclaw to a new laptop/server
   - You want to preserve sessions, auth, and channel logins (WhatsApp, etc.)
 ---
-# Migrating Moltbot to a new machine
+# Migrating Fortclaw to a new machine
 
-This guide migrates a Moltbot Gateway from one machine to another **without redoing onboarding**.
+This guide migrates a Fortclaw Gateway from one machine to another **without redoing onboarding**.
 
 The migration is simple conceptually:
 
@@ -85,7 +85,7 @@ tar -czf clawd-workspace.tgz clawd
 
 If you have multiple profiles/state dirs (e.g. `~/.clawdbot-main`, `~/.clawdbot-work`), archive each.
 
-### Step 1 — Install Moltbot on the new machine
+### Step 1 — Install Fortclaw on the new machine
 
 On the **new** machine, install the CLI (and Node if needed):
 
@@ -187,4 +187,4 @@ On the new machine, confirm:
 
 - [Doctor](/gateway/doctor)
 - [Gateway troubleshooting](/gateway/troubleshooting)
-- [Where does Moltbot store its data?](/help/faq#where-does-moltbot-store-its-data)
+- [Where does Fortclaw store its data?](/help/faq#where-does-moltbot-store-its-data)

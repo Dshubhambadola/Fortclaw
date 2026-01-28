@@ -1,12 +1,12 @@
 ---
-summary: "Use Synthetic's Anthropic-compatible API in Moltbot"
+summary: "Use Synthetic's Anthropic-compatible API in Fortclaw"
 read_when:
   - You want to use Synthetic as a model provider
   - You need a Synthetic API key or base URL setup
 ---
 # Synthetic
 
-Synthetic exposes Anthropic-compatible endpoints. Moltbot registers it as the
+Synthetic exposes Anthropic-compatible endpoints. Fortclaw registers it as the
 `synthetic` provider and uses the Anthropic Messages API.
 
 ## Quick setup
@@ -59,7 +59,7 @@ synthetic/hf:MiniMaxAI/MiniMax-M2.1
 }
 ```
 
-Note: Moltbot's Anthropic client appends `/v1` to the base URL, so use
+Note: Fortclaw's Anthropic client appends `/v1` to the base URL, so use
 `https://api.synthetic.new/anthropic` (not `/anthropic/v1`). If Synthetic changes
 its base URL, override `models.providers.synthetic.baseUrl`.
 

@@ -1,14 +1,14 @@
 ---
-summary: "Top-level overview of Moltbot, features, and purpose"
+summary: "Top-level overview of Fortclaw, features, and purpose"
 read_when:
-  - Introducing Moltbot to newcomers
+  - Introducing Fortclaw to newcomers
 ---
-# Moltbot 🦞
+# Fortclaw 🦞
 
 > *"EXFOLIATE! EXFOLIATE!"* — A space lobster, probably
 
 <p align="center">
-  <img src="whatsapp-clawd.jpg" alt="Moltbot" width="420" />
+  <img src="whatsapp-clawd.jpg" alt="Fortclaw" width="420" />
 </p>
 
 <p align="center">
@@ -21,11 +21,11 @@ read_when:
   <a href="https://github.com/moltbot/moltbot">GitHub</a> ·
   <a href="https://github.com/moltbot/moltbot/releases">Releases</a> ·
   <a href="/">Docs</a> ·
-  <a href="/start/clawd">Moltbot assistant setup</a>
+  <a href="/start/clawd">Fortclaw assistant setup</a>
 </p>
 
-Moltbot bridges WhatsApp (via WhatsApp Web / Baileys), Telegram (Bot API / grammY), Discord (Bot API / channels.discord.js), and iMessage (imsg CLI) to coding agents like [Pi](https://github.com/badlogic/pi-mono). Plugins add Mattermost (Bot API + WebSocket) and more.
-Moltbot also powers [Clawd](https://clawd.me), the space‑lobster assistant.
+Fortclaw bridges WhatsApp (via WhatsApp Web / Baileys), Telegram (Bot API / grammY), Discord (Bot API / channels.discord.js), and iMessage (imsg CLI) to coding agents like [Pi](https://github.com/badlogic/pi-mono). Plugins add Mattermost (Bot API + WebSocket) and more.
+Fortclaw also powers [Clawd](https://clawd.me), the space‑lobster assistant.
 
 ## Start here
 
@@ -58,7 +58,7 @@ WhatsApp / Telegram / Discord / iMessage (+ plugins)
               ├─ Pi agent (RPC)
               ├─ CLI (moltbot …)
               ├─ Chat UI (SwiftUI)
-              ├─ macOS app (Moltbot.app)
+              ├─ macOS app (Fortclaw.app)
               ├─ iOS node via Gateway WS + pairing
               └─ Android node via Gateway WS + pairing
 ```
@@ -141,14 +141,14 @@ moltbot gateway --port 19001
 Send a test message (requires a running Gateway):
 
 ```bash
-moltbot message send --target +15555550123 --message "Hello from Moltbot"
+moltbot message send --target +15555550123 --message "Hello from Fortclaw"
 ```
 
 ## Configuration (optional)
 
 Config lives at `~/.clawdbot/moltbot.json`.
 
-- If you **do nothing**, Moltbot uses the bundled Pi binary in RPC mode with per-sender sessions.
+- If you **do nothing**, Fortclaw uses the bundled Pi binary in RPC mode with per-sender sessions.
 - If you want to lock it down, start with `channels.whatsapp.allowFrom` and (for groups) mention rules.
 
 Example:
@@ -177,7 +177,7 @@ Example:
   - [Updating / rollback](/install/updating)
   - [Pairing (DM + nodes)](/start/pairing)
   - [Nix mode](/install/nix)
-  - [Moltbot assistant setup (Clawd)](/start/clawd)
+  - [Fortclaw assistant setup (Clawd)](/start/clawd)
   - [Skills](/tools/skills)
   - [Skills config](/tools/skills-config)
   - [Workspace templates](/reference/templates/AGENTS)
@@ -214,7 +214,7 @@ Example:
 
 ## The name
 
-**Moltbot = CLAW + TARDIS** — because every space lobster needs a time-and-space machine.
+**Fortclaw = CLAW + TARDIS** — because every space lobster needs a time-and-space machine.
 
 ---
 

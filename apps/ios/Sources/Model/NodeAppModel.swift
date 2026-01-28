@@ -1,4 +1,4 @@
-import MoltbotKit
+import FortclawKit
 import Network
 import Observation
 import SwiftUI
@@ -90,7 +90,7 @@ final class NodeAppModel {
         }()
         guard !userAction.isEmpty else { return }
 
-        guard let name = MoltbotCanvasA2UIAction.extractActionName(userAction) else { return }
+        guard let name = FortclawCanvasA2UIAction.extractActionName(userAction) else { return }
         let actionId: String = {
             let id = (userAction["id"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
             return id.isEmpty ? UUID().uuidString : id
@@ -109,15 +109,15 @@ final class NodeAppModel {
 
         let host = UserDefaults.standard.string(forKey: "node.displayName") ?? UIDevice.current.name
         let instanceId = (UserDefaults.standard.string(forKey: "node.instanceId") ?? "ios-node").lowercased()
-        let contextJSON = MoltbotCanvasA2UIAction.compactJSON(userAction["context"])
+        let contextJSON = FortclawCanvasA2UIAction.compactJSON(userAction["context"])
         let sessionKey = self.mainSessionKey
 
-        let messageContext = MoltbotCanvasA2UIAction.AgentMessageContext(
+        let messageContext = FortclawCanvasA2UIAction.AgentMessageContext(
             actionName: name,
             session: .init(key: sessionKey, surfaceId: surfaceId),
             component: .init(id: sourceComponentId, host: host, instanceId: instanceId),
             contextJSON: contextJSON)
-        let message = MoltbotCanvasA2UIAction.formatAgentMessage(messageContext)
+        let message = FortclawCanvasA2UIAction.formatAgentMessage(messageContext)
 
         let ok: Bool
         var errorText: String?
@@ -142,7 +142,7 @@ final class NodeAppModel {
             }
         }
 
-        let js = MoltbotCanvasA2UIAction.jsDispatchA2UIActionStatus(actionId: actionId, ok: ok, error: errorText)
+        let js = FortclawCanvasA2UIAction.jsDispatchA2UIActionStatus(actionId: actionId, ok: ok, error: errorText)
         do {
             _ = try await self.screen.eval(javaScript: js)
         } catch {
@@ -190,7 +190,7 @@ final class NodeAppModel {
         self.talkMode.setEnabled(enabled)
     }
 
-    func requestLocationPermissions(mode: MoltbotLocationMode) async -> Bool {
+    func requestLocationPermissions(mode: FortclawLocationMode) async -> Bool {
         guard mode != .off else { return true }
         let status = await self.locationService.ensureAuthorization(mode: mode)
         switch status {
@@ -272,7 +272,7 @@ final class NodeAppModel {
                                 return BridgeInvokeResponse(
                                     id: req.id,
                                     ok: false,
-                                    error: MoltbotNodeError(
+                                    error: FortclawNodeError(
                                         code: .unavailable,
                                         message: "UNAVAILABLE: node not ready"))
                             }
@@ -508,7 +508,7 @@ final class NodeAppModel {
             return BridgeInvokeResponse(
                 id: req.id,
                 ok: false,
-                error: MoltbotNodeError(
+                error: FortclawNodeError(
                     code: .backgroundUnavailable,
                     message: "NODE_BACKGROUND_UNAVAILABLE: canvas/camera/screen commands require foreground"))
         }
@@ -517,36 +517,36 @@ final class NodeAppModel {
             return BridgeInvokeResponse(
                 id: req.id,
                 ok: false,
-                error: MoltbotNodeError(
+                error: FortclawNodeError(
                     code: .unavailable,
                     message: "CAMERA_DISABLED: enable Camera in iOS Settings → Camera → Allow Camera"))
         }
 
         do {
             switch command {
-            case MoltbotLocationCommand.get.rawValue:
+            case FortclawLocationCommand.get.rawValue:
                 return try await self.handleLocationInvoke(req)
-            case MoltbotCanvasCommand.present.rawValue,
-                 MoltbotCanvasCommand.hide.rawValue,
-                 MoltbotCanvasCommand.navigate.rawValue,
-                 MoltbotCanvasCommand.evalJS.rawValue,
-                 MoltbotCanvasCommand.snapshot.rawValue:
+            case FortclawCanvasCommand.present.rawValue,
+                 FortclawCanvasCommand.hide.rawValue,
+                 FortclawCanvasCommand.navigate.rawValue,
+                 FortclawCanvasCommand.evalJS.rawValue,
+                 FortclawCanvasCommand.snapshot.rawValue:
                 return try await self.handleCanvasInvoke(req)
-            case MoltbotCanvasA2UICommand.reset.rawValue,
-                 MoltbotCanvasA2UICommand.push.rawValue,
-                 MoltbotCanvasA2UICommand.pushJSONL.rawValue:
+            case FortclawCanvasA2UICommand.reset.rawValue,
+                 FortclawCanvasA2UICommand.push.rawValue,
+                 FortclawCanvasA2UICommand.pushJSONL.rawValue:
                 return try await self.handleCanvasA2UIInvoke(req)
-            case MoltbotCameraCommand.list.rawValue,
-                 MoltbotCameraCommand.snap.rawValue,
-                 MoltbotCameraCommand.clip.rawValue:
+            case FortclawCameraCommand.list.rawValue,
+                 FortclawCameraCommand.snap.rawValue,
+                 FortclawCameraCommand.clip.rawValue:
                 return try await self.handleCameraInvoke(req)
-            case MoltbotScreenCommand.record.rawValue:
+            case FortclawScreenCommand.record.rawValue:
                 return try await self.handleScreenRecordInvoke(req)
             default:
                 return BridgeInvokeResponse(
                     id: req.id,
                     ok: false,
-                    error: MoltbotNodeError(code: .invalidRequest, message: "INVALID_REQUEST: unknown command"))
+                    error: FortclawNodeError(code: .invalidRequest, message: "INVALID_REQUEST: unknown command"))
             }
         } catch {
             if command.hasPrefix("camera.") {
@@ -556,7 +556,7 @@ final class NodeAppModel {
             return BridgeInvokeResponse(
                 id: req.id,
                 ok: false,
-                error: MoltbotNodeError(code: .unavailable, message: error.localizedDescription))
+                error: FortclawNodeError(code: .unavailable, message: error.localizedDescription))
         }
     }
 
@@ -570,7 +570,7 @@ final class NodeAppModel {
             return BridgeInvokeResponse(
                 id: req.id,
                 ok: false,
-                error: MoltbotNodeError(
+                error: FortclawNodeError(
                     code: .unavailable,
                     message: "LOCATION_DISABLED: enable Location in Settings"))
         }
@@ -578,12 +578,12 @@ final class NodeAppModel {
             return BridgeInvokeResponse(
                 id: req.id,
                 ok: false,
-                error: MoltbotNodeError(
+                error: FortclawNodeError(
                     code: .backgroundUnavailable,
                     message: "LOCATION_BACKGROUND_UNAVAILABLE: background location requires Always"))
         }
-        let params = (try? Self.decodeParams(MoltbotLocationGetParams.self, from: req.paramsJSON)) ??
-            MoltbotLocationGetParams()
+        let params = (try? Self.decodeParams(FortclawLocationGetParams.self, from: req.paramsJSON)) ??
+            FortclawLocationGetParams()
         let desired = params.desiredAccuracy ??
             (self.isLocationPreciseEnabled() ? .precise : .balanced)
         let status = self.locationService.authorizationStatus()
@@ -591,7 +591,7 @@ final class NodeAppModel {
             return BridgeInvokeResponse(
                 id: req.id,
                 ok: false,
-                error: MoltbotNodeError(
+                error: FortclawNodeError(
                     code: .unavailable,
                     message: "LOCATION_PERMISSION_REQUIRED: grant Location permission"))
         }
@@ -599,7 +599,7 @@ final class NodeAppModel {
             return BridgeInvokeResponse(
                 id: req.id,
                 ok: false,
-                error: MoltbotNodeError(
+                error: FortclawNodeError(
                     code: .unavailable,
                     message: "LOCATION_PERMISSION_REQUIRED: enable Always for background access"))
         }
@@ -609,7 +609,7 @@ final class NodeAppModel {
             maxAgeMs: params.maxAgeMs,
             timeoutMs: params.timeoutMs)
         let isPrecise = self.locationService.accuracyAuthorization() == .fullAccuracy
-        let payload = MoltbotLocationPayload(
+        let payload = FortclawLocationPayload(
             lat: location.coordinate.latitude,
             lon: location.coordinate.longitude,
             accuracyMeters: location.horizontalAccuracy,
@@ -625,9 +625,9 @@ final class NodeAppModel {
 
     private func handleCanvasInvoke(_ req: BridgeInvokeRequest) async throws -> BridgeInvokeResponse {
         switch req.command {
-        case MoltbotCanvasCommand.present.rawValue:
-            let params = (try? Self.decodeParams(MoltbotCanvasPresentParams.self, from: req.paramsJSON)) ??
-                MoltbotCanvasPresentParams()
+        case FortclawCanvasCommand.present.rawValue:
+            let params = (try? Self.decodeParams(FortclawCanvasPresentParams.self, from: req.paramsJSON)) ??
+                FortclawCanvasPresentParams()
             let url = params.url?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
             if url.isEmpty {
                 self.screen.showDefaultCanvas()
@@ -635,19 +635,19 @@ final class NodeAppModel {
                 self.screen.navigate(to: url)
             }
             return BridgeInvokeResponse(id: req.id, ok: true)
-        case MoltbotCanvasCommand.hide.rawValue:
+        case FortclawCanvasCommand.hide.rawValue:
             return BridgeInvokeResponse(id: req.id, ok: true)
-        case MoltbotCanvasCommand.navigate.rawValue:
-            let params = try Self.decodeParams(MoltbotCanvasNavigateParams.self, from: req.paramsJSON)
+        case FortclawCanvasCommand.navigate.rawValue:
+            let params = try Self.decodeParams(FortclawCanvasNavigateParams.self, from: req.paramsJSON)
             self.screen.navigate(to: params.url)
             return BridgeInvokeResponse(id: req.id, ok: true)
-        case MoltbotCanvasCommand.evalJS.rawValue:
-            let params = try Self.decodeParams(MoltbotCanvasEvalParams.self, from: req.paramsJSON)
+        case FortclawCanvasCommand.evalJS.rawValue:
+            let params = try Self.decodeParams(FortclawCanvasEvalParams.self, from: req.paramsJSON)
             let result = try await self.screen.eval(javaScript: params.javaScript)
             let payload = try Self.encodePayload(["result": result])
             return BridgeInvokeResponse(id: req.id, ok: true, payloadJSON: payload)
-        case MoltbotCanvasCommand.snapshot.rawValue:
-            let params = try? Self.decodeParams(MoltbotCanvasSnapshotParams.self, from: req.paramsJSON)
+        case FortclawCanvasCommand.snapshot.rawValue:
+            let params = try? Self.decodeParams(FortclawCanvasSnapshotParams.self, from: req.paramsJSON)
             let format = params?.format ?? .jpeg
             let maxWidth: CGFloat? = {
                 if let raw = params?.maxWidth, raw > 0 { return CGFloat(raw) }
@@ -671,19 +671,19 @@ final class NodeAppModel {
             return BridgeInvokeResponse(
                 id: req.id,
                 ok: false,
-                error: MoltbotNodeError(code: .invalidRequest, message: "INVALID_REQUEST: unknown command"))
+                error: FortclawNodeError(code: .invalidRequest, message: "INVALID_REQUEST: unknown command"))
         }
     }
 
     private func handleCanvasA2UIInvoke(_ req: BridgeInvokeRequest) async throws -> BridgeInvokeResponse {
         let command = req.command
         switch command {
-        case MoltbotCanvasA2UICommand.reset.rawValue:
+        case FortclawCanvasA2UICommand.reset.rawValue:
             guard let a2uiUrl = await self.resolveA2UIHostURL() else {
                 return BridgeInvokeResponse(
                     id: req.id,
                     ok: false,
-                    error: MoltbotNodeError(
+                    error: FortclawNodeError(
                         code: .unavailable,
                         message: "A2UI_HOST_NOT_CONFIGURED: gateway did not advertise canvas host"))
             }
@@ -692,7 +692,7 @@ final class NodeAppModel {
                 return BridgeInvokeResponse(
                     id: req.id,
                     ok: false,
-                    error: MoltbotNodeError(
+                    error: FortclawNodeError(
                         code: .unavailable,
                         message: "A2UI_HOST_UNAVAILABLE: A2UI host not reachable"))
             }
@@ -704,19 +704,19 @@ final class NodeAppModel {
             })()
             """)
             return BridgeInvokeResponse(id: req.id, ok: true, payloadJSON: json)
-        case MoltbotCanvasA2UICommand.push.rawValue, MoltbotCanvasA2UICommand.pushJSONL.rawValue:
+        case FortclawCanvasA2UICommand.push.rawValue, FortclawCanvasA2UICommand.pushJSONL.rawValue:
             let messages: [AnyCodable]
-            if command == MoltbotCanvasA2UICommand.pushJSONL.rawValue {
-                let params = try Self.decodeParams(MoltbotCanvasA2UIPushJSONLParams.self, from: req.paramsJSON)
-                messages = try MoltbotCanvasA2UIJSONL.decodeMessagesFromJSONL(params.jsonl)
+            if command == FortclawCanvasA2UICommand.pushJSONL.rawValue {
+                let params = try Self.decodeParams(FortclawCanvasA2UIPushJSONLParams.self, from: req.paramsJSON)
+                messages = try FortclawCanvasA2UIJSONL.decodeMessagesFromJSONL(params.jsonl)
             } else {
                 do {
-                    let params = try Self.decodeParams(MoltbotCanvasA2UIPushParams.self, from: req.paramsJSON)
+                    let params = try Self.decodeParams(FortclawCanvasA2UIPushParams.self, from: req.paramsJSON)
                     messages = params.messages
                 } catch {
                     // Be forgiving: some clients still send JSONL payloads to `canvas.a2ui.push`.
-                    let params = try Self.decodeParams(MoltbotCanvasA2UIPushJSONLParams.self, from: req.paramsJSON)
-                    messages = try MoltbotCanvasA2UIJSONL.decodeMessagesFromJSONL(params.jsonl)
+                    let params = try Self.decodeParams(FortclawCanvasA2UIPushJSONLParams.self, from: req.paramsJSON)
+                    messages = try FortclawCanvasA2UIJSONL.decodeMessagesFromJSONL(params.jsonl)
                 }
             }
 
@@ -724,7 +724,7 @@ final class NodeAppModel {
                 return BridgeInvokeResponse(
                     id: req.id,
                     ok: false,
-                    error: MoltbotNodeError(
+                    error: FortclawNodeError(
                         code: .unavailable,
                         message: "A2UI_HOST_NOT_CONFIGURED: gateway did not advertise canvas host"))
             }
@@ -733,12 +733,12 @@ final class NodeAppModel {
                 return BridgeInvokeResponse(
                     id: req.id,
                     ok: false,
-                    error: MoltbotNodeError(
+                    error: FortclawNodeError(
                         code: .unavailable,
                         message: "A2UI_HOST_UNAVAILABLE: A2UI host not reachable"))
             }
 
-            let messagesJSON = try MoltbotCanvasA2UIJSONL.encodeMessagesJSONArray(messages)
+            let messagesJSON = try FortclawCanvasA2UIJSONL.encodeMessagesJSONArray(messages)
             let js = """
             (() => {
               try {
@@ -756,24 +756,24 @@ final class NodeAppModel {
             return BridgeInvokeResponse(
                 id: req.id,
                 ok: false,
-                error: MoltbotNodeError(code: .invalidRequest, message: "INVALID_REQUEST: unknown command"))
+                error: FortclawNodeError(code: .invalidRequest, message: "INVALID_REQUEST: unknown command"))
         }
     }
 
     private func handleCameraInvoke(_ req: BridgeInvokeRequest) async throws -> BridgeInvokeResponse {
         switch req.command {
-        case MoltbotCameraCommand.list.rawValue:
+        case FortclawCameraCommand.list.rawValue:
             let devices = await self.camera.listDevices()
             struct Payload: Codable {
                 var devices: [CameraController.CameraDeviceInfo]
             }
             let payload = try Self.encodePayload(Payload(devices: devices))
             return BridgeInvokeResponse(id: req.id, ok: true, payloadJSON: payload)
-        case MoltbotCameraCommand.snap.rawValue:
+        case FortclawCameraCommand.snap.rawValue:
             self.showCameraHUD(text: "Taking photo…", kind: .photo)
             self.triggerCameraFlash()
-            let params = (try? Self.decodeParams(MoltbotCameraSnapParams.self, from: req.paramsJSON)) ??
-                MoltbotCameraSnapParams()
+            let params = (try? Self.decodeParams(FortclawCameraSnapParams.self, from: req.paramsJSON)) ??
+                FortclawCameraSnapParams()
             let res = try await self.camera.snap(params: params)
 
             struct Payload: Codable {
@@ -789,9 +789,9 @@ final class NodeAppModel {
                 height: res.height))
             self.showCameraHUD(text: "Photo captured", kind: .success, autoHideSeconds: 1.6)
             return BridgeInvokeResponse(id: req.id, ok: true, payloadJSON: payload)
-        case MoltbotCameraCommand.clip.rawValue:
-            let params = (try? Self.decodeParams(MoltbotCameraClipParams.self, from: req.paramsJSON)) ??
-                MoltbotCameraClipParams()
+        case FortclawCameraCommand.clip.rawValue:
+            let params = (try? Self.decodeParams(FortclawCameraClipParams.self, from: req.paramsJSON)) ??
+                FortclawCameraClipParams()
 
             let suspended = (params.includeAudio ?? true) ? self.voiceWake.suspendForExternalAudioCapture() : false
             defer { self.voiceWake.resumeAfterExternalAudioCapture(wasSuspended: suspended) }
@@ -816,13 +816,13 @@ final class NodeAppModel {
             return BridgeInvokeResponse(
                 id: req.id,
                 ok: false,
-                error: MoltbotNodeError(code: .invalidRequest, message: "INVALID_REQUEST: unknown command"))
+                error: FortclawNodeError(code: .invalidRequest, message: "INVALID_REQUEST: unknown command"))
         }
     }
 
     private func handleScreenRecordInvoke(_ req: BridgeInvokeRequest) async throws -> BridgeInvokeResponse {
-        let params = (try? Self.decodeParams(MoltbotScreenRecordParams.self, from: req.paramsJSON)) ??
-            MoltbotScreenRecordParams()
+        let params = (try? Self.decodeParams(FortclawScreenRecordParams.self, from: req.paramsJSON)) ??
+            FortclawScreenRecordParams()
         if let format = params.format, format.lowercased() != "mp4" {
             throw NSError(domain: "Screen", code: 30, userInfo: [
                 NSLocalizedDescriptionKey: "INVALID_REQUEST: screen format must be mp4",
@@ -860,9 +860,9 @@ final class NodeAppModel {
 }
 
 private extension NodeAppModel {
-    func locationMode() -> MoltbotLocationMode {
+    func locationMode() -> FortclawLocationMode {
         let raw = UserDefaults.standard.string(forKey: "location.enabledMode") ?? "off"
-        return MoltbotLocationMode(rawValue: raw) ?? .off
+        return FortclawLocationMode(rawValue: raw) ?? .off
     }
 
     func isLocationPreciseEnabled() -> Bool {

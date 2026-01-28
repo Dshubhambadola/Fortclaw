@@ -1,13 +1,13 @@
 ---
 summary: "Voice Call plugin: outbound + inbound calls via Twilio/Telnyx/Plivo (plugin install + config + CLI)"
 read_when:
-  - You want to place an outbound voice call from Moltbot
+  - You want to place an outbound voice call from Fortclaw
   - You are configuring or developing the voice-call plugin
 ---
 
 # Voice Call (plugin)
 
-Voice calls for Moltbot via a plugin. Supports outbound notifications and
+Voice calls for Fortclaw via a plugin. Supports outbound notifications and
 multi-turn conversations with inbound policies.
 
 Current providers:
@@ -208,7 +208,7 @@ Auto-responses use the agent system. Tune with:
 ## CLI
 
 ```bash
-moltbot voicecall call --to "+15555550123" --message "Hello from Moltbot"
+moltbot voicecall call --to "+15555550123" --message "Hello from Fortclaw"
 moltbot voicecall continue --call-id <id> --message "Any questions?"
 moltbot voicecall speak --call-id <id> --message "One moment"
 moltbot voicecall end --call-id <id>

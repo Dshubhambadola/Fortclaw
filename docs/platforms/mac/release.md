@@ -1,11 +1,11 @@
 ---
-summary: "Moltbot macOS release checklist (Sparkle feed, packaging, signing)"
+summary: "Fortclaw macOS release checklist (Sparkle feed, packaging, signing)"
 read_when:
-  - Cutting or validating a Moltbot macOS release
+  - Cutting or validating a Fortclaw macOS release
   - Updating the Sparkle appcast or feed assets
 ---
 
-# Moltbot macOS release (Sparkle)
+# Fortclaw macOS release (Sparkle)
 
 This app now ships Sparkle auto-updates. Release builds must be Developer ID–signed, zipped, and published with a signed appcast entry.
 
@@ -37,10 +37,10 @@ SIGN_IDENTITY="Developer ID Application: <Developer Name> (<TEAMID>)" \
 scripts/package-mac-app.sh
 
 # Zip for distribution (includes resource forks for Sparkle delta support)
-ditto -c -k --sequesterRsrc --keepParent dist/Moltbot.app dist/Moltbot-2026.1.27-beta.1.zip
+ditto -c -k --sequesterRsrc --keepParent dist/Fortclaw.app dist/Fortclaw-2026.1.27-beta.1.zip
 
 # Optional: also build a styled DMG for humans (drag to /Applications)
-scripts/create-dmg.sh dist/Moltbot.app dist/Moltbot-2026.1.27-beta.1.dmg
+scripts/create-dmg.sh dist/Fortclaw.app dist/Fortclaw-2026.1.27-beta.1.dmg
 
 # Recommended: build + notarize/staple zip + DMG
 # First, create a keychain profile once:
@@ -55,19 +55,19 @@ SIGN_IDENTITY="Developer ID Application: <Developer Name> (<TEAMID>)" \
 scripts/package-mac-dist.sh
 
 # Optional: ship dSYM alongside the release
-ditto -c -k --keepParent apps/macos/.build/release/Moltbot.app.dSYM dist/Moltbot-2026.1.27-beta.1.dSYM.zip
+ditto -c -k --keepParent apps/macos/.build/release/Fortclaw.app.dSYM dist/Fortclaw-2026.1.27-beta.1.dSYM.zip
 ```
 
 ## Appcast entry
 Use the release note generator so Sparkle renders formatted HTML notes:
 ```bash
-SPARKLE_PRIVATE_KEY_FILE=/path/to/ed25519-private-key scripts/make_appcast.sh dist/Moltbot-2026.1.27-beta.1.zip https://raw.githubusercontent.com/moltbot/moltbot/main/appcast.xml
+SPARKLE_PRIVATE_KEY_FILE=/path/to/ed25519-private-key scripts/make_appcast.sh dist/Fortclaw-2026.1.27-beta.1.zip https://raw.githubusercontent.com/moltbot/moltbot/main/appcast.xml
 ```
 Generates HTML release notes from `CHANGELOG.md` (via [`scripts/changelog-to-html.sh`](https://github.com/moltbot/moltbot/blob/main/scripts/changelog-to-html.sh)) and embeds them in the appcast entry.
 Commit the updated `appcast.xml` alongside the release assets (zip + dSYM) when publishing.
 
 ## Publish & verify
-- Upload `Moltbot-2026.1.27-beta.1.zip` (and `Moltbot-2026.1.27-beta.1.dSYM.zip`) to the GitHub release for tag `v2026.1.27-beta.1`.
+- Upload `Fortclaw-2026.1.27-beta.1.zip` (and `Fortclaw-2026.1.27-beta.1.dSYM.zip`) to the GitHub release for tag `v2026.1.27-beta.1`.
 - Ensure the raw appcast URL matches the baked feed: `https://raw.githubusercontent.com/moltbot/moltbot/main/appcast.xml`.
 - Sanity checks:
   - `curl -I https://raw.githubusercontent.com/moltbot/moltbot/main/appcast.xml` returns 200.

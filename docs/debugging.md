@@ -103,9 +103,9 @@ Tip: if a non‑dev gateway is already running (launchd/systemd), stop it first:
 moltbot gateway stop
 ```
 
-## Raw stream logging (Moltbot)
+## Raw stream logging (Fortclaw)
 
-Moltbot can log the **raw assistant stream** before any filtering/formatting.
+Fortclaw can log the **raw assistant stream** before any filtering/formatting.
 This is the best way to see whether reasoning is arriving as plain text deltas
 (or as separate thinking blocks).
 

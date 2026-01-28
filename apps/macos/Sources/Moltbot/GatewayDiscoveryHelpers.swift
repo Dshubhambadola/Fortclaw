@@ -1,4 +1,4 @@
-import MoltbotDiscovery
+import FortclawDiscovery
 import Foundation
 
 enum GatewayDiscoveryHelpers {

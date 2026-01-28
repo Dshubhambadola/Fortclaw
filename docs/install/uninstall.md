@@ -1,7 +1,7 @@
 ---
-summary: "Uninstall Moltbot completely (CLI, service, state, workspace)"
+summary: "Uninstall Fortclaw completely (CLI, service, state, workspace)"
 read_when:
-  - You want to remove Moltbot from a machine
+  - You want to remove Fortclaw from a machine
   - The gateway service is still running after uninstall
 ---
 
@@ -65,7 +65,7 @@ bun remove -g moltbot
 6) If you installed the macOS app:
 
 ```bash
-rm -rf /Applications/Moltbot.app
+rm -rf /Applications/Fortclaw.app
 ```
 
 Notes:
@@ -99,11 +99,11 @@ systemctl --user daemon-reload
 
 ### Windows (Scheduled Task)
 
-Default task name is `Moltbot Gateway` (or `Moltbot Gateway (<profile>)`).
+Default task name is `Fortclaw Gateway` (or `Fortclaw Gateway (<profile>)`).
 The task script lives under your state dir.
 
 ```powershell
-schtasks /Delete /F /TN "Moltbot Gateway"
+schtasks /Delete /F /TN "Fortclaw Gateway"
 Remove-Item -Force "$env:USERPROFILE\.clawdbot\gateway.cmd"
 ```
 

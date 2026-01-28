@@ -26,7 +26,7 @@ moltbot plugins update <id>
 moltbot plugins update --all
 ```
 
-Bundled plugins ship with Moltbot but start disabled. Use `plugins enable` to
+Bundled plugins ship with Fortclaw but start disabled. Use `plugins enable` to
 activate them.
 
 All plugins must ship a `moltbot.plugin.json` file with an inline JSON Schema

@@ -1,11 +1,11 @@
 ---
-summary: "Setup guide for developers working on the Moltbot macOS app"
+summary: "Setup guide for developers working on the Fortclaw macOS app"
 read_when:
   - Setting up the macOS development environment
 ---
 # macOS Developer Setup
 
-This guide covers the necessary steps to build and run the Moltbot macOS application from source.
+This guide covers the necessary steps to build and run the Fortclaw macOS application from source.
 
 ## Prerequisites
 
@@ -24,7 +24,7 @@ pnpm install
 
 ## 2. Build and Package the App
 
-To build the macOS app and package it into `dist/Moltbot.app`, run:
+To build the macOS app and package it into `dist/Fortclaw.app`, run:
 
 ```bash
 ./scripts/package-mac-app.sh
@@ -42,7 +42,7 @@ https://github.com/moltbot/moltbot/blob/main/apps/macos/README.md
 The macOS app expects a global `moltbot` CLI install to manage background tasks.
 
 **To install it (recommended):**
-1.  Open the Moltbot app.
+1.  Open the Fortclaw app.
 2.  Go to the **General** settings tab.
 3.  Click **"Install CLI"**.
 

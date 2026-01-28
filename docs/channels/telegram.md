@@ -101,10 +101,10 @@ group messages, so use admin if you need full visibility.
 - Outbound Telegram text uses `parse_mode: "HTML"` (Telegram’s supported tag subset).
 - Markdown-ish input is rendered into **Telegram-safe HTML** (bold/italic/strike/code/links); block elements are flattened to text with newlines/bullets.
 - Raw HTML from models is escaped to avoid Telegram parse errors.
-- If Telegram rejects the HTML payload, Moltbot retries the same message as plain text.
+- If Telegram rejects the HTML payload, Fortclaw retries the same message as plain text.
 
 ## Commands (native + custom)
-Moltbot registers native commands (like `/status`, `/reset`, `/model`) with Telegram’s bot menu on startup.
+Fortclaw registers native commands (like `/status`, `/reset`, `/model`) with Telegram’s bot menu on startup.
 You can add custom commands to the menu via config:
 
 ```json5
@@ -128,7 +128,7 @@ You can add custom commands to the menu via config:
 More help: [Channel troubleshooting](/channels/troubleshooting).
 
 Notes:
-- Custom commands are **menu entries only**; Moltbot does not implement them unless you handle them elsewhere.
+- Custom commands are **menu entries only**; Fortclaw does not implement them unless you handle them elsewhere.
 - Command names are normalized (leading `/` stripped, lowercased) and must match `a-z`, `0-9`, `_` (1–32 chars).
 - Custom commands **cannot override native commands**. Conflicts are ignored and logged.
 - If `commands.native` is disabled, only custom commands are registered (or cleared if none).
@@ -208,7 +208,7 @@ Forward any message from the group to `@userinfobot` or `@getidsbot` on Telegram
 By default, Telegram is allowed to write config updates triggered by channel events or `/config set|unset`.
 
 This happens when:
-- A group is upgraded to a supergroup and Telegram emits `migrate_to_chat_id` (chat ID changes). Moltbot can migrate `channels.telegram.groups` automatically.
+- A group is upgraded to a supergroup and Telegram emits `migrate_to_chat_id` (chat ID changes). Fortclaw can migrate `channels.telegram.groups` automatically.
 - You run `/config set` or `/config unset` in a Telegram chat (requires `commands.config: true`).
 
 Disable with:
@@ -219,7 +219,7 @@ Disable with:
 ```
 
 ## Topics (forum supergroups)
-Telegram forum topics include a `message_thread_id` per message. Moltbot:
+Telegram forum topics include a `message_thread_id` per message. Fortclaw:
 - Appends `:topic:<threadId>` to the Telegram group session key so each topic is isolated.
 - Sends typing indicators and replies with `message_thread_id` so responses stay in the topic.
 - General topic (thread id `1`) is special: message sends omit `message_thread_id` (Telegram rejects it), but typing indicators still include it.
@@ -227,7 +227,7 @@ Telegram forum topics include a `message_thread_id` per message. Moltbot:
 - Topic-specific configuration is available under `channels.telegram.groups.<chatId>.topics.<threadId>` (skills, allowlists, auto-reply, system prompts, disable).
 - Topic configs inherit group settings (requireMention, allowlists, skills, prompts, enabled) unless overridden per topic.
 
-Private chats can include `message_thread_id` in some edge cases. Moltbot keeps the DM session key unchanged, but still uses the thread id for replies/draft streaming when it is present.
+Private chats can include `message_thread_id` in some edge cases. Fortclaw keeps the DM session key unchanged, but still uses the thread id for replies/draft streaming when it is present.
 
 ## Inline Buttons
 
@@ -363,7 +363,7 @@ Controlled by `channels.telegram.replyToMode`:
 
 ## Audio messages (voice vs file)
 Telegram distinguishes **voice notes** (round bubble) from **audio files** (metadata card).
-Moltbot defaults to audio files for backward compatibility.
+Fortclaw defaults to audio files for backward compatibility.
 
 To force a voice note bubble in agent replies, include this tag anywhere in the reply:
 - `[[audio_as_voice]]` — send audio as a voice note instead of a file.
@@ -385,11 +385,11 @@ For message tool sends, set `asVoice: true` with a voice-compatible audio `media
 
 ## Stickers
 
-Moltbot supports receiving and sending Telegram stickers with intelligent caching.
+Fortclaw supports receiving and sending Telegram stickers with intelligent caching.
 
 ### Receiving stickers
 
-When a user sends a sticker, Moltbot handles it based on the sticker type:
+When a user sends a sticker, Fortclaw handles it based on the sticker type:
 
 - **Static stickers (WEBP):** Downloaded and processed through vision. The sticker appears as a `<media:sticker>` placeholder in the message content.
 - **Animated stickers (TGS):** Skipped (Lottie format not supported for processing).
@@ -405,7 +405,7 @@ Template context field available when receiving stickers:
 
 ### Sticker cache
 
-Stickers are processed through the AI's vision capabilities to generate descriptions. Since the same stickers are often sent repeatedly, Moltbot caches these descriptions to avoid redundant API calls.
+Stickers are processed through the AI's vision capabilities to generate descriptions. Since the same stickers are often sent repeatedly, Fortclaw caches these descriptions to avoid redundant API calls.
 
 **How it works:**
 
@@ -512,7 +512,7 @@ The search uses fuzzy matching across description text, emoji characters, and se
 
 ## Streaming (drafts)
 Telegram can stream **draft bubbles** while the agent is generating a response.
-Moltbot uses Bot API `sendMessageDraft` (not real messages) and then sends the
+Fortclaw uses Bot API `sendMessageDraft` (not real messages) and then sends the
 final reply as a normal message.
 
 Requirements (Telegram Bot API 9.3+):
@@ -552,7 +552,7 @@ Outbound Telegram API calls retry on transient network/429 errors with exponenti
 ## Reaction notifications
 
 **How reactions work:**
-Telegram reactions arrive as **separate `message_reaction` events**, not as properties in message payloads. When a user adds a reaction, Moltbot:
+Telegram reactions arrive as **separate `message_reaction` events**, not as properties in message payloads. When a user adds a reaction, Fortclaw:
 
 1. Receives the `message_reaction` update from Telegram API
 2. Converts it to a **system event** with format: `"Telegram reaction added: {emoji} by {user} on msg {id}"`
@@ -588,7 +588,7 @@ The agent sees reactions as **system notifications** in the conversation history
 ```
 
 **Requirements:**
-- Telegram bots must explicitly request `message_reaction` in `allowed_updates` (configured automatically by Moltbot)
+- Telegram bots must explicitly request `message_reaction` in `allowed_updates` (configured automatically by Fortclaw)
 - For webhook mode, reactions are included in the webhook `allowed_updates`
 - For polling mode, reactions are included in the `getUpdates` `allowed_updates`
 
@@ -621,7 +621,7 @@ The agent sees reactions as **system notifications** in the conversation history
 
 **Long-polling aborts immediately on Node 22+ (often with proxies/custom fetch):**
 - Node 22+ is stricter about `AbortSignal` instances; foreign signals can abort `fetch` calls right away.
-- Upgrade to a Moltbot build that normalizes abort signals, or run the gateway on Node 20 until you can upgrade.
+- Upgrade to a Fortclaw build that normalizes abort signals, or run the gateway on Node 20 until you can upgrade.
 
 **Bot starts, then silently stops responding (or logs `HttpError: Network request ... failed`):**
 - Some hosts resolve `api.telegram.org` to IPv6 first. If your server does not have working IPv6 egress, grammY can get stuck on IPv6-only requests.

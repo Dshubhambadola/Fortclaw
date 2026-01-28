@@ -13,7 +13,7 @@ Status: external CLI integration. Gateway spawns `imsg rpc` (JSON-RPC over stdio
 1) Ensure Messages is signed in on this Mac.
 2) Install `imsg`:
    - `brew install steipete/tap/imsg`
-3) Configure Moltbot with `channels.imessage.cliPath` and `channels.imessage.dbPath`.
+3) Configure Fortclaw with `channels.imessage.cliPath` and `channels.imessage.dbPath`.
 4) Start the gateway and approve any macOS prompts (Automation + Full Disk Access).
 
 Minimal config:
@@ -47,7 +47,7 @@ Disable with:
 
 ## Requirements
 - macOS with Messages signed in.
-- Full Disk Access for Moltbot + `imsg` (Messages DB access).
+- Full Disk Access for Fortclaw + `imsg` (Messages DB access).
 - Automation permission when sending.
 - `channels.imessage.cliPath` can point to any command that proxies stdin/stdout (for example, a wrapper script that SSHes to another Mac and runs `imsg rpc`).
 
@@ -103,7 +103,7 @@ Example config:
 For single-account setups, use flat options (`channels.imessage.cliPath`, `channels.imessage.dbPath`) instead of the `accounts` map.
 
 ### Remote/SSH variant (optional)
-If you want iMessage on another Mac, set `channels.imessage.cliPath` to a wrapper that runs `imsg` on the remote macOS host over SSH. Moltbot only needs stdio.
+If you want iMessage on another Mac, set `channels.imessage.cliPath` to a wrapper that runs `imsg` on the remote macOS host over SSH. Fortclaw only needs stdio.
 
 Example wrapper:
 ```bash
@@ -111,7 +111,7 @@ Example wrapper:
 exec ssh -T gateway-host imsg "$@"
 ```
 
-**Remote attachments:** When `cliPath` points to a remote host via SSH, attachment paths in the Messages database reference files on the remote machine. Moltbot can automatically fetch these over SCP by setting `channels.imessage.remoteHost`:
+**Remote attachments:** When `cliPath` points to a remote host via SSH, attachment paths in the Messages database reference files on the remote machine. Fortclaw can automatically fetch these over SCP by setting `channels.imessage.remoteHost`:
 
 ```json5
 {
@@ -125,7 +125,7 @@ exec ssh -T gateway-host imsg "$@"
 }
 ```
 
-If `remoteHost` is not set, Moltbot attempts to auto-detect it by parsing the SSH command in your wrapper script. Explicit configuration is recommended for reliability.
+If `remoteHost` is not set, Fortclaw attempts to auto-detect it by parsing the SSH command in your wrapper script. Explicit configuration is recommended for reliability.
 
 #### Remote Mac via Tailscale (example)
 If the Gateway runs on a Linux host/VM but iMessage must run on a Mac, Tailscale is the simplest bridge: the Gateway talks to the Mac over the tailnet, runs `imsg` via SSH, and SCPs attachments back.
@@ -193,7 +193,7 @@ Groups:
 ## Group-ish threads (`is_group=false`)
 Some iMessage threads can have multiple participants but still arrive with `is_group=false` depending on how Messages stores the chat identifier.
 
-If you explicitly configure a `chat_id` under `channels.imessage.groups`, Moltbot treats that thread as a “group” for:
+If you explicitly configure a `chat_id` under `channels.imessage.groups`, Fortclaw treats that thread as a “group” for:
 - session isolation (separate `agent:<agentId>:imessage:group:<chat_id>` session key)
 - group allowlisting / mention gating behavior
 

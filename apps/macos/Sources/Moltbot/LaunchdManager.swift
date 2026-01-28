@@ -8,12 +8,12 @@ enum LaunchdManager {
         try? process.run()
     }
 
-    static func startMoltbot() {
+    static func startFortclaw() {
         let userTarget = "gui/\(getuid())/\(launchdLabel)"
         self.runLaunchctl(["kickstart", "-k", userTarget])
     }
 
-    static func stopMoltbot() {
+    static func stopFortclaw() {
         let userTarget = "gui/\(getuid())/\(launchdLabel)"
         self.runLaunchctl(["stop", userTarget])
     }

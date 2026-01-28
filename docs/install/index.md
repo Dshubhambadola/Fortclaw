@@ -1,7 +1,7 @@
 ---
-summary: "Install Moltbot (recommended installer, global install, or from source)"
+summary: "Install Fortclaw (recommended installer, global install, or from source)"
 read_when:
-  - Installing Moltbot
+  - Installing Fortclaw
   - You want to install from GitHub
 ---
 

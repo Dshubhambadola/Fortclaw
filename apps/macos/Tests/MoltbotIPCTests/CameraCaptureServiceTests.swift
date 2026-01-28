@@ -1,6 +1,6 @@
 import Testing
 
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite struct CameraCaptureServiceTests {
     @Test func normalizeSnapDefaults() {

@@ -2,7 +2,7 @@ import { Buffer } from "node:buffer";
 
 import type WebSocket from "ws";
 
-import type { MoltbotConfig } from "clawdbot/plugin-sdk";
+import type { FortclawConfig } from "clawdbot/plugin-sdk";
 
 export type ResponsePrefixContext = {
   model?: string;
@@ -114,20 +114,20 @@ function normalizeAgentId(value: string | undefined | null): string {
   );
 }
 
-type AgentEntry = NonNullable<NonNullable<MoltbotConfig["agents"]>["list"]>[number];
+type AgentEntry = NonNullable<NonNullable<FortclawConfig["agents"]>["list"]>[number];
 
-function listAgents(cfg: MoltbotConfig): AgentEntry[] {
+function listAgents(cfg: FortclawConfig): AgentEntry[] {
   const list = cfg.agents?.list;
   if (!Array.isArray(list)) return [];
   return list.filter((entry): entry is AgentEntry => Boolean(entry && typeof entry === "object"));
 }
 
-function resolveAgentEntry(cfg: MoltbotConfig, agentId: string): AgentEntry | undefined {
+function resolveAgentEntry(cfg: FortclawConfig, agentId: string): AgentEntry | undefined {
   const id = normalizeAgentId(agentId);
   return listAgents(cfg).find((entry) => normalizeAgentId(entry.id) === id);
 }
 
-export function resolveIdentityName(cfg: MoltbotConfig, agentId: string): string | undefined {
+export function resolveIdentityName(cfg: FortclawConfig, agentId: string): string | undefined {
   const entry = resolveAgentEntry(cfg, agentId);
   return entry?.identity?.name?.trim() || undefined;
 }

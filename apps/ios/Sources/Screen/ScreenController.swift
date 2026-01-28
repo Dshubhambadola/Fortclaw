@@ -1,4 +1,4 @@
-import MoltbotKit
+import FortclawKit
 import Observation
 import SwiftUI
 import WebKit
@@ -184,7 +184,7 @@ final class ScreenController {
 
     func snapshotBase64(
         maxWidth: CGFloat? = nil,
-        format: MoltbotCanvasSnapshotFormat,
+        format: FortclawCanvasSnapshotFormat,
         quality: Double? = nil) async throws -> String
     {
         let config = WKSnapshotConfiguration()
@@ -229,7 +229,7 @@ final class ScreenController {
         subdirectory: String)
         -> URL?
     {
-        let bundle = MoltbotKitResources.bundle
+        let bundle = FortclawKitResources.bundle
         return bundle.url(forResource: name, withExtension: ext, subdirectory: subdirectory)
             ?? bundle.url(forResource: name, withExtension: ext)
     }

@@ -1,12 +1,12 @@
-# Moltbot ACP Bridge
+# Fortclaw ACP Bridge
 
-This document describes how the Moltbot ACP (Agent Client Protocol) bridge works,
+This document describes how the Fortclaw ACP (Agent Client Protocol) bridge works,
 how it maps ACP sessions to Gateway sessions, and how IDEs should invoke it.
 
 ## Overview
 
 `moltbot acp` exposes an ACP agent over stdio and forwards prompts to a running
-Moltbot Gateway over WebSocket. It keeps ACP session ids mapped to Gateway
+Fortclaw Gateway over WebSocket. It keeps ACP session ids mapped to Gateway
 session keys so IDEs can reconnect to the same agent transcript or reset it on
 request.
 
@@ -20,7 +20,7 @@ Key goals:
 ## How can I use this
 
 Use ACP when an IDE or tooling speaks Agent Client Protocol and you want it to
-drive a Moltbot Gateway session.
+drive a Fortclaw Gateway session.
 
 Quick steps:
 
@@ -64,7 +64,7 @@ Add a custom ACP agent in `~/.config/zed/settings.json`:
 ```json
 {
   "agent_servers": {
-    "Moltbot ACP": {
+    "Fortclaw ACP": {
       "type": "custom",
       "command": "moltbot",
       "args": ["acp"],
@@ -79,7 +79,7 @@ To target a specific Gateway or agent:
 ```json
 {
   "agent_servers": {
-    "Moltbot ACP": {
+    "Fortclaw ACP": {
       "type": "custom",
       "command": "moltbot",
       "args": [
@@ -94,7 +94,7 @@ To target a specific Gateway or agent:
 }
 ```
 
-In Zed, open the Agent panel and select “Moltbot ACP” to start a thread.
+In Zed, open the Agent panel and select “Fortclaw ACP” to start a thread.
 
 ## Execution Model
 

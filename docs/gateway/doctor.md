@@ -6,7 +6,7 @@ read_when:
 ---
 # Doctor
 
-`moltbot doctor` is the repair + migration tool for Moltbot. It fixes stale
+`moltbot doctor` is the repair + migration tool for Fortclaw. It fixes stale
 config/state, checks health, and provides actionable repair steps.
 
 ## Quick start
@@ -184,9 +184,9 @@ switch to legacy names if the current image is missing.
 
 ### 8) Gateway service migrations and cleanup hints
 Doctor detects legacy gateway services (launchd/systemd/schtasks) and
-offers to remove them and install the Moltbot service using the current gateway
+offers to remove them and install the Fortclaw service using the current gateway
 port. It can also scan for extra gateway-like services and print cleanup hints.
-Profile-named Moltbot gateway services are considered first-class and are not
+Profile-named Fortclaw gateway services are considered first-class and are not
 flagged as "extra."
 
 ### 9) Security warnings

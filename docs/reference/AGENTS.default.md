@@ -1,14 +1,14 @@
 ---
-summary: "Default Moltbot agent instructions and skills roster for the personal assistant setup"
+summary: "Default Fortclaw agent instructions and skills roster for the personal assistant setup"
 read_when:
-  - Starting a new Moltbot agent session
+  - Starting a new Fortclaw agent session
   - Enabling or auditing default skills
 ---
-# AGENTS.md — Moltbot Personal Assistant (default)
+# AGENTS.md — Fortclaw Personal Assistant (default)
 
 ## First run (recommended)
 
-Moltbot uses a dedicated workspace directory for the agent. Default: `~/clawd` (configurable via `agents.defaults.workspace`).
+Fortclaw uses a dedicated workspace directory for the agent. Default: `~/clawd` (configurable via `agents.defaults.workspace`).
 
 1) Create the workspace (if it doesn’t already exist):
 
@@ -78,7 +78,7 @@ git commit -m "Add Clawd workspace"
 # Optional: add a private remote + push
 ```
 
-## What Moltbot Does
+## What Fortclaw Does
 - Runs WhatsApp gateway + Pi coding agent so the assistant can read/write chats, fetch context, and run skills via the host Mac.
 - macOS app manages permissions (screen recording, notifications, microphone) and exposes the `moltbot` CLI via its bundled binary.
 - Direct chats collapse into the agent's `main` session by default; groups stay isolated as `agent:<agentId>:<channel>:group:<id>` (rooms/channels: `agent:<agentId>:<channel>:channel:<id>`); heartbeats keep background tasks alive.

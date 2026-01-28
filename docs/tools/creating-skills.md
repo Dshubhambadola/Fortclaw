@@ -1,6 +1,6 @@
 # Creating Custom Skills 🛠
 
-Moltbot is designed to be easily extensible. "Skills" are the primary way to add new capabilities to your assistant.
+Fortclaw is designed to be easily extensible. "Skills" are the primary way to add new capabilities to your assistant.
 
 ## What is a Skill?
 A skill is a directory containing a `SKILL.md` file (which provides instructions and tool definitions to the LLM) and optionally some scripts or resources.
@@ -29,8 +29,8 @@ When the user asks for a greeting, use the `echo` tool to say "Hello from your c
 ### 3. Add Tools (Optional)
 You can define custom tools in the frontmatter or instruct the agent to use existing system tools (like `bash` or `browser`).
 
-### 4. Refresh Moltbot
-Ask your agent to "refresh skills" or restart the gateway. Moltbot will discover the new directory and index the `SKILL.md`.
+### 4. Refresh Fortclaw
+Ask your agent to "refresh skills" or restart the gateway. Fortclaw will discover the new directory and index the `SKILL.md`.
 
 ## Best Practices
 - **Be Concise**: Instruct the model on *what* to do, not how to be an AI.

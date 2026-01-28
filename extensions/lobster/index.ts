@@ -1,8 +1,8 @@
-import type { MoltbotPluginApi } from "../../src/plugins/types.js";
+import type { FortclawPluginApi } from "../../src/plugins/types.js";
 
 import { createLobsterTool } from "./src/lobster-tool.js";
 
-export default function register(api: MoltbotPluginApi) {
+export default function register(api: FortclawPluginApi) {
   api.registerTool(
     (ctx) => {
       if (ctx.sandboxed) return null;

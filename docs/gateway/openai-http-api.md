@@ -5,7 +5,7 @@ read_when:
 ---
 # OpenAI Chat Completions (HTTP)
 
-Moltbot’s Gateway can serve a small OpenAI-compatible Chat Completions endpoint.
+Fortclaw’s Gateway can serve a small OpenAI-compatible Chat Completions endpoint.
 
 This endpoint is **disabled by default**. Enable it in config first.
 
@@ -31,7 +31,7 @@ No custom headers required: encode the agent id in the OpenAI `model` field:
 - `model: "moltbot:<agentId>"` (example: `"moltbot:main"`, `"moltbot:beta"`)
 - `model: "agent:<agentId>"` (alias)
 
-Or target a specific Moltbot agent by header:
+Or target a specific Fortclaw agent by header:
 
 - `x-moltbot-agent-id: <agentId>` (default: `main`)
 

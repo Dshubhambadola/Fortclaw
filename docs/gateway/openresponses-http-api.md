@@ -6,7 +6,7 @@ read_when:
 ---
 # OpenResponses API (HTTP)
 
-Moltbot’s Gateway can serve an OpenResponses-compatible `POST /v1/responses` endpoint.
+Fortclaw’s Gateway can serve an OpenResponses-compatible `POST /v1/responses` endpoint.
 
 This endpoint is **disabled by default**. Enable it in config first.
 
@@ -33,7 +33,7 @@ No custom headers required: encode the agent id in the OpenResponses `model` fie
 - `model: "moltbot:<agentId>"` (example: `"moltbot:main"`, `"moltbot:beta"`)
 - `model: "agent:<agentId>"` (alias)
 
-Or target a specific Moltbot agent by header:
+Or target a specific Fortclaw agent by header:
 
 - `x-moltbot-agent-id: <agentId>` (default: `main`)
 

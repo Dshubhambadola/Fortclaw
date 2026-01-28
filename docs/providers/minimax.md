@@ -1,7 +1,7 @@
 ---
-summary: "Use MiniMax M2.1 in Moltbot"
+summary: "Use MiniMax M2.1 in Fortclaw"
 read_when:
-  - You want MiniMax models in Moltbot
+  - You want MiniMax models in Fortclaw
   - You need MiniMax setup guidance
 ---
 # MiniMax

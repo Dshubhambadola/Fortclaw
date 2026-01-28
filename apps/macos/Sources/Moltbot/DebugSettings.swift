@@ -103,7 +103,7 @@ struct DebugSettings: View {
                     }
 
                 Text(
-                    "When enabled, Moltbot won't install or manage \(gatewayLaunchdLabel). " +
+                    "When enabled, Fortclaw won't install or manage \(gatewayLaunchdLabel). " +
                         "It will only attach to an existing Gateway.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -274,7 +274,7 @@ struct DebugSettings: View {
                         Toggle("Write rolling diagnostics log (JSONL)", isOn: self.$diagnosticsFileLogEnabled)
                             .toggleStyle(.checkbox)
                             .help(
-                                "Writes a rotating, local-only log under ~/Library/Logs/Moltbot/. " +
+                                "Writes a rotating, local-only log under ~/Library/Logs/Fortclaw/. " +
                                     "Enable only while actively debugging.")
 
                         HStack(spacing: 8) {
@@ -382,7 +382,7 @@ struct DebugSettings: View {
         GroupBox("Paths") {
             VStack(alignment: .leading, spacing: 12) {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Moltbot project root")
+                    Text("Fortclaw project root")
                         .font(.caption.weight(.semibold))
                     HStack(spacing: 8) {
                         TextField("Path to moltbot repo", text: self.$gatewayRootInput)
@@ -524,15 +524,15 @@ struct DebugSettings: View {
 
                 VStack(alignment: .leading, spacing: 6) {
                     Text(
-                        "Note: macOS may require restarting Moltbot after enabling Accessibility or Screen Recording.")
+                        "Note: macOS may require restarting Fortclaw after enabling Accessibility or Screen Recording.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
 
                     Button {
-                        LaunchdManager.startMoltbot()
+                        LaunchdManager.startFortclaw()
                     } label: {
-                        Label("Restart Moltbot", systemImage: "arrow.counterclockwise")
+                        Label("Restart Fortclaw", systemImage: "arrow.counterclockwise")
                     }
                     .buttonStyle(.bordered)
                     .controlSize(.small)

@@ -13,8 +13,8 @@ Status: external CLI integration. Gateway talks to `signal-cli` over HTTP JSON-R
 1) Use a **separate Signal number** for the bot (recommended).
 2) Install `signal-cli` (Java required).
 3) Link the bot device and start the daemon:
-   - `signal-cli link -n "Moltbot"`
-4) Configure Moltbot and start the gateway.
+   - `signal-cli link -n "Fortclaw"`
+4) Configure Fortclaw and start the gateway.
 
 Minimal config:
 ```json5
@@ -54,7 +54,7 @@ Disable with:
 ## Setup (fast path)
 1) Install `signal-cli` (Java required).
 2) Link a bot account:
-   - `signal-cli link -n "Moltbot"` then scan the QR in Signal.
+   - `signal-cli link -n "Fortclaw"` then scan the QR in Signal.
 3) Configure Signal and start the gateway.
 
 Example:
@@ -75,7 +75,7 @@ Example:
 Multi-account support: use `channels.signal.accounts` with per-account config and optional `name`. See [`gateway/configuration`](/gateway/configuration#telegramaccounts--discordaccounts--slackaccounts--signalaccounts--imessageaccounts) for the shared pattern.
 
 ## External daemon mode (httpUrl)
-If you want to manage `signal-cli` yourself (slow JVM cold starts, container init, or shared CPUs), run the daemon separately and point Moltbot at it:
+If you want to manage `signal-cli` yourself (slow JVM cold starts, container init, or shared CPUs), run the daemon separately and point Fortclaw at it:
 
 ```json5
 {
@@ -88,7 +88,7 @@ If you want to manage `signal-cli` yourself (slow JVM cold starts, container ini
 }
 ```
 
-This skips auto-spawn and the startup wait inside Moltbot. For slow starts when auto-spawning, set `channels.signal.startupTimeoutMs`.
+This skips auto-spawn and the startup wait inside Fortclaw. For slow starts when auto-spawning, set `channels.signal.startupTimeoutMs`.
 
 ## Access control (DMs + groups)
 DMs:
@@ -118,8 +118,8 @@ Groups:
 - Group history context uses `channels.signal.historyLimit` (or `channels.signal.accounts.*.historyLimit`), falling back to `messages.groupChat.historyLimit`. Set `0` to disable (default 50).
 
 ## Typing + read receipts
-- **Typing indicators**: Moltbot sends typing signals via `signal-cli sendTyping` and refreshes them while a reply is running.
-- **Read receipts**: when `channels.signal.sendReadReceipts` is true, Moltbot forwards read receipts for allowed DMs.
+- **Typing indicators**: Fortclaw sends typing signals via `signal-cli sendTyping` and refreshes them while a reply is running.
+- **Read receipts**: when `channels.signal.sendReadReceipts` is true, Fortclaw forwards read receipts for allowed DMs.
 - Signal-cli does not expose read receipts for groups.
 
 ## Reactions (message tool)

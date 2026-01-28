@@ -1,13 +1,13 @@
 ---
-summary: "Updating Moltbot safely (global install or source), plus rollback strategy"
+summary: "Updating Fortclaw safely (global install or source), plus rollback strategy"
 read_when:
-  - Updating Moltbot
+  - Updating Fortclaw
   - Something breaks after an update
 ---
 
 # Updating
 
-Moltbot is moving fast (pre “1.0”). Treat updates like shipping infra: update → run checks → restart (or use `moltbot update`, which restarts) → verify.
+Fortclaw is moving fast (pre “1.0”). Treat updates like shipping infra: update → run checks → restart (or use `moltbot update`, which restarts) → verify.
 
 ## Recommended: re-run the website installer (upgrade in place)
 
@@ -125,7 +125,7 @@ moltbot health
 ```
 
 Notes:
-- `pnpm build` matters when you run the packaged `moltbot` binary ([`moltbot.mjs`](https://github.com/moltbot/moltbot/blob/main/moltbot.mjs)) or use Node to run `dist/`.
+- `pnpm build` matters when you run the packaged `moltbot` binary ([`fortclaw.mjs`](https://github.com/moltbot/moltbot/blob/main/fortclaw.mjs)) or use Node to run `dist/`.
 - If you run from a repo checkout without a global install, use `pnpm moltbot ...` for CLI commands.
 - If you run directly from TypeScript (`pnpm moltbot ...`), a rebuild is usually unnecessary, but **config migrations still apply** → run doctor.
 - Switching between global and git installs is easy: install the other flavor, then run `moltbot doctor` so the gateway service entrypoint is rewritten to the current install.
@@ -140,7 +140,7 @@ Typical things it does:
 - Migrate deprecated config keys / legacy config file locations.
 - Audit DM policies and warn on risky “open” settings.
 - Check Gateway health and can offer to restart.
-- Detect and migrate older gateway services (launchd/systemd; legacy schtasks) to current Moltbot services.
+- Detect and migrate older gateway services (launchd/systemd; legacy schtasks) to current Fortclaw services.
 - On Linux, ensure systemd user lingering (so the Gateway survives logout).
 
 Details: [Doctor](/gateway/doctor)

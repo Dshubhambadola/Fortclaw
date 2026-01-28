@@ -1,11 +1,11 @@
 ---
-summary: "Quick troubleshooting guide for common Moltbot failures"
+summary: "Quick troubleshooting guide for common Fortclaw failures"
 read_when:
   - Investigating runtime issues or failures
 ---
 # Troubleshooting 🔧
 
-When Moltbot misbehaves, here's how to fix it.
+When Fortclaw misbehaves, here's how to fix it.
 
 Start with the FAQ’s [First 60 seconds](/help/faq#first-60-seconds-if-somethings-broken) if you just want a quick triage recipe. This page goes deeper on runtime failures and diagnostics.
 
@@ -108,7 +108,7 @@ Doctor/service will show runtime state (PID/last exit) and log hints.
 - File logs (always): `/tmp/moltbot/moltbot-YYYY-MM-DD.log` (or your configured `logging.file`)
 - macOS LaunchAgent (if installed): `$CLAWDBOT_STATE_DIR/logs/gateway.log` and `gateway.err.log`
 - Linux systemd (if installed): `journalctl --user -u moltbot-gateway[-<profile>].service -n 200 --no-pager`
-- Windows: `schtasks /Query /TN "Moltbot Gateway (<profile>)" /V /FO LIST`
+- Windows: `schtasks /Query /TN "Fortclaw Gateway (<profile>)" /V /FO LIST`
 
 **Enable more logging:**
 - Bump file log detail (persisted JSONL):
@@ -267,7 +267,7 @@ The agent was interrupted mid-response.
 
 ### "Agent failed before reply: Unknown model: anthropic/claude-haiku-3-5"
 
-Moltbot intentionally rejects **older/insecure models** (especially those more
+Fortclaw intentionally rejects **older/insecure models** (especially those more
 vulnerable to prompt injection). If you see this error, the model name is no
 longer supported.
 
@@ -409,7 +409,7 @@ grep "media\\|fetch\\|download" "$(ls -t /tmp/moltbot/moltbot-*.log | head -1)" 
 
 ### High Memory Usage
 
-Moltbot keeps conversation history in memory.
+Fortclaw keeps conversation history in memory.
 
 **Fix:** Restart periodically or set session limits:
 ```json
@@ -424,7 +424,7 @@ Moltbot keeps conversation history in memory.
 
 ### “Gateway won’t start — configuration invalid”
 
-Moltbot now refuses to start when the config contains unknown keys, malformed values, or invalid types.
+Fortclaw now refuses to start when the config contains unknown keys, malformed values, or invalid types.
 This is intentional for safety.
 
 Fix it with Doctor:
@@ -553,12 +553,12 @@ Docs: [Discord](/channels/discord), [Channels troubleshooting](/channels/trouble
 ### Cloud Code Assist API error: invalid tool schema (400). What now?
 
 This is almost always a **tool schema compatibility** issue. The Cloud Code Assist
-endpoint accepts a strict subset of JSON Schema. Moltbot scrubs/normalizes tool
+endpoint accepts a strict subset of JSON Schema. Fortclaw scrubs/normalizes tool
 schemas in current `main`, but the fix is not in the last release yet (as of
 January 13, 2026).
 
 Fix checklist:
-1) **Update Moltbot**:
+1) **Update Fortclaw**:
    - If you can run from source, pull `main` and restart the gateway.
    - Otherwise, wait for the next release that includes the schema scrubber.
 2) Avoid unsupported keywords like `anyOf/oneOf/allOf`, `patternProperties`,
@@ -631,7 +631,7 @@ moltbot channels login --verbose
 | Log | Location |
 |-----|----------|
 | Gateway file logs (structured) | `/tmp/moltbot/moltbot-YYYY-MM-DD.log` (or `logging.file`) |
-| Gateway service logs (supervisor) | macOS: `$CLAWDBOT_STATE_DIR/logs/gateway.log` + `gateway.err.log` (default: `~/.clawdbot/logs/...`; profiles use `~/.clawdbot-<profile>/logs/...`)<br />Linux: `journalctl --user -u moltbot-gateway[-<profile>].service -n 200 --no-pager`<br />Windows: `schtasks /Query /TN "Moltbot Gateway (<profile>)" /V /FO LIST` |
+| Gateway service logs (supervisor) | macOS: `$CLAWDBOT_STATE_DIR/logs/gateway.log` + `gateway.err.log` (default: `~/.clawdbot/logs/...`; profiles use `~/.clawdbot-<profile>/logs/...`)<br />Linux: `journalctl --user -u moltbot-gateway[-<profile>].service -n 200 --no-pager`<br />Windows: `schtasks /Query /TN "Fortclaw Gateway (<profile>)" /V /FO LIST` |
 | Session files | `$CLAWDBOT_STATE_DIR/agents/<agentId>/sessions/` |
 | Media cache | `$CLAWDBOT_STATE_DIR/media/` |
 | Credentials | `$CLAWDBOT_STATE_DIR/credentials/` |
@@ -679,7 +679,7 @@ moltbot gateway restart           # or: moltbot gateway
 1. Check logs first: `/tmp/moltbot/` (default: `moltbot-YYYY-MM-DD.log`, or your configured `logging.file`)
 2. Search existing issues on GitHub
 3. Open a new issue with:
-   - Moltbot version
+   - Fortclaw version
    - Relevant log snippets
    - Steps to reproduce
    - Your config (redact secrets!)

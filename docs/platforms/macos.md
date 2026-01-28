@@ -1,12 +1,12 @@
 ---
-summary: "Moltbot macOS companion app (menu bar + gateway broker)"
+summary: "Fortclaw macOS companion app (menu bar + gateway broker)"
 read_when:
   - Implementing macOS app features
   - Changing gateway lifecycle or node bridging on macOS
 ---
-# Moltbot macOS Companion (menu bar + gateway broker)
+# Fortclaw macOS Companion (menu bar + gateway broker)
 
-The macOS app is the **menu‑bar companion** for Moltbot. It owns permissions,
+The macOS app is the **menu‑bar companion** for Fortclaw. It owns permissions,
 manages/attaches to the Gateway locally (launchd or manual), and exposes macOS
 capabilities to the agent as a node.
 
@@ -129,7 +129,7 @@ Safety:
 
 ## Onboarding flow (typical)
 
-1) Install and launch **Moltbot.app**.
+1) Install and launch **Fortclaw.app**.
 2) Complete the permissions checklist (TCC prompts).
 3) Ensure **Local** mode is active and the Gateway is running.
 4) Install the CLI if you want terminal access.
@@ -137,7 +137,7 @@ Safety:
 ## Build & dev workflow (native)
 
 - `cd apps/macos && swift build`
-- `swift run Moltbot` (or Xcode)
+- `swift run Fortclaw` (or Xcode)
 - Package app: `scripts/package-mac-app.sh`
 
 ## Debug gateway connectivity (macOS CLI)

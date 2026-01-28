@@ -1,4 +1,4 @@
-import MoltbotKit
+import FortclawKit
 import Foundation
 import OSLog
 
@@ -91,7 +91,7 @@ final class MacNodeModeCoordinator {
                             return BridgeInvokeResponse(
                                 id: req.id,
                                 ok: false,
-                                error: MoltbotNodeError(code: .unavailable, message: "UNAVAILABLE: node not ready"))
+                                error: FortclawNodeError(code: .unavailable, message: "UNAVAILABLE: node not ready"))
                         }
                         return await self.runtime.handleInvoke(req)
                     })
@@ -107,13 +107,13 @@ final class MacNodeModeCoordinator {
     }
 
     private func currentCaps() -> [String] {
-        var caps: [String] = [MoltbotCapability.canvas.rawValue, MoltbotCapability.screen.rawValue]
+        var caps: [String] = [FortclawCapability.canvas.rawValue, FortclawCapability.screen.rawValue]
         if UserDefaults.standard.object(forKey: cameraEnabledKey) as? Bool ?? false {
-            caps.append(MoltbotCapability.camera.rawValue)
+            caps.append(FortclawCapability.camera.rawValue)
         }
         let rawLocationMode = UserDefaults.standard.string(forKey: locationModeKey) ?? "off"
-        if MoltbotLocationMode(rawValue: rawLocationMode) != .off {
-            caps.append(MoltbotCapability.location.rawValue)
+        if FortclawLocationMode(rawValue: rawLocationMode) != .off {
+            caps.append(FortclawCapability.location.rawValue)
         }
         return caps
     }
@@ -125,30 +125,30 @@ final class MacNodeModeCoordinator {
 
     private func currentCommands(caps: [String]) -> [String] {
         var commands: [String] = [
-            MoltbotCanvasCommand.present.rawValue,
-            MoltbotCanvasCommand.hide.rawValue,
-            MoltbotCanvasCommand.navigate.rawValue,
-            MoltbotCanvasCommand.evalJS.rawValue,
-            MoltbotCanvasCommand.snapshot.rawValue,
-            MoltbotCanvasA2UICommand.push.rawValue,
-            MoltbotCanvasA2UICommand.pushJSONL.rawValue,
-            MoltbotCanvasA2UICommand.reset.rawValue,
+            FortclawCanvasCommand.present.rawValue,
+            FortclawCanvasCommand.hide.rawValue,
+            FortclawCanvasCommand.navigate.rawValue,
+            FortclawCanvasCommand.evalJS.rawValue,
+            FortclawCanvasCommand.snapshot.rawValue,
+            FortclawCanvasA2UICommand.push.rawValue,
+            FortclawCanvasA2UICommand.pushJSONL.rawValue,
+            FortclawCanvasA2UICommand.reset.rawValue,
             MacNodeScreenCommand.record.rawValue,
-            MoltbotSystemCommand.notify.rawValue,
-            MoltbotSystemCommand.which.rawValue,
-            MoltbotSystemCommand.run.rawValue,
-            MoltbotSystemCommand.execApprovalsGet.rawValue,
-            MoltbotSystemCommand.execApprovalsSet.rawValue,
+            FortclawSystemCommand.notify.rawValue,
+            FortclawSystemCommand.which.rawValue,
+            FortclawSystemCommand.run.rawValue,
+            FortclawSystemCommand.execApprovalsGet.rawValue,
+            FortclawSystemCommand.execApprovalsSet.rawValue,
         ]
 
         let capsSet = Set(caps)
-        if capsSet.contains(MoltbotCapability.camera.rawValue) {
-            commands.append(MoltbotCameraCommand.list.rawValue)
-            commands.append(MoltbotCameraCommand.snap.rawValue)
-            commands.append(MoltbotCameraCommand.clip.rawValue)
+        if capsSet.contains(FortclawCapability.camera.rawValue) {
+            commands.append(FortclawCameraCommand.list.rawValue)
+            commands.append(FortclawCameraCommand.snap.rawValue)
+            commands.append(FortclawCameraCommand.clip.rawValue)
         }
-        if capsSet.contains(MoltbotCapability.location.rawValue) {
-            commands.append(MoltbotLocationCommand.get.rawValue)
+        if capsSet.contains(FortclawCapability.location.rawValue) {
+            commands.append(FortclawLocationCommand.get.rawValue)
         }
 
         return commands

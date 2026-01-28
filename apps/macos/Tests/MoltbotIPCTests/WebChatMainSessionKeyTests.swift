@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite struct WebChatMainSessionKeyTests {
     @Test func configGetSnapshotMainKeyFallsBackToMainWhenMissing() throws {

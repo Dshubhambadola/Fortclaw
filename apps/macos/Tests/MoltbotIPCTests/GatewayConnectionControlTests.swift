@@ -1,8 +1,8 @@
-import MoltbotKit
+import FortclawKit
 import Foundation
 import Testing
-@testable import Moltbot
-@testable import MoltbotIPC
+@testable import Fortclaw
+@testable import FortclawIPC
 
 private final class FakeWebSocketTask: WebSocketTasking, @unchecked Sendable {
     var state: URLSessionTask.State = .running

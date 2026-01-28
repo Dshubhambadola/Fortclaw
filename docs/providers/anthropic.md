@@ -1,13 +1,13 @@
 ---
-summary: "Use Anthropic Claude via API keys or setup-token in Moltbot"
+summary: "Use Anthropic Claude via API keys or setup-token in Fortclaw"
 read_when:
-  - You want to use Anthropic models in Moltbot
+  - You want to use Anthropic models in Fortclaw
   - You want setup-token instead of API keys
 ---
 # Anthropic (Claude)
 
 Anthropic builds the **Claude** model family and provides access via an API.
-In Moltbot you can authenticate with an API key or a **setup-token**.
+In Fortclaw you can authenticate with an API key or a **setup-token**.
 
 ## Option A: Anthropic API key
 
@@ -35,7 +35,7 @@ moltbot onboard --anthropic-api-key "$ANTHROPIC_API_KEY"
 
 ## Prompt caching (Anthropic API)
 
-Moltbot does **not** override Anthropic’s default cache TTL unless you set it.
+Fortclaw does **not** override Anthropic’s default cache TTL unless you set it.
 This is **API-only**; subscription auth does not honor TTL settings.
 
 To set the TTL per model, use `cacheControlTtl` in the model `params`:
@@ -54,7 +54,7 @@ To set the TTL per model, use `cacheControlTtl` in the model `params`:
 }
 ```
 
-Moltbot includes the `extended-cache-ttl-2025-04-11` beta flag for Anthropic API
+Fortclaw includes the `extended-cache-ttl-2025-04-11` beta flag for Anthropic API
 requests; keep it if you override provider headers (see [/gateway/configuration](/gateway/configuration)).
 
 ## Option B: Claude setup-token
@@ -69,7 +69,7 @@ Setup-tokens are created by the **Claude Code CLI**, not the Anthropic Console. 
 claude setup-token
 ```
 
-Paste the token into Moltbot (wizard: **Anthropic token (paste setup-token)**), or run it on the gateway host:
+Paste the token into Fortclaw (wizard: **Anthropic token (paste setup-token)**), or run it on the gateway host:
 
 ```bash
 moltbot models auth setup-token --provider anthropic

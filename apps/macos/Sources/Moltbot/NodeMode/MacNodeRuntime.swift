@@ -1,6 +1,6 @@
 import AppKit
-import MoltbotIPC
-import MoltbotKit
+import FortclawIPC
+import FortclawKit
 import Foundation
 
 actor MacNodeRuntime {
@@ -34,39 +34,39 @@ actor MacNodeRuntime {
             return BridgeInvokeResponse(
                 id: req.id,
                 ok: false,
-                error: MoltbotNodeError(
+                error: FortclawNodeError(
                     code: .unavailable,
                     message: "CANVAS_DISABLED: enable Canvas in Settings"))
         }
         do {
             switch command {
-            case MoltbotCanvasCommand.present.rawValue,
-                 MoltbotCanvasCommand.hide.rawValue,
-                 MoltbotCanvasCommand.navigate.rawValue,
-                 MoltbotCanvasCommand.evalJS.rawValue,
-                 MoltbotCanvasCommand.snapshot.rawValue:
+            case FortclawCanvasCommand.present.rawValue,
+                 FortclawCanvasCommand.hide.rawValue,
+                 FortclawCanvasCommand.navigate.rawValue,
+                 FortclawCanvasCommand.evalJS.rawValue,
+                 FortclawCanvasCommand.snapshot.rawValue:
                 return try await self.handleCanvasInvoke(req)
-            case MoltbotCanvasA2UICommand.reset.rawValue,
-                 MoltbotCanvasA2UICommand.push.rawValue,
-                 MoltbotCanvasA2UICommand.pushJSONL.rawValue:
+            case FortclawCanvasA2UICommand.reset.rawValue,
+                 FortclawCanvasA2UICommand.push.rawValue,
+                 FortclawCanvasA2UICommand.pushJSONL.rawValue:
                 return try await self.handleA2UIInvoke(req)
-            case MoltbotCameraCommand.snap.rawValue,
-                 MoltbotCameraCommand.clip.rawValue,
-                 MoltbotCameraCommand.list.rawValue:
+            case FortclawCameraCommand.snap.rawValue,
+                 FortclawCameraCommand.clip.rawValue,
+                 FortclawCameraCommand.list.rawValue:
                 return try await self.handleCameraInvoke(req)
-            case MoltbotLocationCommand.get.rawValue:
+            case FortclawLocationCommand.get.rawValue:
                 return try await self.handleLocationInvoke(req)
             case MacNodeScreenCommand.record.rawValue:
                 return try await self.handleScreenRecordInvoke(req)
-            case MoltbotSystemCommand.run.rawValue:
+            case FortclawSystemCommand.run.rawValue:
                 return try await self.handleSystemRun(req)
-            case MoltbotSystemCommand.which.rawValue:
+            case FortclawSystemCommand.which.rawValue:
                 return try await self.handleSystemWhich(req)
-            case MoltbotSystemCommand.notify.rawValue:
+            case FortclawSystemCommand.notify.rawValue:
                 return try await self.handleSystemNotify(req)
-            case MoltbotSystemCommand.execApprovalsGet.rawValue:
+            case FortclawSystemCommand.execApprovalsGet.rawValue:
                 return try await self.handleSystemExecApprovalsGet(req)
-            case MoltbotSystemCommand.execApprovalsSet.rawValue:
+            case FortclawSystemCommand.execApprovalsSet.rawValue:
                 return try await self.handleSystemExecApprovalsSet(req)
             default:
                 return Self.errorResponse(req, code: .invalidRequest, message: "INVALID_REQUEST: unknown command")
@@ -82,9 +82,9 @@ actor MacNodeRuntime {
 
     private func handleCanvasInvoke(_ req: BridgeInvokeRequest) async throws -> BridgeInvokeResponse {
         switch req.command {
-        case MoltbotCanvasCommand.present.rawValue:
-            let params = (try? Self.decodeParams(MoltbotCanvasPresentParams.self, from: req.paramsJSON)) ??
-                MoltbotCanvasPresentParams()
+        case FortclawCanvasCommand.present.rawValue:
+            let params = (try? Self.decodeParams(FortclawCanvasPresentParams.self, from: req.paramsJSON)) ??
+                FortclawCanvasPresentParams()
             let urlTrimmed = params.url?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
             let url = urlTrimmed.isEmpty ? nil : urlTrimmed
             let placement = params.placement.map {
@@ -98,29 +98,29 @@ actor MacNodeRuntime {
                     placement: placement)
             }
             return BridgeInvokeResponse(id: req.id, ok: true)
-        case MoltbotCanvasCommand.hide.rawValue:
+        case FortclawCanvasCommand.hide.rawValue:
             let sessionKey = self.mainSessionKey
             await MainActor.run {
                 CanvasManager.shared.hide(sessionKey: sessionKey)
             }
             return BridgeInvokeResponse(id: req.id, ok: true)
-        case MoltbotCanvasCommand.navigate.rawValue:
-            let params = try Self.decodeParams(MoltbotCanvasNavigateParams.self, from: req.paramsJSON)
+        case FortclawCanvasCommand.navigate.rawValue:
+            let params = try Self.decodeParams(FortclawCanvasNavigateParams.self, from: req.paramsJSON)
             let sessionKey = self.mainSessionKey
             try await MainActor.run {
                 _ = try CanvasManager.shared.show(sessionKey: sessionKey, path: params.url)
             }
             return BridgeInvokeResponse(id: req.id, ok: true)
-        case MoltbotCanvasCommand.evalJS.rawValue:
-            let params = try Self.decodeParams(MoltbotCanvasEvalParams.self, from: req.paramsJSON)
+        case FortclawCanvasCommand.evalJS.rawValue:
+            let params = try Self.decodeParams(FortclawCanvasEvalParams.self, from: req.paramsJSON)
             let sessionKey = self.mainSessionKey
             let result = try await CanvasManager.shared.eval(
                 sessionKey: sessionKey,
                 javaScript: params.javaScript)
             let payload = try Self.encodePayload(["result": result] as [String: String])
             return BridgeInvokeResponse(id: req.id, ok: true, payloadJSON: payload)
-        case MoltbotCanvasCommand.snapshot.rawValue:
-            let params = try? Self.decodeParams(MoltbotCanvasSnapshotParams.self, from: req.paramsJSON)
+        case FortclawCanvasCommand.snapshot.rawValue:
+            let params = try? Self.decodeParams(FortclawCanvasSnapshotParams.self, from: req.paramsJSON)
             let format = params?.format ?? .jpeg
             let maxWidth: Int? = {
                 if let raw = params?.maxWidth, raw > 0 { return raw }
@@ -155,10 +155,10 @@ actor MacNodeRuntime {
 
     private func handleA2UIInvoke(_ req: BridgeInvokeRequest) async throws -> BridgeInvokeResponse {
         switch req.command {
-        case MoltbotCanvasA2UICommand.reset.rawValue:
+        case FortclawCanvasA2UICommand.reset.rawValue:
             try await self.handleA2UIReset(req)
-        case MoltbotCanvasA2UICommand.push.rawValue,
-             MoltbotCanvasA2UICommand.pushJSONL.rawValue:
+        case FortclawCanvasA2UICommand.push.rawValue,
+             FortclawCanvasA2UICommand.pushJSONL.rawValue:
             try await self.handleA2UIPush(req)
         default:
             Self.errorResponse(req, code: .invalidRequest, message: "INVALID_REQUEST: unknown command")
@@ -170,14 +170,14 @@ actor MacNodeRuntime {
             return BridgeInvokeResponse(
                 id: req.id,
                 ok: false,
-                error: MoltbotNodeError(
+                error: FortclawNodeError(
                     code: .unavailable,
                     message: "CAMERA_DISABLED: enable Camera in Settings"))
         }
         switch req.command {
-        case MoltbotCameraCommand.snap.rawValue:
-            let params = (try? Self.decodeParams(MoltbotCameraSnapParams.self, from: req.paramsJSON)) ??
-                MoltbotCameraSnapParams()
+        case FortclawCameraCommand.snap.rawValue:
+            let params = (try? Self.decodeParams(FortclawCameraSnapParams.self, from: req.paramsJSON)) ??
+                FortclawCameraSnapParams()
             let delayMs = min(10000, max(0, params.delayMs ?? 2000))
             let res = try await self.cameraCapture.snap(
                 facing: CameraFacing(rawValue: params.facing?.rawValue ?? "") ?? .front,
@@ -197,9 +197,9 @@ actor MacNodeRuntime {
                 width: Int(res.size.width),
                 height: Int(res.size.height)))
             return BridgeInvokeResponse(id: req.id, ok: true, payloadJSON: payload)
-        case MoltbotCameraCommand.clip.rawValue:
-            let params = (try? Self.decodeParams(MoltbotCameraClipParams.self, from: req.paramsJSON)) ??
-                MoltbotCameraClipParams()
+        case FortclawCameraCommand.clip.rawValue:
+            let params = (try? Self.decodeParams(FortclawCameraClipParams.self, from: req.paramsJSON)) ??
+                FortclawCameraClipParams()
             let res = try await self.cameraCapture.clip(
                 facing: CameraFacing(rawValue: params.facing?.rawValue ?? "") ?? .front,
                 durationMs: params.durationMs,
@@ -220,7 +220,7 @@ actor MacNodeRuntime {
                 durationMs: res.durationMs,
                 hasAudio: res.hasAudio))
             return BridgeInvokeResponse(id: req.id, ok: true, payloadJSON: payload)
-        case MoltbotCameraCommand.list.rawValue:
+        case FortclawCameraCommand.list.rawValue:
             let devices = await self.cameraCapture.listDevices()
             let payload = try Self.encodePayload(["devices": devices])
             return BridgeInvokeResponse(id: req.id, ok: true, payloadJSON: payload)
@@ -235,12 +235,12 @@ actor MacNodeRuntime {
             return BridgeInvokeResponse(
                 id: req.id,
                 ok: false,
-                error: MoltbotNodeError(
+                error: FortclawNodeError(
                     code: .unavailable,
                     message: "LOCATION_DISABLED: enable Location in Settings"))
         }
-        let params = (try? Self.decodeParams(MoltbotLocationGetParams.self, from: req.paramsJSON)) ??
-            MoltbotLocationGetParams()
+        let params = (try? Self.decodeParams(FortclawLocationGetParams.self, from: req.paramsJSON)) ??
+            FortclawLocationGetParams()
         let desired = params.desiredAccuracy ??
             (Self.locationPreciseEnabled() ? .precise : .balanced)
         let services = await self.mainActorServices()
@@ -257,7 +257,7 @@ actor MacNodeRuntime {
             return BridgeInvokeResponse(
                 id: req.id,
                 ok: false,
-                error: MoltbotNodeError(
+                error: FortclawNodeError(
                     code: .unavailable,
                     message: "LOCATION_PERMISSION_REQUIRED: grant Location permission"))
         }
@@ -267,7 +267,7 @@ actor MacNodeRuntime {
                 maxAgeMs: params.maxAgeMs,
                 timeoutMs: params.timeoutMs)
             let isPrecise = await services.locationAccuracyAuthorization() == .fullAccuracy
-            let payload = MoltbotLocationPayload(
+            let payload = FortclawLocationPayload(
                 lat: location.coordinate.latitude,
                 lon: location.coordinate.longitude,
                 accuracyMeters: location.horizontalAccuracy,
@@ -283,14 +283,14 @@ actor MacNodeRuntime {
             return BridgeInvokeResponse(
                 id: req.id,
                 ok: false,
-                error: MoltbotNodeError(
+                error: FortclawNodeError(
                     code: .unavailable,
                     message: "LOCATION_TIMEOUT: no fix in time"))
         } catch {
             return BridgeInvokeResponse(
                 id: req.id,
                 ok: false,
-                error: MoltbotNodeError(
+                error: FortclawNodeError(
                     code: .unavailable,
                     message: "LOCATION_UNAVAILABLE: \(error.localizedDescription)"))
         }
@@ -354,23 +354,23 @@ actor MacNodeRuntime {
 
     private func handleA2UIPush(_ req: BridgeInvokeRequest) async throws -> BridgeInvokeResponse {
         let command = req.command
-        let messages: [MoltbotKit.AnyCodable]
-        if command == MoltbotCanvasA2UICommand.pushJSONL.rawValue {
-            let params = try Self.decodeParams(MoltbotCanvasA2UIPushJSONLParams.self, from: req.paramsJSON)
-            messages = try MoltbotCanvasA2UIJSONL.decodeMessagesFromJSONL(params.jsonl)
+        let messages: [FortclawKit.AnyCodable]
+        if command == FortclawCanvasA2UICommand.pushJSONL.rawValue {
+            let params = try Self.decodeParams(FortclawCanvasA2UIPushJSONLParams.self, from: req.paramsJSON)
+            messages = try FortclawCanvasA2UIJSONL.decodeMessagesFromJSONL(params.jsonl)
         } else {
             do {
-                let params = try Self.decodeParams(MoltbotCanvasA2UIPushParams.self, from: req.paramsJSON)
+                let params = try Self.decodeParams(FortclawCanvasA2UIPushParams.self, from: req.paramsJSON)
                 messages = params.messages
             } catch {
-                let params = try Self.decodeParams(MoltbotCanvasA2UIPushJSONLParams.self, from: req.paramsJSON)
-                messages = try MoltbotCanvasA2UIJSONL.decodeMessagesFromJSONL(params.jsonl)
+                let params = try Self.decodeParams(FortclawCanvasA2UIPushJSONLParams.self, from: req.paramsJSON)
+                messages = try FortclawCanvasA2UIJSONL.decodeMessagesFromJSONL(params.jsonl)
             }
         }
 
         try await self.ensureA2UIHost()
 
-        let messagesJSON = try MoltbotCanvasA2UIJSONL.encodeMessagesJSONArray(messages)
+        let messagesJSON = try FortclawCanvasA2UIJSONL.encodeMessagesJSONArray(messages)
         let js = """
         (() => {
           try {
@@ -431,7 +431,7 @@ actor MacNodeRuntime {
     }
 
     private func handleSystemRun(_ req: BridgeInvokeRequest) async throws -> BridgeInvokeResponse {
-        let params = try Self.decodeParams(MoltbotSystemRunParams.self, from: req.paramsJSON)
+        let params = try Self.decodeParams(FortclawSystemRunParams.self, from: req.paramsJSON)
         let command = params.command
         guard !command.isEmpty else {
             return Self.errorResponse(req, code: .invalidRequest, message: "INVALID_REQUEST: command required")
@@ -593,7 +593,7 @@ actor MacNodeRuntime {
     }
 
     private func handleSystemWhich(_ req: BridgeInvokeRequest) async throws -> BridgeInvokeResponse {
-        let params = try Self.decodeParams(MoltbotSystemWhichParams.self, from: req.paramsJSON)
+        let params = try Self.decodeParams(FortclawSystemWhichParams.self, from: req.paramsJSON)
         let bins = params.bins
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .filter { !$0.isEmpty }
@@ -639,7 +639,7 @@ actor MacNodeRuntime {
 
     private func resolveSystemRunApproval(
         req: BridgeInvokeRequest,
-        params: MoltbotSystemRunParams,
+        params: FortclawSystemRunParams,
         context: ExecRunContext) async -> ExecApprovalOutcome
     {
         let requiresAsk = ExecApprovalHelpers.requiresAsk(
@@ -790,7 +790,7 @@ actor MacNodeRuntime {
     }
 
     private func handleSystemNotify(_ req: BridgeInvokeRequest) async throws -> BridgeInvokeResponse {
-        let params = try Self.decodeParams(MoltbotSystemNotifyParams.self, from: req.paramsJSON)
+        let params = try Self.decodeParams(FortclawSystemNotifyParams.self, from: req.paramsJSON)
         let title = params.title.trimmingCharacters(in: .whitespacesAndNewlines)
         let body = params.body.trimmingCharacters(in: .whitespacesAndNewlines)
         if title.isEmpty, body.isEmpty {
@@ -886,9 +886,9 @@ extension MacNodeRuntime {
         return merged
     }
 
-    private nonisolated static func locationMode() -> MoltbotLocationMode {
+    private nonisolated static func locationMode() -> FortclawLocationMode {
         let raw = UserDefaults.standard.string(forKey: locationModeKey) ?? "off"
-        return MoltbotLocationMode(rawValue: raw) ?? .off
+        return FortclawLocationMode(rawValue: raw) ?? .off
     }
 
     private nonisolated static func locationPreciseEnabled() -> Bool {
@@ -898,18 +898,18 @@ extension MacNodeRuntime {
 
     private static func errorResponse(
         _ req: BridgeInvokeRequest,
-        code: MoltbotNodeErrorCode,
+        code: FortclawNodeErrorCode,
         message: String) -> BridgeInvokeResponse
     {
         BridgeInvokeResponse(
             id: req.id,
             ok: false,
-            error: MoltbotNodeError(code: code, message: message))
+            error: FortclawNodeError(code: code, message: message))
     }
 
     private static func encodeCanvasSnapshot(
         image: NSImage,
-        format: MoltbotCanvasSnapshotFormat,
+        format: FortclawCanvasSnapshotFormat,
         maxWidth: Int?,
         quality: Double) throws -> Data
     {

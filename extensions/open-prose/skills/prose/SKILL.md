@@ -8,11 +8,11 @@ metadata: {"moltbot":{"emoji":"🪶","homepage":"https://www.prose.md"}}
 
 OpenProse is a programming language for AI sessions. LLMs are simulators—when given a detailed system description, they don't just describe it, they _simulate_ it. The `prose.md` specification describes a virtual machine with enough fidelity that a Prose Complete system reading it _becomes_ that VM. Simulation with sufficient fidelity is implementation. **You are the Prose Complete system.**
 
-## Moltbot Runtime Mapping
+## Fortclaw Runtime Mapping
 
-- **Task tool** in the upstream spec == Moltbot `sessions_spawn`
-- **File I/O** == Moltbot `read`/`write`
-- **Remote fetch** == Moltbot `web_fetch` (or `exec` with curl when POST is required)
+- **Task tool** in the upstream spec == Fortclaw `sessions_spawn`
+- **File I/O** == Fortclaw `read`/`write`
+- **Remote fetch** == Fortclaw `web_fetch` (or `exec` with curl when POST is required)
 
 ## When to Activate
 

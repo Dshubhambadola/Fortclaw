@@ -67,7 +67,7 @@ Example:
   - macOS: `/opt/homebrew/bin`, `/usr/local/bin`, `/usr/bin`, `/bin`
   - Linux: `/usr/local/bin`, `/usr/bin`, `/bin`
 - `host=sandbox`: runs `sh -lc` (login shell) inside the container, so `/etc/profile` may reset `PATH`.
-  Moltbot prepends `env.PATH` after profile sourcing via an internal env var (no shell interpolation);
+  Fortclaw prepends `env.PATH` after profile sourcing via an internal env var (no shell interpolation);
   `tools.exec.pathPrepend` applies here too.
 - `host=node`: only env overrides you pass are sent to the node. `tools.exec.pathPrepend` only applies
   if the exec call already sets `env.PATH`. Headless node hosts accept `PATH` only when it prepends

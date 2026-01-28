@@ -1,8 +1,8 @@
-import MoltbotKit
+import FortclawKit
 import SwiftUI
 import Testing
 import UIKit
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite struct SwiftUIRenderSmokeTests {
     @MainActor private static func host(_ view: some View) -> UIWindow {

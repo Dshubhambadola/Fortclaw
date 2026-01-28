@@ -1,12 +1,12 @@
 ---
-summary: "Model providers (LLMs) supported by Moltbot"
+summary: "Model providers (LLMs) supported by Fortclaw"
 read_when:
   - You want to choose a model provider
   - You want quick setup examples for LLM auth + model selection
 ---
 # Model Providers
 
-Moltbot can use many LLM providers. Pick one, authenticate, then set the default
+Fortclaw can use many LLM providers. Pick one, authenticate, then set the default
 model as `provider/model`.
 
 ## Highlight: Venius (Venice AI)

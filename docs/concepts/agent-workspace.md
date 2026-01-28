@@ -59,7 +59,7 @@ If you intentionally keep multiple workspaces, make sure
 
 ## Workspace file map (what each file means)
 
-These are the standard files Moltbot expects inside the workspace:
+These are the standard files Fortclaw expects inside the workspace:
 
 - `AGENTS.md`
   - Operating instructions for the agent and how it should use memory.
@@ -112,7 +112,7 @@ See [Memory](/concepts/memory) for the workflow and automatic memory flush.
 - `canvas/` (optional)
   - Canvas UI files for node displays (for example `canvas/index.html`).
 
-If any bootstrap file is missing, Moltbot injects a "missing file" marker into
+If any bootstrap file is missing, Fortclaw injects a "missing file" marker into
 the session and continues. Large bootstrap files are truncated when injected;
 adjust the limit with `agents.defaults.bootstrapMaxChars` (default: 20000).
 `moltbot setup` can recreate missing defaults without overwriting existing

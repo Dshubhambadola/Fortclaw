@@ -1,7 +1,7 @@
 import Darwin
 import Foundation
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite(.serialized) struct CommandResolverTests {
     private func makeDefaults() -> UserDefaults {
@@ -24,7 +24,7 @@ import Testing
         try FileManager().setAttributes([.posixPermissions: 0o755], ofItemAtPath: path.path)
     }
 
-    @Test func prefersMoltbotBinary() async throws {
+    @Test func prefersFortclawBinary() async throws {
         let defaults = self.makeDefaults()
         defaults.set(AppState.ConnectionMode.local.rawValue, forKey: connectionModeKey)
 

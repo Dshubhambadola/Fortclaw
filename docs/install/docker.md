@@ -1,5 +1,5 @@
 ---
-summary: "Optional Docker-based setup and onboarding for Moltbot"
+summary: "Optional Docker-based setup and onboarding for Fortclaw"
 read_when:
   - You want a containerized gateway instead of local installs
   - You are validating the Docker flow
@@ -11,12 +11,12 @@ Docker is **optional**. Use it only if you want a containerized gateway or to va
 
 ## Is Docker right for me?
 
-- **Yes**: you want an isolated, throwaway gateway environment or to run Moltbot on a host without local installs.
+- **Yes**: you want an isolated, throwaway gateway environment or to run Fortclaw on a host without local installs.
 - **No**: you’re running on your own machine and just want the fastest dev loop. Use the normal install flow instead.
 - **Sandboxing note**: agent sandboxing uses Docker too, but it does **not** require the full gateway to run in Docker. See [Sandboxing](/gateway/sandboxing).
 
 This guide covers:
-- Containerized Gateway (full Moltbot in Docker)
+- Containerized Gateway (full Fortclaw in Docker)
 - Per-session Agent Sandbox (host gateway + Docker-isolated agent tools)
 
 Sandboxing details: [Sandboxing](/gateway/sandboxing)
@@ -258,7 +258,7 @@ If you plan to install packages in `setupCommand`, note:
 - Default `docker.network` is `"none"` (no egress).
 - `readOnlyRoot: true` blocks package installs.
 - `user` must be root for `apt-get` (omit `user` or set `user: "0:0"`).
-Moltbot auto-recreates containers when `setupCommand` (or docker config) changes
+Fortclaw auto-recreates containers when `setupCommand` (or docker config) changes
 unless the container was **recently used** (within ~5 minutes). Hot containers
 log a warning with the exact `moltbot sandbox recreate ...` command.
 
@@ -441,7 +441,7 @@ Example:
 - Container not running: it will auto-create per session on demand.
 - Permission errors in sandbox: set `docker.user` to a UID:GID that matches your
   mounted workspace ownership (or chown the workspace folder).
-- Custom tools not found: Moltbot runs commands with `sh -lc` (login shell), which
+- Custom tools not found: Fortclaw runs commands with `sh -lc` (login shell), which
   sources `/etc/profile` and may reset PATH. Set `docker.env.PATH` to prepend your
   custom tool paths (e.g., `/custom/bin:/usr/local/share/npm-global/bin`), or add
   a script under `/etc/profile.d/` in your Dockerfile.

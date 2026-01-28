@@ -1,7 +1,7 @@
 import type {
   ChannelOnboardingAdapter,
   ChannelOnboardingDmPolicy,
-  MoltbotConfig,
+  FortclawConfig,
   DmPolicy,
   WizardPrompter,
 } from "clawdbot/plugin-sdk";
@@ -21,7 +21,7 @@ import {
 
 const channel = "msteams" as const;
 
-function setMSTeamsDmPolicy(cfg: MoltbotConfig, dmPolicy: DmPolicy) {
+function setMSTeamsDmPolicy(cfg: FortclawConfig, dmPolicy: DmPolicy) {
   const allowFrom =
     dmPolicy === "open"
       ? addWildcardAllowFrom(cfg.channels?.msteams?.allowFrom)?.map((entry) => String(entry))
@@ -39,7 +39,7 @@ function setMSTeamsDmPolicy(cfg: MoltbotConfig, dmPolicy: DmPolicy) {
   };
 }
 
-function setMSTeamsAllowFrom(cfg: MoltbotConfig, allowFrom: string[]): MoltbotConfig {
+function setMSTeamsAllowFrom(cfg: FortclawConfig, allowFrom: string[]): FortclawConfig {
   return {
     ...cfg,
     channels: {
@@ -64,9 +64,9 @@ function looksLikeGuid(value: string): boolean {
 }
 
 async function promptMSTeamsAllowFrom(params: {
-  cfg: MoltbotConfig;
+  cfg: FortclawConfig;
   prompter: WizardPrompter;
-}): Promise<MoltbotConfig> {
+}): Promise<FortclawConfig> {
   const existing = params.cfg.channels?.msteams?.allowFrom ?? [];
   await params.prompter.note(
     [
@@ -144,9 +144,9 @@ async function noteMSTeamsCredentialHelp(prompter: WizardPrompter): Promise<void
 }
 
 function setMSTeamsGroupPolicy(
-  cfg: MoltbotConfig,
+  cfg: FortclawConfig,
   groupPolicy: "open" | "allowlist" | "disabled",
-): MoltbotConfig {
+): FortclawConfig {
   return {
     ...cfg,
     channels: {
@@ -161,9 +161,9 @@ function setMSTeamsGroupPolicy(
 }
 
 function setMSTeamsTeamsAllowlist(
-  cfg: MoltbotConfig,
+  cfg: FortclawConfig,
   entries: Array<{ teamKey: string; channelKey?: string }>,
-): MoltbotConfig {
+): FortclawConfig {
   const baseTeams = cfg.channels?.msteams?.teams ?? {};
   const teams: Record<string, { channels?: Record<string, unknown> }> = { ...baseTeams };
   for (const entry of entries) {

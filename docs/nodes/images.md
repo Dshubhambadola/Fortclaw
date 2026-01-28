@@ -34,7 +34,7 @@ The WhatsApp channel runs via **Baileys Web**. This document captures the curren
 - Multiple media entries are sent sequentially if provided.
 
 ## Inbound Media to Commands (Pi)
-- When inbound web messages include media, Moltbot downloads to a temp file and exposes templating variables:
+- When inbound web messages include media, Fortclaw downloads to a temp file and exposes templating variables:
   - `{{MediaUrl}}` pseudo-URL for the inbound media.
   - `{{MediaPath}}` local temp path written before running the command.
 - When a per-session Docker sandbox is enabled, inbound media is copied into the sandbox workspace and `MediaPath`/`MediaUrl` are rewritten to a relative path like `media/inbound/<filename>`.

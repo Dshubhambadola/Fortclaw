@@ -1,17 +1,17 @@
-import MoltbotKit
+import FortclawKit
 import Network
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite struct GatewayEndpointIDTests {
     @Test func stableIDForServiceDecodesAndNormalizesName() {
         let endpoint = NWEndpoint.service(
-            name: "Moltbot\\032Gateway   \\032  Node\n",
+            name: "Fortclaw\\032Gateway   \\032  Node\n",
             type: "_moltbot-gw._tcp",
             domain: "local.",
             interface: nil)
 
-        #expect(GatewayEndpointID.stableID(endpoint) == "_moltbot-gw._tcp|local.|Moltbot Gateway Node")
+        #expect(GatewayEndpointID.stableID(endpoint) == "_moltbot-gw._tcp|local.|Fortclaw Gateway Node")
     }
 
     @Test func stableIDForNonServiceUsesEndpointDescription() {
@@ -21,7 +21,7 @@ import Testing
 
     @Test func prettyDescriptionDecodesBonjourEscapes() {
         let endpoint = NWEndpoint.service(
-            name: "Moltbot\\032Gateway",
+            name: "Fortclaw\\032Gateway",
             type: "_moltbot-gw._tcp",
             domain: "local.",
             interface: nil)

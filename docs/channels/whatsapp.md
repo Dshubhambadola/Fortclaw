@@ -48,12 +48,12 @@ Disable with:
 
 ## Getting a phone number (two modes)
 
-WhatsApp requires a real mobile number for verification. VoIP and virtual numbers are usually blocked. There are two supported ways to run Moltbot on WhatsApp:
+WhatsApp requires a real mobile number for verification. VoIP and virtual numbers are usually blocked. There are two supported ways to run Fortclaw on WhatsApp:
 
 ### Dedicated number (recommended)
-Use a **separate phone number** for Moltbot. Best UX, clean routing, no self-chat quirks. Ideal setup: **spare/old Android phone + eSIM**. Leave it on Wi‑Fi and power, and link it via QR.
+Use a **separate phone number** for Fortclaw. Best UX, clean routing, no self-chat quirks. Ideal setup: **spare/old Android phone + eSIM**. Leave it on Wi‑Fi and power, and link it via QR.
 
-**WhatsApp Business:** You can use WhatsApp Business on the same device with a different number. Great for keeping your personal WhatsApp separate — install WhatsApp Business and register the Moltbot number there.
+**WhatsApp Business:** You can use WhatsApp Business on the same device with a different number. Great for keeping your personal WhatsApp separate — install WhatsApp Business and register the Fortclaw number there.
 
 **Sample config (dedicated number, single-user allowlist):**
 ```json5
@@ -72,7 +72,7 @@ If you want pairing instead of allowlist, set `channels.whatsapp.dmPolicy` to `p
 `moltbot pairing approve whatsapp <code>`
 
 ### Personal number (fallback)
-Quick fallback: run Moltbot on **your own number**. Message yourself (WhatsApp “Message yourself”) for testing so you don’t spam contacts. Expect to read verification codes on your main phone during setup and experiments. **Must enable self-chat mode.**
+Quick fallback: run Fortclaw on **your own number**. Message yourself (WhatsApp “Message yourself”) for testing so you don’t spam contacts. Expect to read verification codes on your main phone during setup and experiments. **Must enable self-chat mode.**
 When the wizard asks for your personal WhatsApp number, enter the phone you will message from (the owner/sender), not the assistant number.
 
 **Sample config (personal number, self-chat):**
@@ -101,7 +101,7 @@ the prefix (use `""` to remove it).
 **Tip:** The number only needs to receive one verification SMS. After that, WhatsApp Web sessions persist via `creds.json`.
 
 ## Why Not Twilio?
-- Early Moltbot builds supported Twilio’s WhatsApp Business integration.
+- Early Fortclaw builds supported Twilio’s WhatsApp Business integration.
 - WhatsApp Business numbers are a poor fit for a personal assistant.
 - Meta enforces a 24‑hour reply window; if you haven’t responded in the last 24 hours, the business number can’t initiate new messages.
 - High-volume or “chatty” usage triggers aggressive blocking, because business accounts aren’t meant to send dozens of personal assistant messages.
@@ -128,7 +128,7 @@ the prefix (use `""` to remove it).
   - Self messages are always allowed; “self-chat mode” still requires `channels.whatsapp.allowFrom` to include your own number.
 
 ### Personal-number mode (fallback)
-If you run Moltbot on your **personal WhatsApp number**, enable `channels.whatsapp.selfChatMode` (see sample above).
+If you run Fortclaw on your **personal WhatsApp number**, enable `channels.whatsapp.selfChatMode` (see sample above).
 
 Behavior:
 - Outbound DMs never trigger pairing replies (prevents spamming contacts).
@@ -164,8 +164,8 @@ Notes:
 
 ## WhatsApp FAQ: sending messages + pairing
 
-**Will Moltbot message random contacts when I link WhatsApp?**  
-No. Default DM policy is **pairing**, so unknown senders only get a pairing code and their message is **not processed**. Moltbot only replies to chats it receives, or to sends you explicitly trigger (agent/CLI).
+**Will Fortclaw message random contacts when I link WhatsApp?**  
+No. Default DM policy is **pairing**, so unknown senders only get a pairing code and their message is **not processed**. Fortclaw only replies to chats it receives, or to sends you explicitly trigger (agent/CLI).
 
 **How does pairing work on WhatsApp?**  
 Pairing is a DM gate for unknown senders:
@@ -173,7 +173,7 @@ Pairing is a DM gate for unknown senders:
 - Approve with: `moltbot pairing approve whatsapp <code>` (list with `moltbot pairing list whatsapp`).
 - Codes expire after 1 hour; pending requests are capped at 3 per channel.
 
-**Can multiple people use different Moltbots on one WhatsApp number?**  
+**Can multiple people use different Fortclaws on one WhatsApp number?**  
 Yes, by routing each sender to a different agent via `bindings` (peer `kind: "dm"`, sender E.164 like `+15551234567`). Replies still come from the **same WhatsApp account**, and direct chats collapse to each agent’s main session, so use **one agent per person**. DM access control (`dmPolicy`/`allowFrom`) is global per WhatsApp account. See [Multi-Agent Routing](/concepts/multi-agent).
 
 **Why do you ask for my phone number in the wizard?**  
@@ -289,7 +289,7 @@ WhatsApp can automatically send emoji reactions to incoming messages immediately
 
 ## Voice notes (PTT audio)
 WhatsApp sends audio as **voice notes** (PTT bubble).
-- Best results: OGG/Opus. Moltbot rewrites `audio/ogg` to `audio/ogg; codecs=opus`.
+- Best results: OGG/Opus. Fortclaw rewrites `audio/ogg` to `audio/ogg; codecs=opus`.
 - `[[audio_as_voice]]` is ignored for WhatsApp (audio already ships as voice note).
 
 ## Media limits + optimization

@@ -1,5 +1,5 @@
 ---
-summary: "Install Moltbot declaratively with Nix"
+summary: "Install Fortclaw declaratively with Nix"
 read_when:
   - You want reproducible, rollback-able installs
   - You're already using Nix/NixOS/Home Manager
@@ -8,7 +8,7 @@ read_when:
 
 # Nix Installation
 
-The recommended way to run Moltbot with Nix is via **[nix-moltbot](https://github.com/moltbot/nix-moltbot)** — a batteries-included Home Manager module.
+The recommended way to run Fortclaw with Nix is via **[nix-moltbot](https://github.com/moltbot/nix-moltbot)** — a batteries-included Home Manager module.
 
 ## Quick Start
 
@@ -46,7 +46,7 @@ Reference the nix-moltbot README for module options.
 
 When `CLAWDBOT_NIX_MODE=1` is set (automatic with nix-moltbot):
 
-Moltbot supports a **Nix mode** that makes configuration deterministic and disables auto-install flows.
+Fortclaw supports a **Nix mode** that makes configuration deterministic and disables auto-install flows.
 Enable it by exporting:
 
 ```bash
@@ -62,7 +62,7 @@ defaults write bot.molt.mac moltbot.nixMode -bool true
 
 ### Config + state paths
 
-Moltbot reads JSON5 config from `CLAWDBOT_CONFIG_PATH` and stores mutable data in `CLAWDBOT_STATE_DIR`.
+Fortclaw reads JSON5 config from `CLAWDBOT_CONFIG_PATH` and stores mutable data in `CLAWDBOT_STATE_DIR`.
 
 - `CLAWDBOT_STATE_DIR` (default: `~/.clawdbot`)
 - `CLAWDBOT_CONFIG_PATH` (default: `$CLAWDBOT_STATE_DIR/moltbot.json`)
@@ -81,7 +81,7 @@ stay out of the immutable store.
 The macOS packaging flow expects a stable Info.plist template at:
 
 ```
-apps/macos/Sources/Moltbot/Resources/Info.plist
+apps/macos/Sources/Fortclaw/Resources/Info.plist
 ```
 
 [`scripts/package-mac-app.sh`](https://github.com/moltbot/moltbot/blob/main/scripts/package-mac-app.sh) copies this template into the app bundle and patches dynamic fields

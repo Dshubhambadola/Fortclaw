@@ -1,13 +1,13 @@
 ---
-summary: "Agent tool surface for Moltbot (browser, canvas, nodes, message, cron) replacing legacy `moltbot-*` skills"
+summary: "Agent tool surface for Fortclaw (browser, canvas, nodes, message, cron) replacing legacy `moltbot-*` skills"
 read_when:
   - Adding or modifying agent tools
   - Retiring or changing `moltbot-*` skills
 ---
 
-# Tools (Moltbot)
+# Tools (Fortclaw)
 
-Moltbot exposes **first-class agent tools** for browser, canvas, nodes, and cron.
+Fortclaw exposes **first-class agent tools** for browser, canvas, nodes, and cron.
 These replace the old `moltbot-*` skills: the tools are typed, no shelling,
 and the agent should rely on them directly.
 
@@ -25,7 +25,7 @@ You can globally allow/deny tools via `tools.allow` / `tools.deny` in `moltbot.j
 Notes:
 - Matching is case-insensitive.
 - `*` wildcards are supported (`"*"` means all tools).
-- If `tools.allow` only references unknown or unloaded plugin tool names, Moltbot logs a warning and ignores the allowlist so core tools stay available.
+- If `tools.allow` only references unknown or unloaded plugin tool names, Fortclaw logs a warning and ignores the allowlist so core tools stay available.
 
 ## Tool profiles (base allowlist)
 
@@ -141,7 +141,7 @@ Available groups:
 - `group:automation`: `cron`, `gateway`
 - `group:messaging`: `message`
 - `group:nodes`: `nodes`
-- `group:moltbot`: all built-in Moltbot tools (excludes provider plugins)
+- `group:moltbot`: all built-in Fortclaw tools (excludes provider plugins)
 
 Example (allow only file tools + browser):
 ```json5

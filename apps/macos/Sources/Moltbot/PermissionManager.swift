@@ -1,7 +1,7 @@
 import AppKit
 import ApplicationServices
 import AVFoundation
-import MoltbotIPC
+import FortclawIPC
 import CoreGraphics
 import CoreLocation
 import Foundation

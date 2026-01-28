@@ -1,8 +1,8 @@
-import MoltbotKit
+import FortclawKit
 import Foundation
 import os
 import Testing
-@testable import Moltbot
+@testable import Fortclaw
 
 @Suite struct GatewayConnectionTests {
     private final class FakeWebSocketTask: WebSocketTasking, @unchecked Sendable {

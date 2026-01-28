@@ -1,7 +1,7 @@
 import AppKit
 import SwiftUI
 
-struct GlowingMoltbotIcon: View {
+struct GlowingFortclawIcon: View {
     @Environment(\.scenePhase) private var scenePhase
 
     let size: CGFloat

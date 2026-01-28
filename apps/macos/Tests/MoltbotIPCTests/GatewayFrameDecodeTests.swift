@@ -1,4 +1,4 @@
-import MoltbotProtocol
+import FortclawProtocol
 import Foundation
 import Testing
 
