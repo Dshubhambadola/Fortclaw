@@ -1,4 +1,6 @@
+import { DEFAULT_SANDBOX_CONFIG } from "../../config/defaults.js";
 import type { MoltbotConfig } from "../../config/config.js";
+import { resolveSecurityConfig } from "../../config/security-resolver.js";
 import { resolveAgentConfig } from "../agent-scope.js";
 import {
   DEFAULT_SANDBOX_BROWSER_AUTOSTART_TIMEOUT_MS,
@@ -61,7 +63,7 @@ export function resolveSandboxDockerConfig(params: {
     workdir: agentDocker?.workdir ?? globalDocker?.workdir ?? DEFAULT_SANDBOX_WORKDIR,
     readOnlyRoot: agentDocker?.readOnlyRoot ?? globalDocker?.readOnlyRoot ?? true,
     tmpfs: agentDocker?.tmpfs ?? globalDocker?.tmpfs ?? ["/tmp", "/var/tmp", "/run"],
-    network: agentDocker?.network ?? globalDocker?.network ?? "none",
+    network: agentDocker?.network ?? globalDocker?.network ?? DEFAULT_SANDBOX_CONFIG.docker.network,
     user: agentDocker?.user ?? globalDocker?.user,
     capDrop: agentDocker?.capDrop ?? globalDocker?.capDrop ?? ["ALL"],
     env,
@@ -122,6 +124,10 @@ export function resolveSandboxPruneConfig(params: {
 }
 
 export function resolveSandboxConfigForAgent(cfg?: MoltbotConfig, agentId?: string): SandboxConfig {
+  // Resolve security profile first to get defaults
+  const { config: securityConfig } = resolveSecurityConfig(cfg ?? {});
+  const profileSandbox = securityConfig.sandbox;
+
   const agent = cfg?.agents?.defaults?.sandbox;
 
   // Agent-specific sandbox config overrides global
@@ -132,16 +138,17 @@ export function resolveSandboxConfigForAgent(cfg?: MoltbotConfig, agentId?: stri
   }
 
   const scope = resolveSandboxScope({
-    scope: agentSandbox?.scope ?? agent?.scope,
+    scope: agentSandbox?.scope ?? agent?.scope ?? profileSandbox.scope,
     perSession: agentSandbox?.perSession ?? agent?.perSession,
   });
 
   const toolPolicy = resolveSandboxToolPolicyForAgent(cfg, agentId);
 
   return {
-    mode: agentSandbox?.mode ?? agent?.mode ?? "off",
+    mode: agentSandbox?.mode ?? agent?.mode ?? profileSandbox.mode,
     scope,
-    workspaceAccess: agentSandbox?.workspaceAccess ?? agent?.workspaceAccess ?? "none",
+    workspaceAccess:
+      agentSandbox?.workspaceAccess ?? agent?.workspaceAccess ?? profileSandbox.workspaceAccess,
     workspaceRoot:
       agentSandbox?.workspaceRoot ?? agent?.workspaceRoot ?? DEFAULT_SANDBOX_WORKSPACE_ROOT,
     docker: resolveSandboxDockerConfig({
