@@ -21,6 +21,7 @@ export type AgentConfig = {
   id: string;
   default?: boolean;
   name?: string;
+  trustLevel?: "L1" | "L2" | "L3" | "L4";
   workspace?: string;
   agentDir?: string;
   model?: AgentModelConfig;

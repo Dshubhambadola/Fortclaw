@@ -34,6 +34,9 @@ const DEFAULT_REDACT_PATTERNS: string[] = [
   String.raw`\b(pplx-[A-Za-z0-9_-]{10,})\b`,
   String.raw`\b(npm_[A-Za-z0-9]{10,})\b`,
   String.raw`\b(\d{6,}:[A-Za-z0-9_-]{20,})\b`,
+  // PII
+  String.raw`[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}`,
+  String.raw`\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b`,
 ];
 
 type RedactOptions = {
