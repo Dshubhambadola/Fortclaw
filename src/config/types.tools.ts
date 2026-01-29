@@ -217,6 +217,7 @@ export type AgentToolsConfig = {
     tools?: {
       allow?: string[];
       deny?: string[];
+      requireApproval?: string[];
     };
   };
 };
@@ -443,6 +444,7 @@ export type ToolsConfig = {
     tools?: {
       allow?: string[];
       deny?: string[];
+      requireApproval?: string[];
     };
   };
 };

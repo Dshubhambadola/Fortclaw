@@ -1,5 +1,6 @@
 import type { MoltbotConfig } from "./types.js";
 import { resolveAgentConfig } from "../agents/agent-scope.js";
+import { resolveSecurityConfig } from "./security-resolver.js";
 
 export const TOOL_CATEGORIES = {
   safe: [
@@ -48,7 +49,15 @@ export const TRUST_LEVEL_PRESETS: Record<TrustLevel, TrustLevelPreset> = {
 export function resolveAgentTrustLevel(cfg: MoltbotConfig, agentId?: string): TrustLevel {
   if (!agentId) return "L1";
   const agent = resolveAgentConfig(cfg, agentId);
-  return agent?.trustLevel ?? "L1";
+  const configuredTrustLevel = agent?.trustLevel;
+
+  if (configuredTrustLevel) return configuredTrustLevel;
+
+  // Fallback to security profile default
+  // We pass an empty env here because we can't easily thread it through everywhere yet,
+  // but usually config is enough. If needed, we can expand signature.
+  const security = resolveSecurityConfig(cfg);
+  return security.config.defaultTrustLevel ?? "L1";
 }
 
 export function resolveTrustLevelPolicy(level: TrustLevel) {
