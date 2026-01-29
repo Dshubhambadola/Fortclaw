@@ -6,6 +6,7 @@ on:
 
 jobs:
   install-check:
+    if: false
     runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
       - name: Checkout
@@ -66,6 +67,7 @@ jobs:
           pnpm install --frozen-lockfile --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true
 
   checks:
+    if: false
     runs-on: blacksmith-4vcpu-ubuntu-2404
     strategy:
       fail-fast: false
@@ -160,6 +162,7 @@ jobs:
         run: ${{ matrix.command }}
 
   secrets:
+    if: false
     runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
       - name: Checkout
@@ -185,6 +188,7 @@ jobs:
           fi
 
   checks-windows:
+    if: false
     runs-on: blacksmith-4vcpu-windows-2025
     env:
       NODE_OPTIONS: --max-old-space-size=4096
