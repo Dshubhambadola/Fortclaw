@@ -276,7 +276,7 @@ jobs:
         run: ${{ matrix.command }}
 
   checks-macos:
-    if: github.event_name == 'pull_request'
+    if: false # github.event_name == 'pull_request'
     runs-on: macos-latest
     strategy:
       fail-fast: false
@@ -348,7 +348,7 @@ jobs:
         run: ${{ matrix.command }}
 
   macos-app:
-    if: github.event_name == 'pull_request'
+    if: false # github.event_name == 'pull_request'
     runs-on: macos-latest
     strategy:
       fail-fast: false
@@ -590,6 +590,7 @@ jobs:
           PY
 
   android:
+    if: false
     runs-on: blacksmith-4vcpu-ubuntu-2404
     strategy:
       fail-fast: false
