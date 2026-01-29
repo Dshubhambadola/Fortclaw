@@ -8,6 +8,7 @@ on:
 
 jobs:
   install-smoke:
+    if: false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout CLI

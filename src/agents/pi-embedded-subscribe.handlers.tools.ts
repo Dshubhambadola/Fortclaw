@@ -13,6 +13,7 @@ import {
 } from "./pi-embedded-subscribe.tools.js";
 import { inferToolMetaFromArgs } from "./pi-embedded-utils.js";
 import { normalizeToolName } from "./tool-policy.js";
+import { logAuditEntry } from "../../security/runtime-audit.js";
 
 function extendExecMeta(toolName: string, args: unknown, meta?: string): string | undefined {
   const normalized = toolName.trim().toLowerCase();
@@ -41,6 +42,9 @@ export async function handleToolExecutionStart(
   const toolName = normalizeToolName(rawToolName);
   const toolCallId = String(evt.toolCallId);
   const args = evt.args;
+
+  // Save args for audit logging
+  ctx.state.toolArgsById.set(toolCallId, args);
 
   if (toolName === "read") {
     const record = args && typeof args === "object" ? (args as Record<string, unknown>) : {};
@@ -149,6 +153,18 @@ export function handleToolExecutionEnd(
   const toolCallId = String(evt.toolCallId);
   const isError = Boolean(evt.isError);
   const result = evt.result;
+
+  // Audit Logging
+  const args = ctx.state.toolArgsById.get(toolCallId);
+  logAuditEntry({
+    runId: ctx.params.runId,
+    toolName,
+    args,
+    result,
+    isError,
+  });
+  ctx.state.toolArgsById.delete(toolCallId);
+
   const isToolError = isError || isToolResultError(result);
   const sanitizedResult = sanitizeToolResult(result);
   const meta = ctx.state.toolMetaById.get(toolCallId);

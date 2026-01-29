@@ -50,11 +50,20 @@ export function isToolAllowed(policy: SandboxToolPolicy, name: string) {
   return matchesAny(normalized, allow);
 }
 
+import { resolveAgentTrustLevel, resolveTrustLevelPolicy } from "../../config/trust-levels.js";
+
+// ... (existing imports)
+
 export function resolveSandboxToolPolicyForAgent(
   cfg?: MoltbotConfig,
   agentId?: string,
 ): SandboxToolPolicyResolved {
   const agentConfig = cfg && agentId ? resolveAgentConfig(cfg, agentId) : undefined;
+
+  // Resolve Trust Level Policy
+  const trustLevel = resolveAgentTrustLevel(cfg ?? {}, agentId);
+  const trustPolicy = resolveTrustLevelPolicy(trustLevel);
+
   const agentAllow = agentConfig?.tools?.sandbox?.tools?.allow;
   const agentDeny = agentConfig?.tools?.sandbox?.tools?.deny;
   const globalAllow = cfg?.tools?.sandbox?.tools?.allow;
@@ -72,7 +81,7 @@ export function resolveSandboxToolPolicyForAgent(
         } satisfies SandboxToolPolicySource)
       : ({
           source: "default",
-          key: "tools.sandbox.tools.allow",
+          key: `trust-level-${trustLevel}`,
         } satisfies SandboxToolPolicySource);
 
   const denySource = Array.isArray(agentDeny)
@@ -87,19 +96,20 @@ export function resolveSandboxToolPolicyForAgent(
         } satisfies SandboxToolPolicySource)
       : ({
           source: "default",
-          key: "tools.sandbox.tools.deny",
+          key: `trust-level-${trustLevel}`,
         } satisfies SandboxToolPolicySource);
 
   const deny = Array.isArray(agentDeny)
     ? agentDeny
     : Array.isArray(globalDeny)
       ? globalDeny
-      : [...DEFAULT_TOOL_DENY];
+      : [...(trustPolicy.deny || [])];
+
   const allow = Array.isArray(agentAllow)
     ? agentAllow
     : Array.isArray(globalAllow)
       ? globalAllow
-      : [...DEFAULT_TOOL_ALLOW];
+      : [...(trustPolicy.allow || [])];
 
   const expandedDeny = expandToolGroups(deny);
   let expandedAllow = expandToolGroups(allow);

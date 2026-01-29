@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   label:
+    if: false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/create-github-app-token@v1
