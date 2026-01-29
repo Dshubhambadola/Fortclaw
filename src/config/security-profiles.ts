@@ -4,12 +4,14 @@ import type { SandboxDockerSettings } from "./types.sandbox.js";
  * Security Profile Selection
  */
 export type SecurityProfile = "development" | "personal" | "production" | "custom";
+import type { TrustLevel } from "./trust-levels.js";
 
 /**
  * Detailed Security Configuration
  */
 export type SecurityConfig = {
   profile?: SecurityProfile;
+  defaultTrustLevel?: TrustLevel;
 
   sandbox: {
     enabled: boolean;
@@ -69,6 +71,10 @@ export type SecurityConfig = {
     defaultDeny?: boolean;
     monitoring?: boolean;
     allowedDomains?: string[];
+    // Anomaly Detection Config
+    maxRequestsPerMinute?: number;
+    maxRequestsPerSecond?: number;
+    allowedPorts?: number[];
   };
 
   warnings?: {
@@ -98,6 +104,8 @@ export type SecurityConfig = {
  */
 export const DEVELOPMENT_PROFILE: SecurityConfig = {
   profile: "development",
+  // No strict default for development, effectively explicit permissions or L1 if we fallback
+  defaultTrustLevel: "L1",
   sandbox: {
     enabled: false,
     mode: "off",
@@ -126,6 +134,8 @@ export const DEVELOPMENT_PROFILE: SecurityConfig = {
     egressFiltering: false,
     rateLimiting: false,
     monitoring: true,
+    maxRequestsPerMinute: 300,
+    allowedPorts: [], // Empty means all allowed in our logic for dev
   },
   warnings: {
     showOnStartup: true,
@@ -139,6 +149,7 @@ export const DEVELOPMENT_PROFILE: SecurityConfig = {
  */
 export const PERSONAL_PROFILE: SecurityConfig = {
   profile: "personal",
+  defaultTrustLevel: "L2",
   sandbox: {
     enabled: true,
     mode: "non-main",
@@ -170,6 +181,9 @@ export const PERSONAL_PROFILE: SecurityConfig = {
     rateLimiting: true,
     monitoring: true,
     alertOnBlocked: true, // Renamed from alertOnUnusual to match definition
+    maxRequestsPerMinute: 60,
+    maxRequestsPerSecond: 10,
+    allowedPorts: [80, 443, 8080, 8443],
   },
   warnings: {
     showOnStartup: false,
@@ -183,6 +197,7 @@ export const PERSONAL_PROFILE: SecurityConfig = {
  */
 export const PRODUCTION_PROFILE: SecurityConfig = {
   profile: "production",
+  defaultTrustLevel: "L1",
   sandbox: {
     enabled: true,
     mode: "all",
@@ -226,6 +241,9 @@ export const PRODUCTION_PROFILE: SecurityConfig = {
     anomalyDetection: true,
     alertOnBlocked: true,
     defaultDeny: true,
+    maxRequestsPerMinute: 30,
+    maxRequestsPerSecond: 5,
+    allowedPorts: [80, 443],
   },
   warnings: {
     showOnStartup: false,
