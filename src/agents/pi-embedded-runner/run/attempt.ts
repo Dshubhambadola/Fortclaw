@@ -85,6 +85,9 @@ import { getGlobalHookRunner } from "../../../plugins/hook-runner-global.js";
 import { MAX_IMAGE_BYTES } from "../../../media/constants.js";
 import type { EmbeddedRunAttemptParams, EmbeddedRunAttemptResult } from "./types.js";
 import { detectAndLoadPromptImages } from "./images.js";
+import { resolveSecurityConfig } from "../../../config/security-resolver.js";
+import { InputValidator } from "../../../security/input-validator.js";
+import { calculateHeuristicRiskScore } from "../../../security/ml-heuristics.js";
 
 export function injectHistoryImagesIntoMessages(
   messages: AgentMessage[],
@@ -140,6 +143,31 @@ export async function runEmbeddedAttempt(
   log.debug(
     `embedded run start: runId=${params.runId} sessionId=${params.sessionId} provider=${params.provider} model=${params.modelId} thinking=${params.thinkLevel} messageChannel=${params.messageChannel ?? params.messageProvider ?? "unknown"}`,
   );
+
+  // [Security] Validate User Input (Initial Prompt)
+  const securityResult = resolveSecurityConfig(params.config ?? {}, process.env);
+  if (
+    securityResult.config.inputValidation &&
+    securityResult.config.inputValidation.enabled !== false
+  ) {
+    const strictness = securityResult.config.inputValidation?.strictness ?? "low";
+    const validator = new InputValidator({ strictness });
+    const validation = validator.validateInput(params.prompt);
+    const riskScore = calculateHeuristicRiskScore(params.prompt);
+
+    if (!validation.isValid || (strictness === "high" && riskScore > 80)) {
+      if (validation.action === "block" || (strictness === "high" && riskScore > 80)) {
+        const reason =
+          validation.flags.join(", ") || (riskScore > 80 ? "High Risk Score" : "Unknown");
+        log.error(`Security Block (Initial Prompt): ${reason}`);
+        throw new Error(`Input blocked by security policy: ${reason}`);
+      } else if (validation.action === "warn") {
+        log.warn(
+          `Security Warning (Initial Prompt): ${validation.flags.join(", ")} (Score: ${riskScore})`,
+        );
+      }
+    }
+  }
 
   await fs.mkdir(resolvedWorkspace, { recursive: true });
 
@@ -627,6 +655,30 @@ export async function runEmbeddedAttempt(
 
       const queueHandle: EmbeddedPiQueueHandle = {
         queueMessage: async (text: string) => {
+          // [Security] Validate User Input (Interactive Message)
+          const securityResult = resolveSecurityConfig(params.config ?? {}, process.env);
+          if (
+            securityResult.config.inputValidation &&
+            securityResult.config.inputValidation.enabled !== false
+          ) {
+            const strictness = securityResult.config.inputValidation?.strictness ?? "low";
+            const validator = new InputValidator({ strictness });
+            const validation = validator.validateInput(text);
+            const riskScore = calculateHeuristicRiskScore(text);
+
+            if (!validation.isValid || (strictness === "high" && riskScore > 80)) {
+              if (validation.action === "block" || (strictness === "high" && riskScore > 80)) {
+                const reason =
+                  validation.flags.join(", ") || (riskScore > 80 ? "High Risk Score" : "Unknown");
+                log.error(`Security Block (Interactive Message): ${reason}`);
+                throw new Error(`Input blocked by security policy: ${reason}`);
+              } else if (validation.action === "warn") {
+                log.warn(
+                  `Security Warning (Interactive Message): ${validation.flags.join(", ")} (Score: ${riskScore})`,
+                );
+              }
+            }
+          }
           await activeSession.steer(text);
         },
         isStreaming: () => activeSession.isStreaming,
