@@ -51,6 +51,7 @@ export function isToolAllowed(policy: SandboxToolPolicy, name: string) {
 }
 
 import { resolveAgentTrustLevel, resolveTrustLevelPolicy } from "../../config/trust-levels.js";
+import { resolveSecurityConfig } from "../../config/security-resolver.js";
 
 // ... (existing imports)
 
@@ -59,6 +60,25 @@ export function resolveSandboxToolPolicyForAgent(
   agentId?: string,
 ): SandboxToolPolicyResolved {
   const agentConfig = cfg && agentId ? resolveAgentConfig(cfg, agentId) : undefined;
+
+  // Resolve Security Config
+  const security = resolveSecurityConfig(cfg ?? {});
+
+  // If sandbox is explicitly disabled by security profile (e.g. dev mode), allow all.
+  if (security.config.sandbox.enabled === false) {
+    return {
+      allow: ["*"],
+      deny: [],
+      requireApproval: [], // Or should we still respect approval?
+      // In Dev profile, approval is usually disabled too.
+      // But if we want to be safe, we could check security.config.humanApproval.enabled
+      sources: {
+        allow: { source: "global", key: "security.sandbox.enabled=false" },
+        deny: { source: "global", key: "security.sandbox.enabled=false" },
+        requireApproval: { source: "global", key: "security.sandbox.enabled=false" },
+      },
+    };
+  }
 
   // Resolve Trust Level Policy
   const trustLevel = resolveAgentTrustLevel(cfg ?? {}, agentId);
@@ -111,8 +131,33 @@ export function resolveSandboxToolPolicyForAgent(
       ? globalAllow
       : [...(trustPolicy.allow || [])];
 
+  const agentRequireApproval = agentConfig?.tools?.sandbox?.tools?.requireApproval;
+  const globalRequireApproval = cfg?.tools?.sandbox?.tools?.requireApproval;
+
+  const requireApprovalSource = Array.isArray(agentRequireApproval)
+    ? ({
+        source: "agent",
+        key: "agents.list[].tools.sandbox.tools.requireApproval",
+      } satisfies SandboxToolPolicySource)
+    : Array.isArray(globalRequireApproval)
+      ? ({
+          source: "global",
+          key: "tools.sandbox.tools.requireApproval",
+        } satisfies SandboxToolPolicySource)
+      : ({
+          source: "default",
+          key: `trust-level-${trustLevel}`,
+        } satisfies SandboxToolPolicySource);
+
+  const requireApproval = Array.isArray(agentRequireApproval)
+    ? agentRequireApproval
+    : Array.isArray(globalRequireApproval)
+      ? globalRequireApproval
+      : [...(trustPolicy.requireApproval || [])];
+
   const expandedDeny = expandToolGroups(deny);
   let expandedAllow = expandToolGroups(allow);
+  const expandedRequireApproval = expandToolGroups(requireApproval);
 
   // `image` is essential for multimodal workflows; always include it in sandboxed
   // sessions unless explicitly denied.
@@ -126,9 +171,17 @@ export function resolveSandboxToolPolicyForAgent(
   return {
     allow: expandedAllow,
     deny: expandedDeny,
+    requireApproval: expandedRequireApproval,
     sources: {
       allow: allowSource,
       deny: denySource,
+      requireApproval: requireApprovalSource,
     },
   };
+}
+
+export function shouldToolRequireApproval(policy: SandboxToolPolicyResolved, name: string) {
+  const normalized = name.trim().toLowerCase();
+  const requireApproval = compilePatterns(policy.requireApproval);
+  return matchesAny(normalized, requireApproval);
 }

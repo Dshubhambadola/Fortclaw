@@ -321,6 +321,41 @@ Minimal `~/.clawdbot/moltbot.json` (model + defaults):
 
 Details: [Security guide](https://docs.molt.bot/gateway/security) · [Docker + sandboxing](https://docs.molt.bot/install/docker) · [Sandbox config](https://docs.molt.bot/gateway/configuration)
 
+## Security Profiles
+
+Fortclaw comes with pre-configured security profiles to make setup easier:
+
+- **Development (`development`)**:
+  - Sandbox: Disabled (full system access).
+  - Approvals: Disabled.
+  - Audit: Debug level.
+  - *Use for local experimentation and building new skills.*
+
+- **Personal (`personal`)** (Default):
+  - Sandbox: Enabled for non-main (bundled) sessions.
+  - Approvals: Required for "sensitive" actions (exec, system modification).
+  - Audit: Info level, sanitization enabled.
+  - *Balanced for daily personal use.*
+
+- **Production (`production`)**:
+  - Sandbox: STRICT (gVisor/runc), enabled for ALL sessions.
+  - Approvals: Required for ALL tools.
+  - Input Validation: High strictness + ML detection.
+  - Audit: Encrypted, exported to CloudWatch/S3.
+  - *Use for public-facing or server deployments.*
+
+**Switching Profiles:**
+
+```bash
+# Via CLI
+moltbot gateway --security-profile production
+
+# Via Env Var
+export FORTCLAW_SECURITY_PROFILE=production
+moltbot gateway
+```
+
+
 ### [WhatsApp](https://docs.molt.bot/channels/whatsapp)
 
 - Link the device: `pnpm moltbot channels login` (stores creds in `~/.clawdbot/credentials`).
