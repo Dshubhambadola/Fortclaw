@@ -48,13 +48,23 @@ type GatewayRunOpts = {
   rawStreamPath?: unknown;
   dev?: boolean;
   reset?: boolean;
+  securityProfile?: string;
 };
 
 const gatewayLog = createSubsystemLogger("gateway");
 
 async function runGatewayCommand(opts: GatewayRunOpts) {
+  if (opts.securityProfile) {
+    process.env.FORTCLAW_SECURITY_PROFILE = opts.securityProfile;
+  }
+
   const isDevProfile = process.env.CLAWDBOT_PROFILE?.trim().toLowerCase() === "dev";
   const devMode = Boolean(opts.dev) || isDevProfile;
+
+  if (devMode && !process.env.FORTCLAW_SECURITY_PROFILE) {
+    process.env.FORTCLAW_SECURITY_PROFILE = "development";
+  }
+
   if (opts.reset && !devMode) {
     defaultRuntime.error("Use --reset with --dev.");
     defaultRuntime.exit(1);
@@ -330,6 +340,10 @@ export function addGatewayRunCommand(cmd: Command): Command {
       "--allow-unconfigured",
       "Allow gateway start without gateway.mode=local in config",
       false,
+    )
+    .option(
+      "--security-profile <profile>",
+      'Security profile ("development"|"personal"|"production"|"custom")',
     )
     .option("--dev", "Create a dev config + workspace if missing (no BOOTSTRAP.md)", false)
     .option(
