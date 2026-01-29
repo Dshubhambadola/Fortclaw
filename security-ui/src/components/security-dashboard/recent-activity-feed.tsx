@@ -1,20 +1,25 @@
 import type { AuditEvent } from "../../types/security";
-import { CheckCircle, XCircle, AlertTriangle, ShieldAlert, Terminal } from "lucide-react";
+import { CheckCircle, XCircle, AlertTriangle, ShieldAlert, Terminal, Globe, HardDrive } from "lucide-react";
 import { cn } from "../../lib/utils";
 
-const icons = {
+const icons: Record<string, any> = {
     tool_execution: Terminal,
     approval_granted: CheckCircle,
     approval_denied: XCircle,
     input_blocked: AlertTriangle,
     network_blocked: ShieldAlert,
+    exec: Terminal,
+    network: Globe,
+    fs: HardDrive, // Note: HardDrive must be imported
+    security_alert: ShieldAlert,
 };
 
-const colors = {
+const colors: Record<string, string> = {
     success: "text-emerald-500 bg-emerald-50 border-emerald-100",
     blocked: "text-orange-500 bg-orange-50 border-orange-100",
     denied: "text-red-500 bg-red-50 border-red-100",
     error: "text-red-500 bg-red-50 border-red-100",
+    failed: "text-slate-500 bg-slate-50 border-slate-100",
 };
 
 export function RecentActivityFeed({ activities }: { activities: AuditEvent[] }) {

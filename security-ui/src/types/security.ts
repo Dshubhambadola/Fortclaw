@@ -23,11 +23,11 @@ export type RiskLevel = "low" | "medium" | "high" | "critical";
 export interface AuditEvent {
     id: string;
     timestamp: string;
-    type: "tool_execution" | "approval_granted" | "approval_denied" | "input_blocked" | "network_blocked";
+    type: "tool_execution" | "approval_granted" | "approval_denied" | "input_blocked" | "network_blocked" | "exec" | "network" | "fs" | "security_alert";
     actor: string;
     action: string;
     resource: string;
-    outcome: "success" | "blocked" | "denied" | "error";
+    outcome: "success" | "blocked" | "denied" | "failed";
     severity: RiskLevel;
 }
 
@@ -47,4 +47,21 @@ export interface DashboardData {
     status: SecurityStatus;
     recentActivity: AuditEvent[];
     recommendations: Recommendation[];
+}
+
+export type HealthStatus = 'healthy' | 'degraded' | 'critical' | 'unknown';
+
+export interface SystemComponent {
+    id: string;
+    name: string;
+    status: HealthStatus;
+    latency?: number;
+    message?: string;
+    lastCheck: string;
+}
+
+export interface SecurityHealth {
+    overallStatus: HealthStatus;
+    components: SystemComponent[];
+    lastUpdated: string;
 }

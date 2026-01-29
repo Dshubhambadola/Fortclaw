@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { describe, it, expect } from "vitest";
 import { PendingApprovalsWidget } from "./pending-approvals-widget";
 import type { ApprovalRequest } from "../../types/security";
 
