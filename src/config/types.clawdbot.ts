@@ -1,3 +1,4 @@
+import type { SecurityConfig, SecurityProfile } from "./security-profiles.js";
 import type { AgentBinding, AgentsConfig } from "./types.agents.js";
 import type { ApprovalsConfig } from "./types.approvals.js";
 import type { AuthConfig } from "./types.auth.js";
@@ -57,6 +58,8 @@ export type MoltbotConfig = {
   };
   diagnostics?: DiagnosticsConfig;
   logging?: LoggingConfig;
+  securityProfile?: SecurityProfile;
+  security?: SecurityConfig;
   update?: {
     /** Update channel for git + npm installs ("stable", "beta", or "dev"). */
     channel?: "stable" | "beta" | "dev";
