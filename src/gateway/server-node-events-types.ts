@@ -28,6 +28,8 @@ export type NodeEventContext = {
   refreshHealthSnapshot: (opts?: { probe?: boolean }) => Promise<HealthSummary>;
   loadGatewayModelCatalog: () => Promise<ModelCatalogEntry[]>;
   logGateway: { warn: (msg: string) => void };
+  sourceRole?: string;
+  validPermissions?: string[];
 };
 
 export type NodeEvent = {
