@@ -318,6 +318,7 @@ describe("gateway server misc", () => {
     const prevToken = process.env.CLAWDBOT_GATEWAY_TOKEN;
     const prevCanvasPort = process.env.CLAWDBOT_CANVAS_HOST_PORT;
     process.env.CLAWDBOT_GATEWAY_TOKEN = "secret";
+    testState.gatewayAuth = { mode: "token", token: "secret" };
     testTailnetIPv4.value = "100.64.0.1";
     testState.gatewayBind = "lan";
     const canvasPort = await getFreePort();

@@ -62,6 +62,7 @@ const connectNodeClient = async (params: {
   });
   const client = new GatewayClient({
     url: `ws://127.0.0.1:${params.port}`,
+    token: process.env.CLAWDBOT_GATEWAY_TOKEN,
     role: "node",
     clientName: GATEWAY_CLIENT_NAMES.NODE_HOST,
     clientVersion: "1.0.0",
