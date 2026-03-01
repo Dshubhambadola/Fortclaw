@@ -14,6 +14,7 @@ import {
   startServerWithClient,
   testState,
   writeSessionStore,
+  agentCommand,
 } from "./test-helpers.js";
 
 installGatewayTestHooks({ scope: "suite" });
@@ -305,15 +306,31 @@ describe("gateway server chat", () => {
         },
       });
 
+      const { getReplyFromConfig: realGetReplyFromConfig } =
+        await vi.importActual<typeof import("../auto-reply/reply.js")>("../auto-reply/reply.js");
+
+      const replySpy = vi.mocked(getReplyFromConfig);
+      // Temporarily use the real implementation so slash commands can execute
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      replySpy.mockImplementationOnce(realGetReplyFromConfig as any);
+
       const spy = vi.mocked(agentCommand);
       const callsBefore = spy.mock.calls.length;
       const eventPromise = onceMessage(
         ws,
-        (o) =>
-          o.type === "event" &&
-          o.event === "chat" &&
-          o.payload?.state === "final" &&
-          o.payload?.runId === "idem-command-1",
+        (o) => {
+          const msg = o && typeof o === "object" ? (o as Record<string, unknown>) : {};
+          const payload =
+            msg.payload && typeof msg.payload === "object"
+              ? (msg.payload as Record<string, unknown>)
+              : {};
+          return (
+            msg.type === "event" &&
+            msg.event === "chat" &&
+            payload.state === "final" &&
+            payload.runId === "idem-command-1"
+          );
+        },
         8000,
       );
       const res = await rpcReq(ws, "chat.send", {
@@ -323,7 +340,18 @@ describe("gateway server chat", () => {
       });
       expect(res.ok).toBe(true);
       const evt = await eventPromise;
-      expect(evt.payload?.message?.command).toBe(true);
+      const evtPayload = evt && typeof evt === "object" && (evt as Record<string, unknown>).payload;
+      const evtMsg =
+        evtPayload && typeof evtPayload === "object"
+          ? (evtPayload as Record<string, unknown>).message
+          : undefined;
+      const evtMsgObj =
+        evtMsg && typeof evtMsg === "object" ? (evtMsg as Record<string, unknown>) : {};
+      expect(evtMsgObj.role).toBe("assistant");
+      const content = Array.isArray(evtMsgObj.content) ? evtMsgObj.content : [];
+      const firstContent =
+        content[0] && typeof content[0] === "object" ? (content[0] as Record<string, unknown>) : {};
+      expect(firstContent.text as string).toContain("Context breakdown");
       expect(spy.mock.calls.length).toBe(callsBefore);
     } finally {
       testState.sessionStorePath = undefined;
