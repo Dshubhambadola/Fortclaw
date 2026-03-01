@@ -41,8 +41,56 @@ export function resolveSecurityConfig(
     profile,
     config: merged,
     score,
-    warnings: [], // Warnings generation to be implemented in Phase 1.3
+    warnings: validateSecurityConfig(profile, merged, env),
   };
+}
+
+export function validateSecurityConfig(
+  profile: SecurityProfile,
+  config: SecurityConfig,
+  env: NodeJS.ProcessEnv = process.env,
+): string[] {
+  const warnings: string[] = [];
+
+  // Critical: Profile vs Environment mismatch
+  if (env.NODE_ENV === "production" && profile === "development") {
+    warnings.push(
+      "CRITICAL: Using 'development' security profile in a PRODUCTION environment. This is highly unsafe.",
+    );
+  }
+
+  // Production Profile Checks
+  if (profile === "production") {
+    if (!config.sandbox.enabled) {
+      warnings.push("Production profile violation: Sandbox is DISABLED.");
+    }
+    if (config.sandbox.workspaceAccess === "rw") {
+      warnings.push(
+        "Production profile violation: Workspace access is Read-Write (should be Read-Only).",
+      );
+    }
+    if (!config.audit.enabled) {
+      warnings.push("Production profile violation: Audit logging is DISABLED.");
+    }
+    if (!config.network.egressFiltering) {
+      warnings.push("Production profile violation: Egress filtering is DISABLED.");
+    }
+  }
+
+  // General Security Checks
+  if (!config.sandbox.enabled && profile !== "development") {
+    warnings.push("Security Warning: Sandbox is disabled. Agents have full system access.");
+  }
+
+  if (!config.inputValidation.enabled && profile !== "development") {
+    warnings.push("Security Warning: Input validation is disabled.");
+  }
+
+  if (config.humanApproval.enabled === false && profile === "production") {
+    warnings.push("Security Warning: Human approval is disabled in production profile.");
+  }
+
+  return warnings;
 }
 
 function determineProfile(config: Partial<MoltbotConfig>, env: NodeJS.ProcessEnv): SecurityProfile {

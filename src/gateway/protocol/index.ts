@@ -189,6 +189,10 @@ import {
   WizardStatusResultSchema,
   type WizardStep,
   WizardStepSchema,
+  type ToolApprovalRequestParams,
+  ToolApprovalRequestParamsSchema,
+  type ToolApprovalResolveParams,
+  ToolApprovalResolveParamsSchema,
 } from "./schema.js";
 
 const ajv = new (AjvPkg as unknown as new (opts?: object) => import("ajv").default)({
@@ -302,6 +306,12 @@ export const validateExecApprovalRequestParams = ajv.compile<ExecApprovalRequest
 );
 export const validateExecApprovalResolveParams = ajv.compile<ExecApprovalResolveParams>(
   ExecApprovalResolveParamsSchema,
+);
+export const validateToolApprovalRequestParams = ajv.compile<ToolApprovalRequestParams>(
+  ToolApprovalRequestParamsSchema,
+);
+export const validateToolApprovalResolveParams = ajv.compile<ToolApprovalResolveParams>(
+  ToolApprovalResolveParamsSchema,
 );
 export const validateExecApprovalsNodeGetParams = ajv.compile<ExecApprovalsNodeGetParams>(
   ExecApprovalsNodeGetParamsSchema,
@@ -517,4 +527,6 @@ export type {
   PollParams,
   UpdateRunParams,
   ChatInjectParams,
+  ToolApprovalRequestParams,
+  ToolApprovalResolveParams,
 };

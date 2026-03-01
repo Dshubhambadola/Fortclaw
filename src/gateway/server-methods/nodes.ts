@@ -514,6 +514,10 @@ export const nodeHandlers: GatewayRequestHandlers = {
         refreshHealthSnapshot: context.refreshHealthSnapshot,
         loadGatewayModelCatalog: context.loadGatewayModelCatalog,
         logGateway: { warn: context.logGateway.warn },
+        sourceRole: client?.connect?.role, // Fallback, though nodes usually authentiate differently
+        validPermissions: Object.entries(context.nodeRegistry.get(nodeId)?.permissions ?? {})
+          .filter(([, v]) => v)
+          .map(([k]) => k),
       };
       await handleNodeEvent(nodeContext, nodeId, {
         event: p.event,

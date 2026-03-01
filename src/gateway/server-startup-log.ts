@@ -2,6 +2,7 @@ import chalk from "chalk";
 import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../agents/defaults.js";
 import { resolveConfiguredModelRef } from "../agents/model-selection.js";
 import type { loadConfig } from "../config/config.js";
+import { resolveSecurityConfig } from "../config/security-resolver.js";
 import { getResolvedLoggerSettings } from "../logging.js";
 
 export function logGatewayStartup(params: {
@@ -36,5 +37,23 @@ export function logGatewayStartup(params: {
   params.log.info(`log file: ${getResolvedLoggerSettings().file}`);
   if (params.isNixMode) {
     params.log.info("gateway: running in Nix mode (config managed externally)");
+  }
+
+  // Security Profile Logging
+  const { profile, warnings } = resolveSecurityConfig(params.cfg);
+  let color = chalk.blue;
+  if (profile === "production") color = chalk.green;
+  else if (profile === "development") color = chalk.yellow;
+
+  params.log.info(`security profile: ${profile}`, {
+    consoleMessage: `security profile: ${color(profile)}`,
+  });
+
+  if (warnings.length > 0) {
+    for (const warning of warnings) {
+      params.log.info(`security warning: ${warning}`, {
+        consoleMessage: chalk.red(`security warning: ${warning}`),
+      });
+    }
   }
 }

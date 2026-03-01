@@ -5,6 +5,7 @@ export type { SandboxDockerConfig } from "./types.docker.js";
 export type SandboxToolPolicy = {
   allow?: string[];
   deny?: string[];
+  requireApproval?: string[];
 };
 
 export type SandboxToolPolicySource = {
@@ -19,9 +20,11 @@ export type SandboxToolPolicySource = {
 export type SandboxToolPolicyResolved = {
   allow: string[];
   deny: string[];
+  requireApproval: string[];
   sources: {
     allow: SandboxToolPolicySource;
     deny: SandboxToolPolicySource;
+    requireApproval: SandboxToolPolicySource;
   };
 };
 

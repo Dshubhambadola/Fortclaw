@@ -19,6 +19,9 @@ import { listChannelAgentTools } from "./channel-tools.js";
 import { createMoltbotTools } from "./moltbot-tools.js";
 import type { ModelAuthMode } from "./model-auth.js";
 import { wrapToolWithAbortSignal } from "./pi-tools.abort.js";
+import { wrapToolWithApproval } from "./pi-tools.approval.js";
+import { wrapToolWithAudit } from "./pi-tools.audit.js";
+import { wrapToolWithNetwork } from "./pi-tools.network.js";
 import {
   filterToolsByPolicy,
   isToolAllowedByPolicies,
@@ -48,6 +51,7 @@ import {
   resolveToolProfilePolicy,
   stripPluginOnlyAllowlist,
 } from "./tool-policy.js";
+import { resolveSandboxToolPolicyForAgent } from "./sandbox/tool-policy.js";
 import { getPluginToolMeta } from "../plugins/tools.js";
 import { logWarn } from "../logger.js";
 
@@ -413,8 +417,31 @@ export function createMoltbotCodingTools(options?: {
     ? normalized.map((tool) => wrapToolWithAbortSignal(tool, options.abortSignal))
     : normalized;
 
-  // NOTE: Keep canonical (lowercase) tool names here.
-  // pi-ai's Anthropic OAuth transport remaps tool names to Claude Code-style names
-  // on the wire and maps them back for tool dispatch.
-  return withAbort;
+  // Apply approval wrapper last
+  const approvalPolicy = resolveSandboxToolPolicyForAgent(options?.config, agentId);
+  const withApproval = withAbort.map((tool) =>
+    wrapToolWithApproval(tool, {
+      policy: approvalPolicy,
+      config: options?.config,
+      agentId,
+      sessionKey: options?.sessionKey,
+    }),
+  );
+
+  const withNetwork = withApproval.map((tool) => {
+    // Only apply to specific network-capable tools
+    if (["browser", "web_fetch", "web_search"].includes(tool.name)) {
+      return wrapToolWithNetwork(tool, { config: options?.config, agentId });
+    }
+    return tool;
+  });
+
+  const withAudit = withNetwork.map((tool) =>
+    wrapToolWithAudit(tool, {
+      agentId,
+      sessionKey: options?.sessionKey,
+    }),
+  );
+
+  return withAudit;
 }

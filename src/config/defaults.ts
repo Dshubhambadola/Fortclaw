@@ -5,6 +5,21 @@ import type { MoltbotConfig } from "./types.js";
 import { DEFAULT_AGENT_MAX_CONCURRENT, DEFAULT_SUBAGENT_MAX_CONCURRENT } from "./agent-limits.js";
 import type { ModelDefinitionConfig } from "./types.models.js";
 
+export const DEFAULT_SANDBOX_CONFIG = {
+  mode: "all",
+  scope: "agent",
+  workspaceAccess: "ro",
+  docker: {
+    network: "none",
+    resources: {
+      cpus: "1.0",
+      memory: "1g",
+      pids: 100,
+      timeout: 300,
+    },
+  },
+} as const;
+
 type WarnState = { warned: boolean };
 
 let defaultWarnState: WarnState = { warned: false };

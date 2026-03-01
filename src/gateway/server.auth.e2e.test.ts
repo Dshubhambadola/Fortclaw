@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
 import { WebSocket } from "ws";
 import { PROTOCOL_VERSION } from "./protocol/index.js";
 import { getHandshakeTimeoutMs } from "./server-constants.js";
@@ -218,6 +218,10 @@ describe("gateway server auth/connect", () => {
     let server: Awaited<ReturnType<typeof startGatewayServer>>;
     let port: number;
     let prevToken: string | undefined;
+
+    beforeEach(() => {
+      testState.gatewayAuth = { mode: "token", token: "secret" };
+    });
 
     beforeAll(async () => {
       prevToken = process.env.CLAWDBOT_GATEWAY_TOKEN;

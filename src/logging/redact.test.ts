@@ -92,4 +92,29 @@ describe("redactSensitiveText", () => {
     });
     expect(output).toBe(input);
   });
+  it("masks emails", () => {
+    const input = "Contact us at support@example.com for help.";
+    const output = redactSensitiveText(input, {
+      mode: "tools",
+      patterns: defaults,
+    });
+    // support@example.com (19 chars) -> suppor + ... + .com
+    expect(output).toBe("Contact us at suppor….com for help.");
+    // Wait, let's calculate carefully.
+    // Length 19. Start 6: "suppor". End 4: ".com".
+    // Wait, example.com is 11 chars. support is 7. Total 19.
+    // slice(0, 6) = "suppor"
+    // slice(-4) = ".com" (Wait, . c o m = 4 chars)
+    // "suppor" + "…" + ".com" = "suppor….com"
+  });
+
+  it("masks IP addresses", () => {
+    const input = "Server IP is 192.168.1.1";
+    const output = redactSensitiveText(input, {
+      mode: "tools",
+      patterns: defaults,
+    });
+    // 192.168.1.1 (11 chars) < 18 -> "***"
+    expect(output).toBe("Server IP is ***");
+  });
 });

@@ -73,6 +73,20 @@ export const handleNodeEvent = async (ctx: NodeEventContext, nodeId: string, evt
       return;
     }
     case "agent.request": {
+      // Security Check: Only allow authorized nodes (coordinators) to trigger agent requests.
+      // We check for 'agent:coordinator' permission OR 'admin' role.
+      const hasPermission =
+        ctx.validPermissions?.includes("agent:coordinator") ||
+        ctx.validPermissions?.includes("admin") ||
+        ctx.sourceRole === "admin";
+
+      if (!hasPermission) {
+        ctx.logGateway.warn(
+          `agent.request denied: node=${nodeId} missing agent:coordinator permission`,
+        );
+        return;
+      }
+
       if (!evt.payloadJSON) return;
       type AgentDeepLink = {
         message?: string;

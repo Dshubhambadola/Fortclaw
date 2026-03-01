@@ -29,7 +29,7 @@ let previousToken: string | undefined;
 
 beforeAll(async () => {
   previousToken = process.env.CLAWDBOT_GATEWAY_TOKEN;
-  delete process.env.CLAWDBOT_GATEWAY_TOKEN;
+  process.env.CLAWDBOT_GATEWAY_TOKEN = "test-gateway-token-1234567890";
   port = await getFreePort();
   server = await startGatewayServer(port);
 });
@@ -226,7 +226,7 @@ describe("gateway server health/presence", () => {
       role,
       scopes,
       signedAtMs,
-      token: null,
+      token: "test-gateway-token-1234567890",
     });
     const ws = await openClient({
       role,

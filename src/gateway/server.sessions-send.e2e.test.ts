@@ -23,7 +23,7 @@ beforeAll(async () => {
   prevGatewayToken = process.env.CLAWDBOT_GATEWAY_TOKEN;
   gatewayPort = await getFreePort();
   process.env.CLAWDBOT_GATEWAY_PORT = String(gatewayPort);
-  process.env.CLAWDBOT_GATEWAY_TOKEN = "test-token";
+  process.env.CLAWDBOT_GATEWAY_TOKEN = "test-gateway-token-1234567890";
   server = await startGatewayServer(gatewayPort);
 });
 

@@ -8,7 +8,9 @@ import {
   readConfigFileSnapshot,
   resolveGatewayPort,
 } from "../../config/config.js";
+import { resolveSecurityConfig } from "../../config/security-resolver.js";
 import { resolveGatewayAuth } from "../../gateway/auth.js";
+
 import { startGatewayServer } from "../../gateway/server.js";
 import type { GatewayWsLogStyle } from "../../gateway/ws-logging.js";
 import { setGatewayWsLogStyle } from "../../gateway/ws-logging.js";
@@ -104,6 +106,17 @@ async function runGatewayCommand(opts: GatewayRunOpts) {
   }
 
   const cfg = loadConfig();
+
+  // Security Profile Resolution & Warnings
+  const securityResult = resolveSecurityConfig(cfg, process.env);
+  if (securityResult.warnings.length > 0) {
+    defaultRuntime.error("\n--- SECURITY WARNINGS ---");
+    for (const warning of securityResult.warnings) {
+      defaultRuntime.error(`[${securityResult.profile}] ${warning}`);
+    }
+    defaultRuntime.error("-------------------------\n");
+  }
+
   const portOverride = parsePort(opts.port);
   if (opts.port !== undefined && portOverride === null) {
     defaultRuntime.error("Invalid port");
