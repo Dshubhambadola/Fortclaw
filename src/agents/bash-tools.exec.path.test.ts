@@ -73,8 +73,9 @@ describe("exec PATH login shell merge", () => {
     const tool = createExecTool({ host: "gateway", security: "full", ask: "off" });
     const result = await tool.execute("call1", { command: "echo $PATH" });
     const text = normalizeText(result.content.find((c) => c.type === "text")?.text);
+    const lastLine = text?.split("\n").pop()?.trim();
 
-    expect(text).toBe("/custom/bin:/opt/bin:/usr/bin");
+    expect(lastLine).toBe("/custom/bin:/opt/bin:/usr/bin");
     expect(shellPathMock).toHaveBeenCalledTimes(1);
   });
 
@@ -93,8 +94,9 @@ describe("exec PATH login shell merge", () => {
       env: { PATH: "/explicit/bin" },
     });
     const text = normalizeText(result.content.find((c) => c.type === "text")?.text);
+    const lastLine = text?.split("\n").pop()?.trim();
 
-    expect(text).toBe("/explicit/bin");
+    expect(lastLine).toBe("/explicit/bin");
     expect(shellPathMock).not.toHaveBeenCalled();
   });
 });

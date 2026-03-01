@@ -78,6 +78,7 @@ describe("Agent-specific sandbox config", () => {
             sandbox: {
               mode: "all",
               scope: "agent",
+              workspaceAccess: "ro",
               workspaceRoot: "/tmp/isolated-sandboxes", // Agent override
             },
           },
