@@ -359,6 +359,78 @@ describe("gateway server chat", () => {
     }
   });
 
+  test("rejects chat.send messages that exceed the maximum length", async () => {
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-gw-"));
+    try {
+      testState.sessionStorePath = path.join(dir, "sessions.json");
+      await writeSessionStore({
+        entries: {
+          main: { sessionId: "sess-sec-1", updatedAt: Date.now() },
+        },
+      });
+      const oversizedMessage = "x".repeat(100_001);
+      const res = await rpcReq(ws, "chat.send", {
+        sessionKey: "main",
+        message: oversizedMessage,
+        idempotencyKey: "idem-oversize-1",
+      });
+      expect(res.ok).toBe(false);
+      const err = res.error as Record<string, unknown> | undefined;
+      const errMsg = typeof err?.message === "string" ? err.message.toLowerCase() : "";
+      expect(errMsg).toContain("too long");
+    } finally {
+      testState.sessionStorePath = undefined;
+      await fs.rm(dir, { recursive: true, force: true });
+    }
+  });
+
+  test("rejects concurrent chat.send runs on the same session", async () => {
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-gw-"));
+    try {
+      testState.sessionStorePath = path.join(dir, "sessions.json");
+      await writeSessionStore({
+        entries: {
+          main: { sessionId: "sess-sec-2", updatedAt: Date.now() },
+        },
+      });
+
+      // Make the first run's getReplyFromConfig block indefinitely so the run stays in-flight
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      vi.mocked(getReplyFromConfig).mockImplementationOnce(() => new Promise<any>(() => {}));
+
+      // Start first run — stays active since the mock never resolves
+      void rpcReq(ws, "chat.send", {
+        sessionKey: "main",
+        message: "first run",
+        idempotencyKey: "idem-concurrent-1",
+      });
+
+      // Wait for the first run to register in chatAbortControllers
+      await new Promise((resolve) => setTimeout(resolve, 150));
+
+      // Second run on same session while first is still active — must be rejected
+      const secondRes = await rpcReq(ws, "chat.send", {
+        sessionKey: "main",
+        message: "second run",
+        idempotencyKey: "idem-concurrent-2",
+      });
+
+      expect(secondRes.ok).toBe(false);
+      const err = secondRes.error as Record<string, unknown> | undefined;
+      const errMsg = typeof err?.message === "string" ? err.message.toLowerCase() : "";
+      expect(errMsg).toContain("active");
+
+      // Abort to clean up the blocked first run
+      await rpcReq(ws, "chat.abort", {
+        sessionKey: "main",
+        runId: "idem-concurrent-1",
+      });
+    } finally {
+      testState.sessionStorePath = undefined;
+      await fs.rm(dir, { recursive: true, force: true });
+    }
+  });
+
   test("agent events include sessionKey and agent.wait covers lifecycle flows", async () => {
     const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-gw-"));
     testState.sessionStorePath = path.join(dir, "sessions.json");
