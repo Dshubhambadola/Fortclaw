@@ -36,6 +36,7 @@ describe("gateway e2e", () => {
         skipCron: process.env.CLAWDBOT_SKIP_CRON,
         skipCanvas: process.env.CLAWDBOT_SKIP_CANVAS_HOST,
         skipBrowser: process.env.CLAWDBOT_SKIP_BROWSER_CONTROL_SERVER,
+        disableCache: process.env.CLAWDBOT_DISABLE_CONFIG_CACHE,
       };
 
       const { baseUrl: openaiBaseUrl, restore } = installOpenAiResponsesMock();
@@ -47,6 +48,7 @@ describe("gateway e2e", () => {
       process.env.CLAWDBOT_SKIP_CRON = "1";
       process.env.CLAWDBOT_SKIP_CANVAS_HOST = "1";
       process.env.CLAWDBOT_SKIP_BROWSER_CONTROL_SERVER = "1";
+      process.env.CLAWDBOT_DISABLE_CONFIG_CACHE = "1";
 
       const token = `test-${randomUUID()}`;
       process.env.CLAWDBOT_GATEWAY_TOKEN = token;
@@ -64,7 +66,12 @@ describe("gateway e2e", () => {
       const configPath = path.join(configDir, "moltbot.json");
 
       const cfg = {
-        agents: { defaults: { workspace: workspaceDir } },
+        agents: {
+          defaults: {
+            workspace: workspaceDir,
+            sandbox: { workspaceRoot: workspaceDir },
+          },
+        },
         models: {
           mode: "replace",
           providers: {
@@ -148,6 +155,7 @@ describe("gateway e2e", () => {
         process.env.CLAWDBOT_SKIP_CRON = prev.skipCron;
         process.env.CLAWDBOT_SKIP_CANVAS_HOST = prev.skipCanvas;
         process.env.CLAWDBOT_SKIP_BROWSER_CONTROL_SERVER = prev.skipBrowser;
+        process.env.CLAWDBOT_DISABLE_CONFIG_CACHE = prev.disableCache;
       }
     },
   );
@@ -163,6 +171,7 @@ describe("gateway e2e", () => {
       skipCron: process.env.CLAWDBOT_SKIP_CRON,
       skipCanvas: process.env.CLAWDBOT_SKIP_CANVAS_HOST,
       skipBrowser: process.env.CLAWDBOT_SKIP_BROWSER_CONTROL_SERVER,
+      disableCache: process.env.CLAWDBOT_DISABLE_CONFIG_CACHE,
     };
 
     process.env.CLAWDBOT_SKIP_CHANNELS = "1";
@@ -170,6 +179,7 @@ describe("gateway e2e", () => {
     process.env.CLAWDBOT_SKIP_CRON = "1";
     process.env.CLAWDBOT_SKIP_CANVAS_HOST = "1";
     process.env.CLAWDBOT_SKIP_BROWSER_CONTROL_SERVER = "1";
+    process.env.CLAWDBOT_DISABLE_CONFIG_CACHE = "1";
     delete process.env.CLAWDBOT_GATEWAY_TOKEN;
 
     const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-wizard-home-"));
@@ -271,6 +281,7 @@ describe("gateway e2e", () => {
       process.env.CLAWDBOT_SKIP_CRON = prev.skipCron;
       process.env.CLAWDBOT_SKIP_CANVAS_HOST = prev.skipCanvas;
       process.env.CLAWDBOT_SKIP_BROWSER_CONTROL_SERVER = prev.skipBrowser;
+      process.env.CLAWDBOT_DISABLE_CONFIG_CACHE = prev.disableCache;
     }
   });
 });
