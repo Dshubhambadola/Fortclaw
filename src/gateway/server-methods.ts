@@ -77,11 +77,12 @@ const READ_METHODS = new Set([
   "node.list",
   "node.describe",
   "chat.history",
+  "agent.wait",
 ]);
 const WRITE_METHODS = new Set([
   "send",
   "agent",
-  "agent.wait",
+  "agent.request",
   "wake",
   "talk.mode",
   "tts.enable",

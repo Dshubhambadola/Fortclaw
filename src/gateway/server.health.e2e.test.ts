@@ -13,9 +13,11 @@ import { emitHeartbeatEvent } from "../infra/heartbeat-events.js";
 import { GATEWAY_CLIENT_MODES, GATEWAY_CLIENT_NAMES } from "../utils/message-channel.js";
 import {
   connectOk,
+  connectReq,
   getFreePort,
   installGatewayTestHooks,
   onceMessage,
+  rpcReq,
   startGatewayServer,
   startServerWithClient,
 } from "./test-helpers.js";
@@ -298,4 +300,80 @@ describe("gateway server health/presence", () => {
 
     ws.close();
   });
+});
+
+describe("gateway device token rotation", () => {
+  test("rejects reconnect with old device token after rotation", async () => {
+    // 1. Connect a fresh device identity and capture the device token from hello-ok
+    const identityPath = path.join(os.tmpdir(), `moltbot-rotate-${randomUUID()}.json`);
+    const identity = loadOrCreateDeviceIdentity(identityPath);
+    const role = "operator";
+    const scopes: string[] = [];
+    const gatewayToken = "test-gateway-token-1234567890";
+
+    const buildDeviceConnectOpts = (authToken: string, extra?: { signedAtMs?: number }) => {
+      const signedAtMs = extra?.signedAtMs ?? Date.now();
+      const payload = buildDeviceAuthPayload({
+        deviceId: identity.deviceId,
+        clientId: GATEWAY_CLIENT_NAMES.TEST,
+        clientMode: GATEWAY_CLIENT_MODES.TEST,
+        role,
+        scopes,
+        signedAtMs,
+        token: authToken,
+      });
+      return {
+        role,
+        scopes,
+        client: {
+          id: GATEWAY_CLIENT_NAMES.TEST,
+          version: "1.0.0",
+          platform: "test",
+          mode: GATEWAY_CLIENT_MODES.TEST,
+        },
+        device: {
+          id: identity.deviceId,
+          publicKey: publicKeyRawBase64UrlFromPem(identity.publicKeyPem),
+          signature: signDevicePayload(identity.privateKeyPem, payload),
+          signedAt: signedAtMs,
+        },
+        token: authToken,
+      };
+    };
+
+    // Connect with gateway token — triggers auto-pairing (silent=true on localhost)
+    // hello-ok returns auth.deviceToken for subsequent reconnects
+    const ws1 = new WebSocket(`ws://127.0.0.1:${port}`);
+    await new Promise<void>((resolve) => ws1.once("open", resolve));
+    const hello1 = await connectReq(ws1, buildDeviceConnectOpts(gatewayToken));
+    expect(hello1.ok).toBe(true);
+    const helloPayload1 = hello1.payload as { auth?: { deviceToken?: string } } | undefined;
+    const deviceToken = helloPayload1?.auth?.deviceToken;
+    expect(typeof deviceToken).toBe("string");
+
+    // 2. Rotate the device token via the gateway (operator must be connected)
+    const rotateRes = await rpcReq(ws1, "device.token.rotate", {
+      deviceId: identity.deviceId,
+      role,
+    });
+    expect(rotateRes.ok).toBe(true);
+    const newToken = (rotateRes.payload as { token?: string } | undefined)?.token;
+    expect(typeof newToken).toBe("string");
+    expect(newToken).not.toBe(deviceToken); // token value must have changed
+    ws1.close();
+
+    // 3. Try to reconnect with the OLD device token — must be rejected
+    const ws2 = new WebSocket(`ws://127.0.0.1:${port}`);
+    await new Promise<void>((resolve) => ws2.once("open", resolve));
+    const hello2 = await connectReq(ws2, buildDeviceConnectOpts(deviceToken!));
+    expect(hello2.ok).toBe(false);
+    ws2.close();
+
+    // 4. Reconnect with the NEW token — must succeed
+    const ws3 = new WebSocket(`ws://127.0.0.1:${port}`);
+    await new Promise<void>((resolve) => ws3.once("open", resolve));
+    const hello3 = await connectReq(ws3, buildDeviceConnectOpts(newToken!));
+    expect(hello3.ok).toBe(true);
+    ws3.close();
+  }, 15_000);
 });

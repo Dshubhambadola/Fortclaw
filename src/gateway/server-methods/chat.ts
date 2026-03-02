@@ -347,6 +347,18 @@ export const chatHandlers: GatewayRequestHandlers = {
       );
       return;
     }
+    const MAX_MESSAGE_LENGTH = 100_000;
+    if (p.message.length > MAX_MESSAGE_LENGTH) {
+      respond(
+        false,
+        undefined,
+        errorShape(
+          ErrorCodes.INVALID_REQUEST,
+          `message too long: max ${MAX_MESSAGE_LENGTH} characters`,
+        ),
+      );
+      return;
+    }
     let parsedMessage = p.message;
     let parsedImages: ChatImageContent[] = [];
     if (normalizedAttachments.length > 0) {
@@ -418,6 +430,23 @@ export const chatHandlers: GatewayRequestHandlers = {
         cached: true,
         runId: clientRunId,
       });
+      return;
+    }
+
+    // Limit concurrent active runs per session to prevent race conditions and quota exhaustion
+    const MAX_CONCURRENT_RUNS_PER_SESSION = 1;
+    const sessionActiveRuns = [...context.chatAbortControllers.values()].filter(
+      (e) => e.sessionKey === p.sessionKey,
+    ).length;
+    if (sessionActiveRuns >= MAX_CONCURRENT_RUNS_PER_SESSION) {
+      respond(
+        false,
+        undefined,
+        errorShape(
+          ErrorCodes.UNAVAILABLE,
+          "another run is active for this session; abort it first",
+        ),
+      );
       return;
     }
 

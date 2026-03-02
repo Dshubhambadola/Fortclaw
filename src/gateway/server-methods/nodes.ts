@@ -6,7 +6,7 @@ import {
   requestNodePairing,
   verifyNodeToken,
 } from "../../infra/node-pairing.js";
-import { listDevicePairing } from "../../infra/device-pairing.js";
+import { listDevicePairing, getPairedDevice } from "../../infra/device-pairing.js";
 import {
   ErrorCodes,
   errorShape,
@@ -384,6 +384,17 @@ export const nodeHandlers: GatewayRequestHandlers = {
           undefined,
           errorShape(ErrorCodes.UNAVAILABLE, "node not connected", {
             details: { code: "NOT_CONNECTED" },
+          }),
+        );
+        return;
+      }
+      const pairedDevice = await getPairedDevice(nodeId);
+      if (!pairedDevice) {
+        respond(
+          false,
+          undefined,
+          errorShape(ErrorCodes.INVALID_REQUEST, "node not paired", {
+            details: { code: "NOT_PAIRED" },
           }),
         );
         return;
