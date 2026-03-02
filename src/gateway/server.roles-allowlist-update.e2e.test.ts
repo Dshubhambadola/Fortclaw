@@ -320,3 +320,55 @@ describe("gateway node command allowlist", () => {
     }
   });
 });
+
+describe("gateway node.invoke pairing enforcement", () => {
+  test("rejects node.invoke when node is connected but not paired", async () => {
+    // Use a raw WebSocket with token-only auth (no device identity) to simulate a
+    // node that connected successfully but was never approved through device pairing.
+    // The gateway allows token-only nodes to connect with role="node", but they
+    // are never written to the paired.json store — so node.invoke must reject them.
+    const nodeWs = new WebSocket(`ws://127.0.0.1:${port}`);
+    await new Promise<void>((resolve) => nodeWs.once("open", resolve));
+
+    try {
+      // Connect as node role with gateway token only (no device key).
+      // Passing device:null explicitly skips device identity so the node
+      // is never written to the device pairing store.
+      await connectOk(nodeWs, {
+        role: "node",
+        client: {
+          id: GATEWAY_CLIENT_NAMES.NODE_HOST,
+          version: "1.0.0",
+          platform: "ios",
+          mode: GATEWAY_CLIENT_MODES.NODE,
+        },
+        commands: ["canvas.snapshot"],
+        device: null,
+      });
+
+      // Discover the nodeId from node.list
+      const listRes = await rpcReq<{ nodes?: Array<{ nodeId: string; connected?: boolean }> }>(
+        ws,
+        "node.list",
+        {},
+      );
+      const connectedNode = listRes.payload?.nodes?.find((n) => n.connected);
+      expect(connectedNode).toBeDefined();
+      const nodeId = connectedNode?.nodeId ?? "";
+
+      const invokeRes = await rpcReq(ws, "node.invoke", {
+        nodeId,
+        command: "canvas.snapshot",
+        params: {},
+        idempotencyKey: "pairing-check-rbac-1",
+      });
+
+      // Must fail: node is connected (token-only) but not in the device pairing store
+      expect(invokeRes.ok).toBe(false);
+      const errMsg = invokeRes.error?.message ?? "";
+      expect(errMsg).toContain("not paired");
+    } finally {
+      nodeWs.close();
+    }
+  }, 10_000);
+});
