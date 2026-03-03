@@ -14,6 +14,7 @@ import { formatError } from "../server-utils.js";
 import { logWs } from "../ws-log.js";
 import { getHealthVersion, getPresenceVersion, incrementPresenceVersion } from "./health-state.js";
 import { attachGatewayWsMessageHandler } from "./ws-connection/message-handler.js";
+import { releaseRateLimiterBucket } from "../server-methods.js";
 import type { GatewayWsClient } from "./ws-types.js";
 
 type SubsystemLogger = ReturnType<typeof createSubsystemLogger>;
@@ -208,6 +209,8 @@ export function attachGatewayWsConnectionHandler(params: {
         lastFrameMethod,
         lastFrameId,
       });
+      // Release the rate-limiter bucket for this connection to free memory.
+      releaseRateLimiterBucket(connId);
       close();
     });
 

@@ -30,6 +30,7 @@ import {
 } from "./nodes.helpers.js";
 import { loadConfig } from "../../config/config.js";
 import { isNodeCommandAllowed, resolveNodeCommandAllowlist } from "../node-command-policy.js";
+import { auditLog } from "../security-audit.js";
 import type { GatewayRequestHandlers } from "./types.js";
 
 function isNodeEntry(entry: { role?: string; roles?: string[] }) {
@@ -390,6 +391,12 @@ export const nodeHandlers: GatewayRequestHandlers = {
       }
       const pairedDevice = await getPairedDevice(nodeId);
       if (!pairedDevice) {
+        auditLog(context.logGateway, {
+          kind: "node_invoke.denied",
+          method: "node.invoke",
+          reason: "NOT_PAIRED",
+          extra: { nodeId, command },
+        });
         respond(
           false,
           undefined,

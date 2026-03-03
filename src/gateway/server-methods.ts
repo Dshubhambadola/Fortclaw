@@ -25,12 +25,27 @@ import { usageHandlers } from "./server-methods/usage.js";
 import { voicewakeHandlers } from "./server-methods/voicewake.js";
 import { webHandlers } from "./server-methods/web.js";
 import { wizardHandlers } from "./server-methods/wizard.js";
+import { ConnectionRateLimiter } from "./gateway-rate-limiter.js";
+import { auditLog } from "./security-audit.js";
 
 const ADMIN_SCOPE = "operator.admin";
 const READ_SCOPE = "operator.read";
 const WRITE_SCOPE = "operator.write";
 const APPROVALS_SCOPE = "operator.approvals";
 const PAIRING_SCOPE = "operator.pairing";
+const NODE_INVOKE_SCOPE = "operator.node";
+
+// Module-level rate limiter: 60 requests/min per connection by default.
+// Shared across all WS connections in this process.
+const rateLimiter = new ConnectionRateLimiter({ capacity: 60, refillPerSecond: 1 });
+
+/**
+ * Call on connection close to release the rate-limiter bucket.
+ * Safe to call multiple times for the same connId.
+ */
+export function releaseRateLimiterBucket(connId: string): void {
+  rateLimiter.delete(connId);
+}
 
 const APPROVAL_METHODS = new Set([
   "exec.approval.request",
@@ -79,6 +94,7 @@ const READ_METHODS = new Set([
   "chat.history",
   "agent.wait",
 ]);
+const NODE_INVOKE_METHODS = new Set(["node.invoke"]);
 const WRITE_METHODS = new Set([
   "send",
   "agent",
@@ -90,7 +106,7 @@ const WRITE_METHODS = new Set([
   "tts.convert",
   "tts.setProvider",
   "voicewake.set",
-  "node.invoke",
+  // node.invoke is now governed by NODE_INVOKE_METHODS (operator.write OR operator.node)
   "chat.send",
   "chat.abort",
   "browser.request",
@@ -116,6 +132,18 @@ function authorizeGatewayMethod(method: string, client: GatewayRequestOptions["c
   }
   if (PAIRING_METHODS.has(method) && !scopes.includes(PAIRING_SCOPE)) {
     return errorShape(ErrorCodes.INVALID_REQUEST, "missing scope: operator.pairing");
+  }
+  // node.invoke accepts either operator.write (broad) or operator.node (fine-grained)
+  if (NODE_INVOKE_METHODS.has(method)) {
+    const hasWrite = scopes.includes(WRITE_SCOPE);
+    const hasNodeScope = scopes.includes(NODE_INVOKE_SCOPE);
+    if (!hasWrite && !hasNodeScope) {
+      return errorShape(
+        ErrorCodes.INVALID_REQUEST,
+        "missing scope: operator.write or operator.node",
+      );
+    }
+    return null;
   }
   if (READ_METHODS.has(method) && !(scopes.includes(READ_SCOPE) || scopes.includes(WRITE_SCOPE))) {
     return errorShape(ErrorCodes.INVALID_REQUEST, "missing scope: operator.read");
@@ -180,9 +208,31 @@ export const coreGatewayHandlers: GatewayRequestHandlers = {
 };
 
 export async function handleGatewayRequest(
-  opts: GatewayRequestOptions & { extraHandlers?: GatewayRequestHandlers },
+  opts: GatewayRequestOptions & { extraHandlers?: GatewayRequestHandlers; connId?: string },
 ): Promise<void> {
   const { req, respond, client, isWebchatConnect, context } = opts;
+
+  // Rate limit check: per-connection token bucket (60 req/min by default)
+  if (opts.connId) {
+    const allowed = rateLimiter.consume(opts.connId);
+    if (!allowed) {
+      auditLog(context.logGateway, {
+        kind: "rate_limit.hit",
+        connId: opts.connId,
+        method: req.method,
+        reason: "token bucket exhausted",
+      });
+      respond(
+        false,
+        undefined,
+        errorShape(ErrorCodes.INVALID_REQUEST, "rate limit exceeded", {
+          details: { code: "RATE_LIMIT_EXCEEDED" },
+        }),
+      );
+      return;
+    }
+  }
+
   const authError = authorizeGatewayMethod(req.method, client);
   if (authError) {
     respond(false, undefined, authError);
