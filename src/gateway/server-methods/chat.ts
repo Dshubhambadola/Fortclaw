@@ -41,6 +41,7 @@ import {
 } from "../session-utils.js";
 import { stripEnvelopeFromMessages } from "../chat-sanitize.js";
 import { formatForLog } from "../ws-log.js";
+import { auditLog } from "../security-audit.js";
 import type { GatewayRequestContext, GatewayRequestHandlers } from "./types.js";
 
 type TranscriptAppendResult = {
@@ -349,6 +350,11 @@ export const chatHandlers: GatewayRequestHandlers = {
     }
     const MAX_MESSAGE_LENGTH = 100_000;
     if (p.message.length > MAX_MESSAGE_LENGTH) {
+      auditLog(context.logGateway, {
+        kind: "chat.size_exceeded",
+        method: "chat.send",
+        reason: `message length ${p.message.length} exceeds max ${MAX_MESSAGE_LENGTH}`,
+      });
       respond(
         false,
         undefined,

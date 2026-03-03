@@ -925,6 +925,7 @@ export function attachGatewayWsMessageHandler(params: {
           isWebchatConnect,
           extraHandlers,
           context: buildRequestContext(),
+          connId,
         });
       })().catch((err) => {
         logGateway.error(`request handler failed: ${formatForLog(err)}`);
