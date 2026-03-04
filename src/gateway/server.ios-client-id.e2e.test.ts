@@ -6,6 +6,7 @@ import { getFreePort, onceMessage, startGatewayServer } from "./test-helpers.ser
 
 let server: Awaited<ReturnType<typeof startGatewayServer>>;
 let port = 0;
+process.env.CLAWDBOT_GATEWAY_TOKEN = "test";
 
 beforeAll(async () => {
   port = await getFreePort();
